@@ -1,0 +1,556 @@
+{{ 'component-cart.css' | asset_url | stylesheet_tag }}
+{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}
+{{ 'component-totals.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+{{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  /* --- estilos específicos bahari (compactos) --- */
+  .bahari-empty-cart{text-align:center;padding:60px 20px;}
+  .bahari-empty-inner{max-width:520px;margin:0 auto;}
+  .bahari-empty-title{font-size:32px;font-weight:700;color:#0d2b45;margin-bottom:12px;}
+  .bahari-empty-text{font-size:15px;color:#62727f;margin-bottom:32px;line-height:1.5;}
+  .bahari-btn-primary{display:inline-block;background:#c0392b;padding:14px 28px;color:#fff;border-radius:12px;font-size:16px;font-weight:600;text-decoration:none;transition:.2s;}
+  .bahari-btn-primary:hover{background:#9f2d24;transform:translateY(-2px);box-shadow:0 4px 12px rgba(192,57,43,.25);}
+  .bahari-empty-login{margin-top:28px;font-size:15px;color:#62727f;}
+  .bahari-link{color:#c0392b;font-weight:600;text-decoration:underline;}
+  .bahari-cart-grid{display:grid;grid-template-columns:1fr 360px;gap:34px;}
+  .bahari-cart-card{display:flex;gap:20px;background:#fff;border:1px solid #eee;border-radius:14px;padding:18px;margin-bottom:16px;transition:.25s;}
+  .bahari-cart-card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.06);}
+  .bahari-card-image img{width:120px;height:120px;object-fit:cover;border-radius:10px;}
+  .bahari-card-title{font-size:18px;font-weight:700;color:#0d2b45;text-decoration:none;}
+  .bahari-card-variant{margin-top:6px;color:#62727f;font-size:14px;}
+  .bahari-card-bottom{margin-top:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .bahari-qty{display:flex;align-items:center;border:1px solid #ddd;border-radius:999px;padding:4px;}
+  .bahari-qty-btn{background:none;border:none;font-size:20px;color:#6b7280;padding:4px 10px;cursor:pointer;}
+  input.quantity__input{width:48px;text-align:center;border:none;font-weight:600;background:transparent;font-size:15px;}
+  .bahari-card-price{font-weight:700;color:#0d2b45;font-size:17px;}
+  .bahari-remove{color:#c0392b;font-size:14px;text-decoration:none;}
+  .bahari-summary{background:#fff;padding:24px;border-radius:14px;border:1px solid #eee;position:sticky;top:28px;}
+  .bahari-summary h3{margin:0 0 14px;color:#0d2b45;font-size:20px;}
+  .bahari-summary-row{display:flex;justify-content:space-between;margin-bottom:10px;color:#62727f;}
+  .bahari-summary-total{display:flex;justify-content:space-between;margin-top:16px;padding-top:16px;border-top:1px solid #eee;font-size:18px;color:#0d2b45;}
+  .bahari-checkout-btn{width:100%;margin-top:20px;padding:14px;background:#1B2B41;color:#fff;font-weight:700;border:none;border-radius:10px;cursor:pointer;}
+  .bahari-checkout-btn:hover{background:#0f1c2e;}
+  @media(max-width:980px){
+    .bahari-cart-grid{grid-template-columns:1fr !important;}
+    .bahari-summary{position:relative;top:auto;margin-top:24px;}
+  }
+
+  /* ensure we hide the theme's duplicate "pagar" area visually but keep it in DOM for rollback */
+  .bahari-hide-duplicate-checkout { display: none !important; }
+{%- endstyle -%}
+
+{%- unless settings.cart_type == 'drawer' -%}
+  <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+{%- endunless -%}
+<script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
+
+<cart-items class="gradient color-{{ section.settings.color_scheme }} isolate section-{{ section.id }}-padding">
+  <div class="page-width">
+
+    {%- comment -%} SHOW EMPTY STATE IF CART EMPTY {%- endcomment -%}
+    {%- if cart == empty -%}
+      <div class="bahari-empty-cart" role="region" aria-label="Carrito vacío">
+        <div class="bahari-empty-inner">
+          <div class="bahari-empty-illustration" aria-hidden="true" style="margin-bottom:20px;opacity:.9;">
+            <svg width="140" height="140" viewBox="0 0 24 24" fill="none" stroke="#0d2b45" stroke-width="1.4">
+              <path d="M3 14s1.5-2 4-2 4 2 4 2 1.5-2 4-2 4 2 4 2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+
+          <h1 class="bahari-empty-title">Tu carrito está vacío</h1>
+          <p class="bahari-empty-text">Aún no has agregado productos. Explora nuestras colecciones y encuentra algo que te encante.</p>
+
+          <a href="{{ routes.all_products_collection_url }}" class="bahari-btn-primary">Explorar productos</a>
+
+          {% if shop.customer_accounts_enabled and customer == null %}
+            <div class="bahari-empty-login">
+              <p>¿Ya tienes una cuenta? <a href="{{ routes.account_login_url }}" class="bahari-link">Inicia sesión</a></p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+    {%- else -%}
+      {%- comment -%} CART HAS ITEMS => SHOW FULL LAYOUT {%- endcomment -%}
+
+      <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:28px;">
+        <h1 style="font-size:32px;color:#0d2b45;margin:0;">Carrito de Compras</h1>
+        <span style="color:#62727f;font-weight:600;">{{ cart.item_count }} artículos</span>
+      </div>
+
+      <div class="bahari-cart-grid">
+        <!-- LEFT: Items -->
+        <div>
+          <div style="margin-bottom:18px;">
+            <!-- place for future promos or progress -->
+          </div>
+
+          <div>
+            <form action="{{ routes.cart_url }}" method="post" id="cart">
+              <div>
+                {% for item in cart.items %}
+                  <div class="bahari-cart-card" data-line-index="{{ item.index }}">
+                    <div class="bahari-card-image" style="flex:0 0 120px;">
+                      {% if item.image %}
+                        <img src="{{ item.image | image_url: width: 400 }}" alt="{{ item.image.alt | escape }}" width="120" height="120" loading="lazy">
+                      {% else %}
+                        <div style="width:120px;height:120px;background:#f6f6f6;border-radius:10px;"></div>
+                      {% endif %}
+                    </div>
+
+                    <div class="bahari-card-details" style="flex:1;">
+                      <a href="{{ item.url }}" class="bahari-card-title">{{ item.product.title | escape }}</a>
+
+                      {% if item.options_with_values.size > 0 %}
+                        <div class="bahari-card-variant">
+                          {% for opt in item.options_with_values %}
+                            {{ opt.name }}: {{ opt.value }}{% unless forloop.last %} • {% endunless %}
+                          {% endfor %}
+                        </div>
+                      {% endif %}
+
+                      <div class="bahari-card-bottom">
+                        <div class="bahari-qty" aria-hidden="false" style="align-items:center;">
+                          <button
+                            type="button"
+                            class="bahari-qty-btn bahari-minus"
+                            data-variant="{{ item.variant.id }}"
+                            aria-label="Disminuir cantidad"
+                          >−</button>
+
+                          <input
+                            class="quantity__input"
+                            data-quantity-variant-id="{{ item.variant.id }}"
+                            type="number"
+                            name="updates[]"
+                            value="{{ item.quantity }}"
+                            min="0"
+                          >
+
+                          <button
+                            type="button"
+                            class="bahari-qty-btn bahari-plus"
+                            data-variant="{{ item.variant.id }}"
+                            aria-label="Aumentar cantidad"
+                          >+</button>
+                        </div>
+
+                        <div class="bahari-card-price" data-line-price-for="{{ item.variant.id }}">
+                          {{ item.final_line_price | money }}
+                        </div>
+
+                        <a href="{{ item.url_to_remove }}" class="bahari-remove" aria-label="Eliminar">Eliminar</a>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </form>
+          </div>
+
+          <!-- Cross-sell placeholder (puedes inyectar un snippet aquí) -->
+          <div style="margin-top:28px;">
+            <!-- BEGIN: Bahari Cross-sell (recomendados) -->
+<h2 class="bahari-crosssell-title" style="margin-top:40px;">Completa tu look Bahari</h2>
+
+<div class="bahari-crosssell-grid" aria-label="Productos recomendados">
+  {% assign first_item = cart.items[0] %}
+  {% if first_item and first_item.product and first_item.product.recommendations != nil and first_item.product.recommendations.size > 0 %}
+    {% for product in first_item.product.recommendations limit:4 %}
+      <div class="bahari-crosssell-card">
+        <a href="{{ product.url }}" class="bahari-crosssell-img">
+          {% if product.featured_image %}
+            <img src="{{ product.featured_image | image_url: width: 400, height: 300 }}" alt="{{ product.title | escape }}" width="400" height="300" loading="lazy">
+          {% else %}
+            <div style="width:100%;height:160px;background:#f5f5f5;border-radius:8px;"></div>
+          {% endif %}
+        </a>
+
+        <div class="bahari-crosssell-info">
+          <h3 class="bahari-crosssell-name"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+          <p class="bahari-crosssell-price">{{ product.price | money }}</p>
+
+          <form method="post" action="/cart/add" class="bahari-crosssell-form" data-product-id="{{ product.id }}">
+            {% if product.variants.size > 1 %}
+              {% assign first_variant = product.variants.first %}
+              <input type="hidden" name="id" value="{{ first_variant.id }}">
+            {% else %}
+              <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+            {% endif %}
+            <button type="submit" class="bahari-crosssell-add">Agregar</button>
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    {%- comment -%}
+      Fallback: si no hay recomendaciones del primer producto,
+      puedes usar una colección específica por handle (cambia 'playa-y-piscina' al handle real)
+    {%- endcomment -%}
+
+    {% assign fallback_collection_handle = 'playa-y-piscina' %}
+    {% assign fallback_collection = collections[fallback_collection_handle] %}
+    {% if fallback_collection and fallback_collection.products_count > 0 %}
+      {% for product in fallback_collection.products limit:4 %}
+        <div class="bahari-crosssell-card">
+          <a href="{{ product.url }}" class="bahari-crosssell-img">
+            {% if product.featured_image %}
+              <img src="{{ product.featured_image | image_url: width: 400, height: 300 }}" alt="{{ product.title | escape }}" width="400" height="300" loading="lazy">
+            {% endif %}
+          </a>
+          <div class="bahari-crosssell-info">
+            <h3 class="bahari-crosssell-name"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+            <p class="bahari-crosssell-price">{{ product.price | money }}</p>
+            <form method="post" action="/cart/add" class="bahari-crosssell-form">
+              <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+              <button type="submit" class="bahari-crosssell-add">Agregar</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="bahari-crosssell-empty" style="color:#62727f;">No hay recomendaciones por el momento.</p>
+    {% endif %}
+  {% endif %}
+</div>
+
+<style>
+  /* Cross-sell styles */
+  .bahari-crosssell-grid {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    align-items: start;
+  }
+  .bahari-crosssell-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 12px;
+    text-align: left;
+  }
+  .bahari-crosssell-img img { width:100%; height:160px; object-fit:cover; border-radius:8px; display:block; }
+  .bahari-crosssell-name { margin:10px 0 6px; font-size:14px; color:#0d2b45; font-weight:600; }
+  .bahari-crosssell-price { color:#62727f; margin-bottom:8px; font-size:13px; }
+  .bahari-crosssell-add {
+    display:block;
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #d04a36;
+    background:transparent;
+    color:#d04a36;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .bahari-crosssell-add:hover{ background:#d04a36;color:#fff; }
+  @media (max-width: 1024px) {
+    .bahari-crosssell-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 680px) {
+    .bahari-crosssell-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 420px) {
+    .bahari-crosssell-grid { grid-template-columns: 1fr; }
+  }
+</style>
+<!-- END: Bahari Cross-sell -->
+
+          </div>
+        </div>
+
+        <!-- RIGHT: Summary -->
+        <aside class="bahari-summary" aria-label="Resumen del pedido">
+          <h3>Resumen del Pedido</h3>
+
+          <div class="bahari-summary-row">
+            <span>Subtotal</span>
+            <span class="bahari-subtotal">{{ cart.items_subtotal_price | money }}</span>
+          </div>
+
+          <div class="bahari-summary-row">
+            <span>Envío estimado</span>
+            <span style="color:green;font-weight:700;">Gratis</span>
+          </div>
+
+          <div class="bahari-summary-total">
+            <strong>Total</strong>
+            <strong class="bahari-total">{{ cart.total_price | money }}</strong>
+          </div>
+
+          <button
+            type="button"
+            onclick="window.location.href='{{ routes.cart_url | append: '/checkout' }}'"
+            class="bahari-checkout-btn"
+          >
+            Continuar Compra →
+          </button>
+
+          <div style="margin-top:12px;text-align:center;color:#9aa6b2;">
+            <small>Compra 100% segura</small>
+          </div>
+        </aside>
+      </div>
+
+    {%- endif -%}
+
+  </div>
+</cart-items>
+
+{%- comment -%} JS: handlers + ajax sync. No modificar si no entiendes. {%- endcomment -%}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  /* ---------- Config / util ---------- */
+  const SHOP_CURRENCY = '{{ shop.currency | default: "COP" }}';
+
+  function formatMoney(amountCents) {
+    try {
+      return new Intl.NumberFormat('es-CO', { style: 'currency', currency: SHOP_CURRENCY }).format(amountCents / 100);
+    } catch (e) {
+      return (amountCents/100).toFixed(0);
+    }
+  }
+
+  /* ---------- DOM helpers ---------- */
+  function findQuantityInputFromButton(btn) {
+    const wrapper = btn.closest('.bahari-qty, .quantity-popover-wrapper, .quantity-popover-container, .cart-item__quantity-wrapper');
+    if (!wrapper) return null;
+    return wrapper.querySelector('input.quantity__input');
+  }
+
+  function findRowFromInput(input) {
+    return input ? input.closest('.bahari-cart-card, tr.cart-item, .cart-item') : null;
+  }
+
+  function updateLinePriceInDOM(variantId, linePriceCents) {
+    // Update the visible price containers for the row(s) matching variantId
+    // First try our Bahari card element (data-line-price-for)
+    const selector = `[data-line-price-for="${variantId}"]`;
+    const priceEls = document.querySelectorAll(selector);
+
+    if (priceEls.length) {
+      priceEls.forEach(el => el.textContent = formatMoney(linePriceCents));
+      return;
+    }
+
+    // fallback: find input and update any price-like elements in the row
+    const input = document.querySelector(`input.quantity__input[data-quantity-variant-id="${variantId}"]`);
+    if (!input) return;
+    const row = findRowFromInput(input);
+    if (!row) return;
+    const maybeEls = row.querySelectorAll('.cart-item__price-wrapper .price, .cart-item__final-price, .price--end, span, strong, p');
+    for (const el of maybeEls) {
+      if (/\$/.test(el.textContent)) {
+        el.textContent = formatMoney(linePriceCents);
+        break;
+      }
+    }
+  }
+
+  function updateSummaryDOM(cart) {
+    // update our Bahari summary elements
+    const subtotalEl = document.querySelector('.bahari-subtotal');
+    const totalEl = document.querySelector('.bahari-total');
+
+    if (subtotalEl) subtotalEl.textContent = formatMoney(cart.items_subtotal_price || cart.total_price || 0);
+    if (totalEl) totalEl.textContent = formatMoney(cart.total_price || 0);
+  }
+
+  /* ---------- Ajax call to change cart ---------- */
+  async function changeCartItemByVariant(variantId, quantity) {
+    if (!variantId) return;
+    const body = new URLSearchParams();
+    body.append('id', variantId);
+    body.append('quantity', String(quantity));
+
+    try {
+      const res = await fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        body: body.toString()
+      });
+      if (!res.ok) throw new Error('cart/change.js response not ok: ' + res.status);
+      const cart = await res.json();
+
+      // Update DOM prices per returned cart items
+      if (Array.isArray(cart.items)) {
+        cart.items.forEach(ci => {
+          const variant = ci.variant_id || ci.id || ci.variant;
+          const linePriceCents = ci.line_price || 0;
+          updateLinePriceInDOM(variant, linePriceCents);
+          const input = document.querySelector(`input.quantity__input[data-quantity-variant-id="${variant}"]`);
+          if (input) input.value = ci.quantity;
+        });
+      }
+
+      // Update summary
+      updateSummaryDOM(cart);
+
+      // Dispatch event for other scripts
+      window.dispatchEvent(new CustomEvent('bahari:cart:updated', { detail: cart }));
+
+      return cart;
+    } catch (err) {
+      console.error('Error calling /cart/change.js', err);
+      // fallback: full reload if error (commented to avoid surprise reloads)
+      // location.reload();
+      return null;
+    }
+  }
+
+  /* ---------- Event delegation for +/- and manual edits ---------- */
+  document.body.addEventListener('click', function (e) {
+    const btn = e.target.closest('.bahari-plus, .bahari-minus, button[name="plus"], button[name="minus"], button.quantity__button');
+    if (!btn) return;
+
+    // find associated input
+    const input = findQuantityInputFromButton(btn);
+    if (!input) return;
+
+    e.preventDefault();
+
+    let qty = parseInt(input.value || '0', 10);
+    if (isNaN(qty)) qty = 0;
+
+    // determine plus or minus
+    if (btn.classList.contains('bahari-plus') || btn.getAttribute('name') === 'plus' || btn.textContent.includes('+')) qty = qty + 1;
+    else qty = Math.max(0, qty - 1);
+
+    // immediate feedback
+    input.value = qty;
+
+    const variantId = input.getAttribute('data-quantity-variant-id') || input.getAttribute('data-variant');
+    if (!variantId) {
+      console.warn('No variant id on input', input);
+      return;
+    }
+
+    // call server
+    changeCartItemByVariant(variantId, qty);
+  });
+
+  // manual change / blur
+  document.body.addEventListener('change', function (e) {
+    const input = e.target;
+    if (!input || !input.classList.contains('quantity__input')) return;
+
+    let qty = parseInt(input.value || '0', 10);
+    if (isNaN(qty) || qty < 0) qty = 0;
+    input.value = qty;
+
+    const variantId = input.getAttribute('data-quantity-variant-id') || input.getAttribute('data-variant');
+    if (!variantId) {
+      console.warn('No variant id on input (manual change)', input);
+      return;
+    }
+    changeCartItemByVariant(variantId, qty);
+  });
+
+  // Enter key commits change
+  document.body.addEventListener('keydown', function (e) {
+    const input = e.target;
+    if (!input || !input.classList.contains('quantity__input')) return;
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      input.blur(); // triggers change listener
+    }
+  });
+
+  /* ---------- Initial sync with server to ensure canonical state ---------- */
+  (async function initialSync() {
+    try {
+      const r = await fetch('/cart.js');
+      if (!r.ok) return;
+      const cart = await r.json();
+      if (Array.isArray(cart.items)) {
+        cart.items.forEach(ci => {
+          const variant = ci.variant_id || ci.id;
+          const input = document.querySelector(`input.quantity__input[data-quantity-variant-id="${variant}"]`);
+          if (input) input.value = ci.quantity;
+          updateLinePriceInDOM(variant, ci.line_price || 0);
+        });
+      }
+      updateSummaryDOM(cart);
+    } catch (err) {
+      // ignore silently
+    }
+  })();
+
+  /* ---------- Hide duplicate theme checkout button(s) but keep in DOM (for rollback) ---------- */
+  function hideDuplicateCheckoutButtonsByText() {
+    // Find any visible buttons/links that contain the text "Pagar pedido" (case-insensitive) and hide them
+    const lookups = Array.from(document.querySelectorAll('a, button, input[type="button"], input[type="submit"]'));
+    lookups.forEach(el => {
+      const text = (el.textContent || el.value || '').trim().toLowerCase();
+      if (!text) return;
+      if (text.includes('pagar pedido') || text.includes('pagar pedido') || text.includes('pagar')) {
+        el.classList.add('bahari-hide-duplicate-checkout');
+        // Also hide parent blocks to avoid duplicates (best-effort)
+        const parent = el.closest('.cart__footer, .main-cart-footer, .cart-footer, .cart-actions, .cart__actions, .cart__order-now, .order-summary');
+        if (parent) parent.classList.add('bahari-hide-duplicate-checkout');
+      }
+    });
+  }
+
+  // run early and again after small delay (theme may render elements async)
+  hideDuplicateCheckoutButtonsByText();
+  setTimeout(hideDuplicateCheckoutButtonsByText, 800);
+  setTimeout(hideDuplicateCheckoutButtonsByText, 2000);
+
+});
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-cart-items.name",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

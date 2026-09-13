@@ -1,0 +1,367 @@
+{{ 'bahari-lifestyle.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="bahari-lifestyle"
+  style="
+    --bl-bg: {{ section.settings.bg_color }};
+    --bl-title: {{ section.settings.title_color }};
+    --bl-text: {{ section.settings.text_color }};
+    --bl-button-bg: {{ section.settings.button_bg }};
+    --bl-button-text: {{ section.settings.button_text }};
+    --bl-overlay: {{ section.settings.overlay_color }};
+    --bl-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --bl-radius: {{ section.settings.card_radius }}px;
+    --bl-gap: {{ section.settings.grid_gap }}px;
+    --bl-padding-top: {{ section.settings.padding_top }}px;
+    --bl-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --bl-title-size: {{ section.settings.title_size }}px;
+    --bl-subtitle-size: {{ section.settings.subtitle_size }}px;
+    --bl-card-height: {{ section.settings.card_height }}px;
+    --bl-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+    --bl-columns-mobile: repeat({{ section.settings.columns_mobile }}, 1fr);
+  "
+>
+  <div class="bahari-lifestyle__container">
+    <!-- HEADER -->
+    <div class="bahari-lifestyle__header">
+      {% if section.settings.eyebrow != blank %}
+        <span class="bahari-lifestyle__eyebrow">
+          {{ section.settings.eyebrow }}
+        </span>
+      {% endif %}
+
+      {% if section.settings.title != blank %}
+        <h2 class="bahari-lifestyle__title">
+          {{ section.settings.title }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.subtitle != blank %}
+        <div class="bahari-lifestyle__subtitle">
+          {{ section.settings.subtitle }}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- GRID -->
+    <div class="bahari-lifestyle__grid">
+      {% for block in section.blocks %}
+        <a
+          href="{{ block.settings.link }}"
+          class="bahari-card"
+          {{ block.shopify_attributes }}
+        >
+          {% if block.settings.image != blank %}
+            <img
+              src="{{ block.settings.image | image_url: width: 1400 }}"
+              alt="{{ block.settings.title | escape }}"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
+              loading="lazy"
+            >
+          {% endif %}
+
+          <div class="bahari-card__overlay"></div>
+
+          <div class="bahari-card__content bahari-card__content--{{ block.settings.content_position }}">
+            {% if block.settings.title != blank %}
+              <h3 class="bahari-card__title">
+                {{ block.settings.title }}
+              </h3>
+            {% endif %}
+
+            {% if block.settings.subtitle != blank %}
+              <p class="bahari-card__subtitle">
+                {{ block.settings.subtitle }}
+              </p>
+            {% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+
+    <!-- BUTTON -->
+    {% if section.settings.button_label != blank %}
+      <div class="bahari-lifestyle__footer">
+        <a
+          href="{{ section.settings.button_link }}"
+          class="bahari-lifestyle__button"
+        >
+          {{ section.settings.button_label }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bahari Lifestyle PRO",
+
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "BAHARI LIFESTYLE"
+    },
+
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Vive el verano diferente"
+    },
+
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "<p>Diseñadas para playas, ciudad y días sin prisa.</p>"
+    },
+
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 24,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "label": "Tamaño título",
+      "default": 56
+    },
+
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño subtítulo",
+      "default": 18
+    },
+
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Columnas desktop",
+      "default": 3
+    },
+
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columnas mobile",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 columna"
+        },
+        {
+          "value": "2",
+          "label": "2 columnas"
+        }
+      ]
+    },
+
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Espaciado entre cards",
+      "default": 24
+    },
+
+    {
+      "type": "range",
+      "id": "card_height",
+      "min": 250,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "label": "Altura cards",
+      "default": 650
+    },
+
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 24
+    },
+
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color fondo",
+      "default": "#ffffff"
+    },
+
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color títulos",
+      "default": "#0b2545"
+    },
+
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color texto",
+      "default": "#666666"
+    },
+
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Color overlay",
+      "default": "#000000"
+    },
+
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "label": "Opacidad overlay",
+      "default": 20
+    },
+
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Color botón",
+      "default": "#0b2545"
+    },
+
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Color texto botón",
+      "default": "#ffffff"
+    },
+
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding superior",
+      "default": 100
+    },
+
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding inferior",
+      "default": 100
+    },
+
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto botón",
+      "default": "Explorar colección"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link botón"
+    }
+  ],
+
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card Lifestyle",
+
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Summer Escape"
+        },
+
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtítulo",
+          "default": "Bahari Collection"
+        },
+
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "Posición contenido",
+          "default": "bottom-left",
+
+          "options": [
+            {
+              "value": "bottom-left",
+              "label": "Abajo izquierda"
+            },
+            {
+              "value": "bottom-center",
+              "label": "Abajo centro"
+            },
+            {
+              "value": "center",
+              "label": "Centro"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "Bahari Lifestyle PRO",
+      "blocks": [
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,75 @@
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "disabled": false,
+      "blocks": {
+        "announcement-1": {
+          "type": "announcement",
+          "settings": {
+            "text": "¡Envíos gratis a toda Colombia por compras superiores a $150.000!"
+          }
+        },
+        "announcement-2": {
+          "type": "announcement",
+          "settings": {
+            "text": "🔥 Promoción de Temporada: Hasta 20% OFF en referencias seleccionadas"
+          }
+        },
+        "announcement-3": {
+          "type": "announcement",
+          "settings": {
+            "text": "✨ Garantía GoSense: 30 días para cambios y devoluciones sin costo"
+          }
+        },
+        "announcement-4": {
+          "type": "announcement",
+          "settings": {
+            "text": "💳 Compra hoy y paga a cuotas sin interés con Addi y Sistecrédito"
+          }
+        }
+      },
+      "block_order": [
+        "announcement-1",
+        "announcement-2",
+        "announcement-3",
+        "announcement-4"
+      ],
+      "settings": {
+        "auto_rotate": true,
+        "change_slides_speed": 2,
+        "color_scheme": "scheme-6",
+        "show_line_separator": true
+      }
+    },
+    "header": {
+      "type": "header",
+      "custom_css": [
+        ".header { max-width: 1320px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }",
+        "@media screen and (min-width: 990px) { .header { display: flex; align-items: center; justify-content: space-between; } .header__inline-menu { margin: 0 auto; } }"
+      ],
+      "settings": {
+        "logo_position": "middle-left",
+        "mobile_logo_position": "center",
+        "menu": "main-menu",
+        "menu_type_desktop": "dropdown",
+        "sticky_header_type": "on-scroll-up",
+        "show_line_separator": false,
+        "color_scheme": "scheme-6",
+        "menu_color_scheme": "scheme-6",
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "enable_customer_avatar": true,
+        "margin_bottom": 0,
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
+}

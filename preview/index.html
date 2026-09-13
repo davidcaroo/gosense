@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoSense — Zapatillas que desafían tu estilo diario</title>
+  <link rel="stylesheet" href="assets/custom-home.css">
+  <link rel="stylesheet" href="../assets/custom-home.css">
+  <link rel="stylesheet" href="assets/custom-cart.css">
+  <link rel="stylesheet" href="../assets/custom-cart.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: #F7F6F2; color: #151515; font-family: var(--font-body-editorial); overflow-x: hidden; }
+  </style>
+</head>
+<body class="editorial-page-wrap">
+
+  <!-- Mobile Navigation Drawer -->
+  <div id="mobileNavDrawer" class="mobile-nav-drawer">
+    <div class="mobile-nav-backdrop" onclick="closeMobileNavDrawer()"></div>
+    <div class="mobile-nav-body">
+      <div class="mobile-nav-header">
+        <a href="index.html" class="mobile-nav-logo">GoSense</a>
+        <button class="mobile-nav-close" onclick="closeMobileNavDrawer()" aria-label="Cerrar menú">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <ul class="mobile-nav-links">
+        <li class="mobile-nav-item"><a href="product.html"><span>Sneakers</span><span class="mobile-nav-badge">Nuevo</span></a></li>
+        <li class="mobile-nav-item"><a href="collections.html"><span>Hombre</span><span style="color: #999;">›</span></a></li>
+        <li class="mobile-nav-item"><a href="collections.html"><span>Niños</span><span style="color: #999;">›</span></a></li>
+        <li class="mobile-nav-item"><a href="collections.html"><span>Accesorios</span><span style="color: #999;">›</span></a></li>
+        <li class="mobile-nav-item"><a href="collections.html"><span>Colecciones</span><span style="color: #111;">›</span></a></li>
+        <li class="mobile-nav-item"><a href="index.html" class="active"><span>Nosotros</span><span style="color: #999;">›</span></a></li>
+      </ul>
+      <div class="mobile-nav-footer">
+        <a href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>Mi Cuenta / Registro</span>
+        </a>
+        <a href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <span>Ayuda y Preguntas</span>
+        </a>
+        <div style="font-size: 1.15rem; color: #888; margin-top: 14px;">
+          🇨🇴 Colombia • COP ($)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Announcement Bar (Dinámica cada 2s & Responsive) -->
+  <div class="preview-announcement-bar">
+    <div class="preview-announcement-wrap">
+      <button class="preview-announcement-nav" onclick="prevAnnouncement()" aria-label="Anuncio anterior">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <div class="preview-announcement-content">
+        <p id="announcementText" class="preview-announcement-msg">
+          ¡Envíos gratis a toda <strong>Colombia</strong> por compras superiores a $150.000!
+        </p>
+      </div>
+      <button class="preview-announcement-nav" onclick="nextAnnouncement()" aria-label="Siguiente anuncio">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Header (Navbar Blanco Fijo Full-Width) -->
+  <div class="preview-header-sticky-wrap">
+    <header class="preview-header">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button class="mobile-nav-toggle" onclick="openMobileNavDrawer()" aria-label="Abrir menú">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <a href="index.html" class="preview-logo">GoSense</a>
+      </div>
+      <ul class="preview-nav">
+        <li><a href="product.html">Sneakers</a></li>
+        <li><a href="collections.html">Hombre</a></li>
+        <li><a href="collections.html">Niños</a></li>
+        <li><a href="collections.html">Accesorios</a></li>
+        <li><a href="collections.html">Colecciones</a></li>
+        <li><a href="index.html">Nosotros</a></li>
+      </ul>
+      <div class="preview-icons">
+        <button class="preview-icon-btn" aria-label="Buscar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+        <button class="preview-icon-btn" aria-label="Mi Cuenta">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </button>
+        <button type="button" class="preview-icon-btn" onclick="openCartDrawer()" aria-label="Carrito">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span class="preview-cart-badge" id="indexCartBadge">2</span>
+        </button>
+      </div>
+    </header>
+  </div>
+
+  <!-- 01. Large Hero -->
+  <section class="custom-hero-section">
+    <div class="editorial-container">
+      <div class="custom-hero-card">
+        <img src="https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=1800&auto=format&fit=crop" alt="Estilo de vida sneakers" class="custom-hero-bg">
+        <div class="custom-hero-overlay"></div>
+        <div class="custom-hero-content">
+          <h1 class="custom-hero-title editorial-serif">Zapatillas que<br>desafían tu estilo<br>diario</h1>
+          <p class="custom-hero-description">Descubre calzado confeccionado con siluetas audaces, máxima comodidad y una estética atemporal para tu día a día.</p>
+          <a href="product.html" class="custom-hero-btn">Comprar Ahora</a>
+        </div>
+        <div class="custom-hero-dots">
+          <span class="custom-hero-dot active"></span>
+          <span class="custom-hero-dot"></span>
+          <span class="custom-hero-dot"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02. Three Promotional Cards -->
+  <section class="promo-cards-section">
+    <div class="editorial-container">
+      <div class="promo-cards-grid">
+        <div class="promo-card">
+          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop" alt="Sneakers" class="promo-card-bg">
+          <div class="promo-card-overlay"></div>
+          <div class="promo-card-content">
+            <h3 class="promo-card-heading editorial-serif">Zapatillas que se adaptan a tu ritmo: cómodas, duraderas y siempre en tendencia.</h3>
+            <a href="product.html" class="promo-card-btn">Ver Colección</a>
+          </div>
+        </div>
+        <div class="promo-card">
+          <img src="https://images.unsplash.com/photo-1607522370275-f14206abe5d3?q=80&w=800&auto=format&fit=crop" alt="Nuevos Lanzamientos" class="promo-card-bg">
+          <div class="promo-card-overlay"></div>
+          <div class="promo-card-content">
+            <h3 class="promo-card-heading editorial-serif">¡Nuevos Lanzamientos! Diseños extraordinarios que hablan antes que tú.</h3>
+            <a href="product.html" class="promo-card-btn">Explorar Ahora</a>
+          </div>
+        </div>
+        <div class="promo-card">
+          <img src="https://images.unsplash.com/photo-1512374382149-233c42b6a83b?q=80&w=800&auto=format&fit=crop" alt="Style-Stack" class="promo-card-bg">
+          <div class="promo-card-overlay"></div>
+          <div class="promo-card-content" style="text-align: center;">
+            <h3 class="promo-card-heading editorial-serif promo-card-heading--style-stack">STYLE-STACK</h3>
+            <a href="product.html" class="promo-card-btn promo-card-btn--white">Comprar Sneakers</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03. Newly Dropped Collections (Grid 1) -->
+  <section>
+    <div class="editorial-container">
+      <div class="editorial-heading-block">
+        <h2 class="editorial-section-title editorial-serif">Colecciones Recién Lanzadas</h2>
+        <p class="editorial-section-subtitle">Diseños que fusionan la silueta clásica del sneaker con innovación urbana y máximo confort para tu día a día.</p>
+      </div>
+
+      <div class="editorial-product-grid">
+        <!-- Card 1 -->
+        <div class="custom-product-card">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=600&auto=format&fit=crop" alt="Gaelic Indoor Shoes" class="custom-product-card-img custom-product-card-img--primary">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$219.96</span>
+            <span class="custom-product-card-badge">Nuevo Lanzamiento</span>
+          </div>
+          <a href="product.html" class="custom-product-card-title">Gaelic Indoor Shoes</a>
+          <p class="custom-product-card-desc">Silueta urbana con suela de tracción ultra resistente, confeccionada para el dinamismo de la ciudad.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="custom-product-card">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?q=80&w=600&auto=format&fit=crop" alt="Gaelic Indoor Shoes" class="custom-product-card-img custom-product-card-img--primary">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$329.96</span>
+            <span class="custom-product-card-badge">Más Vendido</span>
+          </div>
+          <a href="product.html" class="custom-product-card-title">Gaelic Indoor Shoes</a>
+          <p class="custom-product-card-desc">Calzado lifestyle refinado con soporte reactivo y ajuste anatómico de la mañana a la noche.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="custom-product-card">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=600&auto=format&fit=crop" alt="Zoom Vomero" class="custom-product-card-img custom-product-card-img--primary">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$169.99</span>
+            <span class="custom-product-card-badge">En Tendencia</span>
+          </div>
+          <a href="product.html" class="custom-product-card-title">Zoom Vomero</a>
+          <p class="custom-product-card-desc">Acentos vibrantes sobre amortiguación clásica, diseñada para exploradores urbanos con estilo.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="custom-product-card">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?q=80&w=600&auto=format&fit=crop" alt="Gaelic Indoor Shoes" class="custom-product-card-img custom-product-card-img--primary">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$219.96</span>
+            <span class="custom-product-card-badge">Nuevo Lanzamiento</span>
+          </div>
+          <a href="product.html" class="custom-product-card-title">Gaelic Indoor Shoes</a>
+          <p class="custom-product-card-desc">Perfil vintage reinterpretado con paneles técnicos transpirables y amortiguación premium.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="custom-product-card">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?q=80&w=600&auto=format&fit=crop" alt="Gaelic Indoor Shoes" class="custom-product-card-img custom-product-card-img--primary">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$249.96</span>
+            <span class="custom-product-card-badge">Exclusivo</span>
+          </div>
+          <a href="product.html" class="custom-product-card-title">Gaelic Indoor Shoes</a>
+          <p class="custom-product-card-desc">Edición monocromática triple dark creada para un rendimiento discreto y elegancia contemporánea.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="custom-product-card">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?q=80&w=600&auto=format&fit=crop" alt="Zoom Vomero" class="custom-product-card-img custom-product-card-img--primary">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$169.99</span>
+            <span class="custom-product-card-badge">Más Vendido</span>
+          </div>
+          <a href="product.html" class="custom-product-card-title">Zoom Vomero</a>
+          <p class="custom-product-card-desc">Malla técnica ligera con acentos metálicos para un look distintivo y comodidad prolongada.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="editorial-see-more-wrap">
+        <a href="product.html" class="btn-see-more">Ver Más Colecciones</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04. Editorial Category Mosaic -->
+  <section class="editorial-mosaic-section">
+    <div class="editorial-container">
+      <div class="editorial-heading-block" style="padding-top: 10px; padding-bottom: 24px;">
+        <h2 class="editorial-section-title editorial-serif">Colecciones Más Recomendadas para Ti</h2>
+        <p class="editorial-section-subtitle">Zapatillas diseñadas para combinar con cualquier atuendo, uniendo estética clásica y materiales de alta calidad.</p>
+      </div>
+
+      <div class="editorial-mosaic-grid">
+        <div class="mosaic-card mosaic-card--tall">
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1000&auto=format&fit=crop" alt="Sneakers" class="mosaic-card-bg">
+          <div class="mosaic-card-overlay"></div>
+          <div class="mosaic-card-content">
+            <h3 class="mosaic-card-title editorial-serif">Zapatillas</h3>
+            <a href="product.html" class="mosaic-card-btn">Ver todos los productos</a>
+          </div>
+        </div>
+        <div class="editorial-mosaic-col-right">
+          <div class="mosaic-card mosaic-card--wide">
+            <img src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=900&auto=format&fit=crop" alt="Sneakers" class="mosaic-card-bg">
+            <div class="mosaic-card-overlay"></div>
+            <div class="mosaic-card-content">
+              <h3 class="mosaic-card-title editorial-serif">Edición Especial</h3>
+              <a href="product.html" class="mosaic-card-btn">Ver todos los productos</a>
+            </div>
+          </div>
+          <div class="mosaic-card mosaic-card--wide">
+            <img src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=900&auto=format&fit=crop" alt="Sneakers" class="mosaic-card-bg">
+            <div class="mosaic-card-overlay"></div>
+            <div class="mosaic-card-content">
+              <h3 class="mosaic-card-title editorial-serif">Clásicos Urbanos</h3>
+              <a href="product.html" class="mosaic-card-btn">Ver todos los productos</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05. Trending Banner -->
+  <section class="trending-banner-section">
+    <div class="editorial-container">
+      <div class="trending-banner-card">
+        <img src="https://images.unsplash.com/photo-1518002171953-a080ee817e1f?q=80&w=1800&auto=format&fit=crop" alt="Tendencias del Momento" class="trending-banner-bg">
+        <div class="trending-banner-overlay"></div>
+        <div class="trending-banner-content">
+          <h2 class="trending-banner-title editorial-serif">Tendencias del Momento</h2>
+          <a href="product.html" class="trending-banner-btn">
+            <span>Explorar Tienda</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06. Summer Collections (Grid 2) -->
+  <section>
+    <div class="editorial-container">
+      <div class="editorial-heading-block">
+        <h2 class="editorial-section-title editorial-serif">Colección de Temporada</h2>
+        <p class="editorial-section-subtitle">Inspirada en el movimiento urbano y el confort continuo para todas tus actividades cotidianas.</p>
+      </div>
+
+      <div class="editorial-product-grid">
+        <div class="custom-product-card">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=600&auto=format&fit=crop" alt="Gaelic Indoor Shoes" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$219.96</span>
+            <span class="custom-product-card-badge">Nuevo Lanzamiento</span>
+          </div>
+          <a href="product.html" class="custom-product-card-title">Gaelic Indoor Shoes</a>
+          <p class="custom-product-card-desc">Silueta urbana con suela de tracción ultra resistente, confeccionada para el ritmo de la ciudad.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </div>
+
+        <div class="custom-product-card">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?q=80&w=600&auto=format&fit=crop" alt="Gaelic Indoor Shoes" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$329.96</span>
+            <span class="custom-product-card-badge">Más Vendido</span>
+          </div>
+          <a href="product.html" class="custom-product-card-title">Gaelic Indoor Shoes</a>
+          <p class="custom-product-card-desc">Calzado lifestyle refinado con soporte reactivo y ajuste anatómico de la mañana a la noche.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </div>
+
+        <div class="custom-product-card">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=600&auto=format&fit=crop" alt="Zoom Vomero" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$169.99</span>
+            <span class="custom-product-card-badge">En Tendencia</span>
+          </div>
+          <a href="product.html" class="custom-product-card-title">Zoom Vomero</a>
+          <p class="custom-product-card-desc">Acentos vibrantes sobre amortiguación clásica, pensados para exploradores con estilo.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </div>
+
+        <div class="custom-product-card">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?q=80&w=600&auto=format&fit=crop" alt="Gaelic Indoor Shoes" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$219.96</span>
+            <span class="custom-product-card-badge">Nuevo Lanzamiento</span>
+          </div>
+          <a href="product.html" class="custom-product-card-title">Gaelic Indoor Shoes</a>
+          <p class="custom-product-card-desc">Perfil vintage reinterpretado con paneles técnicos transpirables y amortiguación premium.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </div>
+
+        <div class="custom-product-card">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?q=80&w=600&auto=format&fit=crop" alt="Gaelic Indoor Shoes" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$249.96</span>
+            <span class="custom-product-card-badge">Exclusivo</span>
+          </div>
+          <a href="product.html" class="custom-product-card-title">Gaelic Indoor Shoes</a>
+          <p class="custom-product-card-desc">Edición monocromática triple dark creada para un rendimiento discreto y estilo impecable.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </div>
+
+        <div class="custom-product-card">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?q=80&w=600&auto=format&fit=crop" alt="Zoom Vomero" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$169.99</span>
+            <span class="custom-product-card-badge">Más Vendido</span>
+          </div>
+          <a href="product.html" class="custom-product-card-title">Zoom Vomero</a>
+          <p class="custom-product-card-desc">Malla técnica ligera con acentos metálicos para un look distintivo y confort prolongado.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="editorial-see-more-wrap">
+        <a href="product.html" class="btn-see-more">Ver Más Colecciones</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07. Lifestyle CTA -->
+  <section class="lifestyle-cta-section">
+    <div class="editorial-container">
+      <div class="lifestyle-cta-card">
+        <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=1800&auto=format&fit=crop" alt="Construye tu estilo" class="lifestyle-cta-bg">
+        <div class="lifestyle-cta-overlay"></div>
+        <div class="lifestyle-cta-content">
+          <h2 class="lifestyle-cta-title editorial-serif">Construye tu estilo con pasos firmes<br>llevando nuestros sneakers.</h2>
+          <a href="product.html" class="lifestyle-cta-btn">Comprar Ahora</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08. Custom Editorial Footer -->
+  <footer class="custom-editorial-footer">
+    <div class="editorial-container">
+      <div class="custom-footer-grid">
+        <div>
+          <h3 class="custom-footer-brand-title editorial-serif">GoSense</h3>
+          <p class="custom-footer-desc">Colecciones diseñadas para elevar tu estilo cotidiano con la perfecta fusión de diseño de autor, durabilidad y máxima comodidad.</p>
+          <span class="custom-footer-newsletter-label">Suscríbete a nuestro boletín</span>
+          <form class="custom-footer-newsletter-form" onsubmit="event.preventDefault(); alert('¡Gracias por suscribirte!');">
+            <input type="email" class="custom-footer-input" placeholder="Ingresa tu correo electrónico" required>
+            <button type="submit" class="custom-footer-submit">Suscribirme</button>
+          </form>
+        </div>
+        <div>
+          <h4 class="custom-footer-col-heading">Categorías</h4>
+          <ul class="custom-footer-links">
+            <li class="custom-footer-link-item"><a href="product.html" class="custom-footer-link">Hombre</a></li>
+            <li class="custom-footer-link-item"><a href="product.html" class="custom-footer-link">Mujer</a></li>
+            <li class="custom-footer-link-item"><a href="product.html" class="custom-footer-link">Niños</a></li>
+            <li class="custom-footer-link-item"><a href="product.html" class="custom-footer-link">Accesorios</a></li>
+            <li class="custom-footer-link-item"><a href="product.html" class="custom-footer-link">Colecciones</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="custom-footer-col-heading">Legal</h4>
+          <ul class="custom-footer-links">
+            <li class="custom-footer-link-item"><a href="#" class="custom-footer-link">Política de Privacidad</a></li>
+            <li class="custom-footer-link-item"><a href="#" class="custom-footer-link">Términos del Servicio</a></li>
+            <li class="custom-footer-link-item"><a href="#" class="custom-footer-link">Política de Devoluciones</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="custom-footer-col-heading">Ayuda</h4>
+          <ul class="custom-footer-links">
+            <li class="custom-footer-link-item"><a href="#" class="custom-footer-link">Estado del Pedido</a></li>
+            <li class="custom-footer-link-item"><a href="#" class="custom-footer-link">Centro de Ayuda</a></li>
+            <li class="custom-footer-link-item"><a href="#" class="custom-footer-link">Contáctanos</a></li>
+            <li class="custom-footer-link-item"><a href="#" class="custom-footer-link">Guía de Tallas</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="custom-footer-bottom">
+        <div>&copy; 2026 GoSense Sneakers Inc. Todos los derechos reservados.</div>
+        <div class="custom-footer-policy-links">
+          <a href="#" class="custom-footer-policy-link">Privacidad</a>
+          <a href="#" class="custom-footer-policy-link">Comentarios</a>
+          <a href="#" class="custom-footer-policy-link">Accesibilidad</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Drawer (Lateral slide-out panel) -->
+  <div id="cartDrawerBackdrop" class="cart-side-backdrop" onclick="closeCartDrawer()"></div>
+  <aside id="cartDrawerPanel" class="cart-side-drawer" aria-label="Carrito de Compras">
+    <div class="cart-side-header">
+      <button class="cart-side-back-btn" onclick="closeCartDrawer()" aria-label="Cerrar carrito">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <h3 class="cart-side-title">Mi Carrito (<span id="cartDrawerCount">2</span>)</h3>
+      <button class="cart-side-close-btn" onclick="closeCartDrawer()" aria-label="Cerrar carrito">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <!-- Items Area -->
+    <div class="cart-side-items" id="cartSideItems">
+      <div class="side-item-card" id="sideCartItem1">
+        <div class="side-item-thumb">
+          <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=300&auto=format&fit=crop" alt="Gaelic Sneaker">
+        </div>
+        <div class="side-item-details">
+          <div class="side-item-title">Gaelic Indoor Shoes</div>
+          <div class="side-item-variant">Color: Crema Vintage • Talla: 9.5</div>
+          <div class="side-item-price">$219.96</div>
+        </div>
+        <div class="side-item-actions">
+          <div class="side-item-stepper">
+            <button class="stepper-minus" onclick="updateIndexQty(-1)">−</button>
+            <span class="stepper-val" id="indexItemQty">2</span>
+            <button class="stepper-plus" onclick="updateIndexQty(1)">+</button>
+          </div>
+          <button class="side-item-delete" onclick="removeIndexItem()" aria-label="Eliminar producto">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer: Order Info & Checkout -->
+    <div class="cart-side-footer">
+      <div class="side-order-info-card">
+        <span class="side-order-info-title">Información del Pedido</span>
+        <div class="side-order-row">
+          <span>Subtotal</span>
+          <strong id="indexSubtotal">$439.92</strong>
+        </div>
+        <div class="side-order-row">
+          <span>Costo de Envío</span>
+          <strong style="color: #16A34A;">Gratis Express</strong>
+        </div>
+        <div class="side-order-row side-order-row--discount">
+          <span>Descuento Promocional</span>
+          <strong style="color: #16A34A;">-$50.00</strong>
+        </div>
+        <div class="side-order-divider"></div>
+        <div class="side-order-total-row">
+          <span class="side-order-total-label">Total</span>
+          <span class="side-order-total-val" id="indexTotal">$389.92</span>
+        </div>
+      </div>
+
+      <button class="side-checkout-btn" onclick="alert('Redirigiendo a la pasarela de pago seguro...');">
+        Proceder al Pago &nbsp;→
+      </button>
+      <button class="side-continue-btn" onclick="closeCartDrawer()">
+        Seguir Comprando
+      </button>
+    </div>
+  </aside>
+
+  <script>
+    let indexCartQty = 2;
+    const basePrice = 219.96;
+
+    function openCartDrawer() {
+      document.getElementById('cartDrawerBackdrop').classList.add('active');
+      document.getElementById('cartDrawerPanel').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCartDrawer() {
+      document.getElementById('cartDrawerBackdrop').classList.remove('active');
+      document.getElementById('cartDrawerPanel').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function updateIndexTotals() {
+      const subtotal = basePrice * indexCartQty;
+      const total = Math.max(0, subtotal - 50);
+      const qtySpan = document.getElementById('indexItemQty');
+      if (qtySpan) qtySpan.textContent = indexCartQty;
+      const countEl = document.getElementById('cartDrawerCount');
+      if (countEl) countEl.textContent = indexCartQty;
+      const badgeEl = document.getElementById('indexCartBadge');
+      if (badgeEl) badgeEl.textContent = indexCartQty;
+      const subEl = document.getElementById('indexSubtotal');
+      if (subEl) subEl.textContent = `$${subtotal.toFixed(2)}`;
+      const totEl = document.getElementById('indexTotal');
+      if (totEl) totEl.textContent = `$${total.toFixed(2)}`;
+    }
+
+    function updateIndexQty(delta) {
+      indexCartQty += delta;
+      if (indexCartQty < 1) {
+        removeIndexItem();
+        return;
+      }
+      updateIndexTotals();
+    }
+
+    function removeIndexItem() {
+      const itemCard = document.getElementById('sideCartItem1');
+      if (itemCard) {
+        itemCard.style.opacity = '0';
+        itemCard.style.transform = 'translateX(20px)';
+        setTimeout(() => {
+          itemCard.remove();
+          indexCartQty = 0;
+          document.getElementById('cartDrawerCount').textContent = '0';
+          document.getElementById('indexCartBadge').textContent = '0';
+          document.getElementById('cartSideItems').innerHTML = `
+            <div style="text-align: center; padding: 48px 20px; color: #888;">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5" style="margin: 0 auto 16px; display: block;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+              <p style="font-size: 1.4rem; font-weight: 600; color: #111; margin-bottom: 6px;">Tu carrito está vacío</p>
+              <p style="font-size: 1.2rem;">Agrega zapatillas exclusivas para comenzar.</p>
+            </div>
+          `;
+          document.getElementById('indexSubtotal').textContent = '$0.00';
+          document.getElementById('indexTotal').textContent = '$0.00';
+        }, 200);
+      }
+    }
+
+    // Attach click listener to all "Add to Cart" buttons in cards
+    document.querySelectorAll('.btn-card-add').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const orig = btn.innerHTML;
+        btn.innerHTML = '✓ Añadido';
+        btn.style.backgroundColor = '#166534';
+
+        indexCartQty++;
+        updateIndexTotals();
+
+        setTimeout(() => {
+          openCartDrawer();
+        }, 250);
+
+        setTimeout(() => {
+          btn.innerHTML = orig;
+          btn.style.backgroundColor = '#111111';
+        }, 1500);
+      });
+    });
+
+    /* Dynamic Announcement Bar (2 seconds rotation) */
+    const announcements = [
+      "¡Envíos gratis a toda <strong>Colombia</strong> por compras superiores a $150.000!",
+      "🔥 Promoción de Temporada: Hasta <strong>20% OFF</strong> en referencias seleccionadas",
+      "✨ Garantía GoSense: <strong>30 días</strong> para cambios sin costo en todo el país",
+      "💳 Compra hoy y paga a <strong>cuotas sin interés</strong> con Addi y Sistecrédito"
+    ];
+    let currentAnnouncementIdx = 0;
+    let announcementTimer = null;
+
+    function showAnnouncement(idx) {
+      currentAnnouncementIdx = (idx + announcements.length) % announcements.length;
+      const el = document.getElementById('announcementText');
+      if (!el) return;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(-4px)';
+      setTimeout(() => {
+        el.innerHTML = announcements[currentAnnouncementIdx];
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 150);
+    }
+
+    function nextAnnouncement() {
+      showAnnouncement(currentAnnouncementIdx + 1);
+      resetAnnouncementTimer();
+    }
+
+    function prevAnnouncement() {
+      showAnnouncement(currentAnnouncementIdx - 1);
+      resetAnnouncementTimer();
+    }
+
+    function resetAnnouncementTimer() {
+      if (announcementTimer) clearInterval(announcementTimer);
+      announcementTimer = setInterval(() => {
+        showAnnouncement(currentAnnouncementIdx + 1);
+      }, 2000);
+    }
+
+    resetAnnouncementTimer();
+
+    /* Mobile Nav Drawer Handlers */
+    function openMobileNavDrawer() {
+      document.getElementById('mobileNavDrawer').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileNavDrawer() {
+      document.getElementById('mobileNavDrawer').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+{{ 'custom-home.css' | asset_url | stylesheet_tag }}
+
+<footer class="custom-editorial-footer">
+  <div class="editorial-container">
+    <div class="custom-footer-grid">
+      <!-- Column 1: Brand Info & Newsletter -->
+      <div>
+        <h3 class="custom-footer-brand-title editorial-serif">
+          {{ section.settings.brand_name | default: shop.name }}
+        </h3>
+        <p class="custom-footer-desc">
+          {{ section.settings.brand_description | default: 'Elevating everyday street style with authentic craftsmanship, premium comfort and high-end sneaker silhouettes.' }}
+        </p>
+
+        {%- if section.settings.show_newsletter -%}
+          <span class="custom-footer-newsletter-label">{{ section.settings.newsletter_label | default: 'Subscribe to newsletter' }}</span>
+          {%- form 'customer', class: 'custom-footer-newsletter-form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <input
+              type="email"
+              name="contact[email]"
+              class="custom-footer-input"
+              value="{{ form.email }}"
+              aria-required="true"
+              autocorrect="off"
+              autocapitalize="off"
+              autocomplete="email"
+              placeholder="{{ section.settings.newsletter_placeholder | default: 'Enter your email address' }}"
+              required
+            >
+            <button type="submit" class="custom-footer-submit">
+              {{ section.settings.newsletter_button_label | default: 'Subscribe' }}
+            </button>
+          {%- endform -%}
+        {%- endif -%}
+      </div>
+
+      <!-- Column 2: Categories / Shop Menu -->
+      <div>
+        <h4 class="custom-footer-col-heading">{{ section.settings.menu_1_heading | default: 'Categories' }}</h4>
+        <ul class="custom-footer-links">
+          {%- if section.settings.menu_1 != blank -%}
+            {%- for link in section.settings.menu_1.links -%}
+              <li class="custom-footer-link-item">
+                <a href="{{ link.url }}" class="custom-footer-link">{{ link.title }}</a>
+              </li>
+            {%- endfor -%}
+          {%- else -%}
+            <li class="custom-footer-link-item"><a href="/collections" class="custom-footer-link">Men</a></li>
+            <li class="custom-footer-link-item"><a href="/collections" class="custom-footer-link">Women</a></li>
+            <li class="custom-footer-link-item"><a href="/collections" class="custom-footer-link">Kids</a></li>
+            <li class="custom-footer-link-item"><a href="/collections" class="custom-footer-link">Accessories</a></li>
+            <li class="custom-footer-link-item"><a href="/collections" class="custom-footer-link">Collections</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      <!-- Column 3: Legal Menu -->
+      <div>
+        <h4 class="custom-footer-col-heading">{{ section.settings.menu_2_heading | default: 'Legal' }}</h4>
+        <ul class="custom-footer-links">
+          {%- if section.settings.menu_2 != blank -%}
+            {%- for link in section.settings.menu_2.links -%}
+              <li class="custom-footer-link-item">
+                <a href="{{ link.url }}" class="custom-footer-link">{{ link.title }}</a>
+              </li>
+            {%- endfor -%}
+          {%- else -%}
+            <li class="custom-footer-link-item"><a href="/policies/privacy-policy" class="custom-footer-link">Privacy Policy</a></li>
+            <li class="custom-footer-link-item"><a href="/policies/terms-of-service" class="custom-footer-link">Terms of Service</a></li>
+            <li class="custom-footer-link-item"><a href="/policies/refund-policy" class="custom-footer-link">Refund Policy</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      <!-- Column 4: Help Menu -->
+      <div>
+        <h4 class="custom-footer-col-heading">{{ section.settings.menu_3_heading | default: 'Help' }}</h4>
+        <ul class="custom-footer-links">
+          {%- if section.settings.menu_3 != blank -%}
+            {%- for link in section.settings.menu_3.links -%}
+              <li class="custom-footer-link-item">
+                <a href="{{ link.url }}" class="custom-footer-link">{{ link.title }}</a>
+              </li>
+            {%- endfor -%}
+          {%- else -%}
+            <li class="custom-footer-link-item"><a href="/pages/contact" class="custom-footer-link">Order Status</a></li>
+            <li class="custom-footer-link-item"><a href="/pages/contact" class="custom-footer-link">Help Center</a></li>
+            <li class="custom-footer-link-item"><a href="/pages/contact" class="custom-footer-link">Contact Us</a></li>
+            <li class="custom-footer-link-item"><a href="/pages/tallas" class="custom-footer-link">Size Guide</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Row -->
+    <div class="custom-footer-bottom">
+      <div>
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.copyright_text | default: 'All rights reserved.' }}
+      </div>
+
+      <div class="custom-footer-policy-links">
+        <a href="/policies/privacy-policy" class="custom-footer-policy-link">Privacy</a>
+        <a href="/policies/terms-of-service" class="custom-footer-policy-link">Feedback</a>
+        <a href="/pages/contact" class="custom-footer-policy-link">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Custom Editorial Footer",
+  "tag": "section",
+  "class": "section-footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand Name / Logo Text",
+      "default": "GoSense"
+    },
+    {
+      "type": "textarea",
+      "id": "brand_description",
+      "label": "Brand Description",
+      "default": "Elevating everyday street style with authentic craftsmanship, premium comfort and high-end sneaker silhouettes."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show Newsletter Subscription",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_label",
+      "label": "Newsletter Label",
+      "default": "Subscribe to newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_placeholder",
+      "label": "Newsletter Placeholder",
+      "default": "Enter your email address"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_button_label",
+      "label": "Subscribe Button Text",
+      "default": "Subscribe"
+    },
+    {
+      "type": "header",
+      "content": "Column 2"
+    },
+    {
+      "type": "text",
+      "id": "menu_1_heading",
+      "label": "Menu 1 Heading",
+      "default": "Categories"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_1",
+      "label": "Menu 1"
+    },
+    {
+      "type": "header",
+      "content": "Column 3"
+    },
+    {
+      "type": "text",
+      "id": "menu_2_heading",
+      "label": "Menu 2 Heading",
+      "default": "Legal"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_2",
+      "label": "Menu 2"
+    },
+    {
+      "type": "header",
+      "content": "Column 4"
+    },
+    {
+      "type": "text",
+      "id": "menu_3_heading",
+      "label": "Menu 3 Heading",
+      "default": "Help"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_3",
+      "label": "Menu 3"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright Text",
+      "default": "All rights reserved."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Editorial Footer"
+    }
+  ]
+}
+{% endschema %}

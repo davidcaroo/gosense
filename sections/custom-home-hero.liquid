@@ -1,0 +1,229 @@
+{{ 'custom-home.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  #custom-hero-{{ section.id }} .custom-hero-card {
+    min-height: {{ section.settings.hero_height_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #custom-hero-{{ section.id }} .custom-hero-card {
+      min-height: {{ section.settings.hero_height_desktop }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section id="custom-hero-{{ section.id }}" class="custom-hero-section section-{{ section.id }}-padding">
+  <div class="editorial-container">
+    {%- for block in section.blocks -%}
+      <div class="custom-hero-card" {{ block.shopify_attributes }}>
+        <!-- Background Image -->
+        {%- if block.settings.image != blank -%}
+          <picture>
+            {%- if block.settings.image_mobile != blank -%}
+              <source media="(max-width: 749px)" srcset="{{ block.settings.image_mobile | image_url: width: 800 }}">
+            {%- endif -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 1800 }}"
+              srcset="
+                {{ block.settings.image | image_url: width: 800 }} 800w,
+                {{ block.settings.image | image_url: width: 1200 }} 1200w,
+                {{ block.settings.image | image_url: width: 1800 }} 1800w,
+                {{ block.settings.image | image_url: width: 2400 }} 2400w
+              "
+              sizes="100vw"
+              alt="{{ block.settings.heading | escape }}"
+              class="custom-hero-bg"
+              loading="eager"
+              fetchpriority="high"
+              width="1800"
+              height="800"
+            >
+          </picture>
+        {%- else -%}
+          <!-- High quality demo lifestyle fallback image -->
+          <img
+            src="https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=1800&auto=format&fit=crop"
+            alt="{{ block.settings.heading | escape }}"
+            class="custom-hero-bg"
+            loading="eager"
+            fetchpriority="high"
+            width="1800"
+            height="800"
+          >
+        {%- endif -%}
+
+        <!-- Visual Contrast Overlay -->
+        <div class="custom-hero-overlay" style="opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+
+        <!-- Hero Content Area -->
+        <div class="custom-hero-content" style="text-align: {{ block.settings.text_alignment }};">
+          {%- if block.settings.heading != blank -%}
+            <h1 class="custom-hero-title editorial-serif">
+              {{ block.settings.heading | newline_to_br }}
+            </h1>
+          {%- endif -%}
+
+          {%- if block.settings.subheading != blank -%}
+            <p class="custom-hero-description">
+              {{ block.settings.subheading }}
+            </p>
+          {%- endif -%}
+
+          {%- if block.settings.button_label != blank -%}
+            <div>
+              <a href="{{ block.settings.button_link | default: '/collections/all' }}" class="custom-hero-btn">
+                {{ block.settings.button_label }}
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- if section.blocks.size > 1 -%}
+          <div class="custom-hero-dots">
+            {%- for b in section.blocks -%}
+              <span class="custom-hero-dot{% if forloop.first %} active{% endif %}"></span>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom Home Hero",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "range",
+      "id": "hero_height_desktop",
+      "min": 450,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "label": "Desktop Hero Height",
+      "default": 640
+    },
+    {
+      "type": "range",
+      "id": "hero_height_mobile",
+      "min": 350,
+      "max": 650,
+      "step": 20,
+      "unit": "px",
+      "label": "Mobile Hero Height",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 24
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Hero Slide",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop Background Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile Background Image (Optional)"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 90,
+          "step": 5,
+          "unit": "%",
+          "label": "Dark Overlay Opacity",
+          "default": 65
+        },
+        {
+          "type": "textarea",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Sneakers That\nDefy Your Every\nday Look"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": ""
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Home Hero",
+      "blocks": [
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

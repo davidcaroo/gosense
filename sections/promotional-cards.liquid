@@ -1,0 +1,216 @@
+{{ 'custom-home.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="promo-cards-section section-{{ section.id }}-padding">
+  <div class="editorial-container">
+    <div class="promo-cards-grid">
+      {%- for block in section.blocks -%}
+        <div class="promo-card" {{ block.shopify_attributes }}>
+          <!-- Background Image -->
+          {%- if block.settings.image != blank -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 800 }}"
+              srcset="
+                {{ block.settings.image | image_url: width: 400 }} 400w,
+                {{ block.settings.image | image_url: width: 800 }} 800w,
+                {{ block.settings.image | image_url: width: 1200 }} 1200w
+              "
+              sizes="(min-width: 990px) 33vw, (min-width: 600px) 50vw, 100vw"
+              alt="{{ block.settings.heading | escape }}"
+              class="promo-card-bg"
+              loading="lazy"
+              width="800"
+              height="1000"
+            >
+          {%- else -%}
+            {%- liquid
+              assign demo_img = 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop'
+              if forloop.index == 2
+                assign demo_img = 'https://images.unsplash.com/photo-1607522370275-f14206abe5d3?q=80&w=800&auto=format&fit=crop'
+              elsif forloop.index == 3
+                assign demo_img = 'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?q=80&w=800&auto=format&fit=crop'
+              endif
+            -%}
+            <img
+              src="{{ demo_img }}"
+              alt="{{ block.settings.heading | escape }}"
+              class="promo-card-bg"
+              loading="lazy"
+              width="800"
+              height="1000"
+            >
+          {%- endif -%}
+
+          <!-- Overlay -->
+          <div class="promo-card-overlay" style="opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+
+          <!-- Content -->
+          <div class="promo-card-content" style="text-align: {{ block.settings.content_alignment }};">
+            {%- if block.settings.heading != blank -%}
+              <h3 class="promo-card-heading editorial-serif{% if block.settings.is_style_stack %} promo-card-heading--style-stack{% endif %}">
+                {{ block.settings.heading }}
+              </h3>
+            {%- endif -%}
+
+            {%- if block.settings.button_label != blank -%}
+              <div>
+                <a
+                  href="{{ block.settings.button_link | default: '/collections/all' }}"
+                  class="promo-card-btn{% if block.settings.button_style == 'white' %} promo-card-btn--white{% endif %}"
+                >
+                  {{ block.settings.button_label }}
+                </a>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promotional Cards Grid",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Promo Card",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 90,
+          "step": 5,
+          "unit": "%",
+          "label": "Overlay Opacity",
+          "default": 70
+        },
+        {
+          "type": "textarea",
+          "id": "heading",
+          "label": "Card Heading",
+          "default": "Sneakers That Move With You, Comfortable, Durable, and Always In Style."
+        },
+        {
+          "type": "checkbox",
+          "id": "is_style_stack",
+          "label": "Large Brand Typography (Style-Stack mode)",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button Color Style",
+          "options": [
+            { "value": "dark", "label": "Translucent Dark" },
+            { "value": "white", "label": "Solid White" }
+          ],
+          "default": "dark"
+        },
+        {
+          "type": "select",
+          "id": "content_alignment",
+          "label": "Content Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" }
+          ],
+          "default": "left"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promotional Cards Grid",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "heading": "Sneakers That Move With You, Comfortable, Durable, and Always In Style.",
+            "button_label": "Shop Now",
+            "button_style": "dark"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "heading": "Fresh Drops Alert! Extraordinary Sneakers That Speak Before You Do.",
+            "button_label": "Explore Now",
+            "button_style": "dark"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "heading": "STYLE-STACK",
+            "is_style_stack": true,
+            "button_label": "Shop Sneakers",
+            "button_style": "white",
+            "content_alignment": "center"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,516 @@
+{%- comment -%}
+  Reemplazar solo el contenido del div .customer login que existe en main-login.liquid
+  Mantener schema y estilos de padding del theme fuera de este bloque.
+{%- endcomment -%}
+
+<div class="bahari-auth-wrapper section-{{ section.id }}-padding" aria-live="polite">
+
+  <!-- CONTAINER (centra todo) -->
+  <div class="bahari-auth-container" role="region" aria-label="Autenticación BahariAqua">
+
+    <!-- CARD: recover (hidden by default, toggled by hash) -->
+    <aside id="recover" class="bahari-auth-card bahari-hidden" aria-hidden="true">
+      <div class="bahari-card-inner">
+        <h2 class="bahari-h2">Restablecer tu contraseña</h2>
+        <p class="bahari-lead">Te enviaremos un correo electrónico para restablecer tu contraseña.</p>
+
+        {% form 'recover_customer_password' %}
+          {% assign recover_success = form.posted_successfully? %}
+
+          {% if form.errors %}
+            <div class="bahari-message bahari-error" role="alert">
+              {{ form.errors.messages.form }}
+            </div>
+          {% endif %}
+
+          {% if recover_success %}
+            <div class="bahari-message bahari-success" role="status">
+              {{ 'customer.recover_password.success' | t }}
+            </div>
+          {% endif %}
+
+          <label class="float-label">
+            <span class="float-label-text">Correo electrónico</span>
+            <div class="input-wrapper">
+              <span class="field-icon field-icon-left">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </span>
+              <input class="bahari-input" type="email" name="email" required autocomplete="email" placeholder="tu@email.com" />
+            </div>
+          </label>
+
+          <button type="submit" class="bahari-btn full">Enviar instrucciones</button>
+
+          <a href="#login" class="bahari-link-center">Cancelar</a>
+        {% endform %}
+      </div>
+    </aside>
+
+    <!-- CARD: login -->
+    <main id="login" class="bahari-auth-card" aria-hidden="false">
+      <div class="bahari-card-inner">
+
+        <h1 class="bahari-h1">Inicio de sesión</h1>
+        <p class="bahari-lead">Ingresa los datos de tu cuenta BahariAqua.</p>
+
+        {% form 'customer_login', novalidate: 'novalidate' %}
+          {% if form.errors %}
+            <div class="bahari-message bahari-error" role="alert">
+              {{ form.errors | default_errors }}
+            </div>
+          {% endif %}
+
+          {%- if shop.features.login_with_shop_classic_customer_accounts? -%}
+            <div class="bahari-shop-login">
+              {{ shop | login_button: hide_button: hide_shop_login_button }}
+            </div>
+          {%- endif -%}
+
+          <!-- Email -->
+          <label class="float-label">
+            <span class="float-label-text">Correo electrónico</span>
+            <div class="input-wrapper">
+              <span class="field-icon field-icon-left">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </span>
+              <input class="bahari-input" type="email" name="customer[email]" id="CustomerEmail" required autocomplete="email" placeholder="tu@email.com" />
+            </div>
+          </label>
+
+          <!-- Password con toggle -->
+          <label class="float-label">
+            <span class="float-label-text">Contraseña</span>
+            <div class="input-wrapper">
+              <span class="field-icon field-icon-left">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input class="bahari-input" type="password" name="customer[password]" id="CustomerPassword" required autocomplete="current-password" placeholder="••••••••" />
+              <button type="button" class="show-pass" aria-label="Mostrar contraseña" title="Mostrar contraseña">
+                <svg class="eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <svg class="eye-closed" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              </button>
+            </div>
+          </label>
+
+          <div class="bahari-row">
+            <a class="bahari-link-right" href="#recover">¿Olvidaste tu contraseña?</a>
+          </div>
+
+          <button type="submit" class="bahari-btn full">Iniciar sesión</button>
+
+          <a class="bahari-link-center" href="{{ routes.account_register_url }}">¿No tienes cuenta? <strong>Crear cuenta</strong></a>
+        {% endform %}
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<style>
+/* ===== Container & Card ===== */
+.bahari-auth-wrapper { 
+  display: flex; 
+  justify-content: center;
+  min-height: 100vh;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.bahari-auth-container { 
+  width: 100%; 
+  max-width: 460px; 
+  margin: 0 auto;
+  position: relative;
+  min-height: 500px;
+}
+
+/* Card base */
+.bahari-auth-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 12px 36px rgba(0, 0, 0, 0.08);
+  overflow: visible;
+  margin: 20px 0;
+  transform-origin: center;
+  transition: all .4s cubic-bezier(.4, 0, .2, 1);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 460px;
+}
+
+/* inner padding (consistent) */
+.bahari-card-inner { 
+  padding: 48px 40px 40px; 
+}
+
+/* Titles */
+.bahari-h1 { 
+  font-size: 32px; 
+  text-align: center; 
+  margin: 0 0 12px; 
+  color: #0d2b45; 
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.bahari-h2 { 
+  font-size: 26px; 
+  text-align: center; 
+  margin: 0 0 12px; 
+  color: #0d2b45; 
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.bahari-lead { 
+  text-align: center; 
+  color: #62727f; 
+  font-size: 15px; 
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+/* Messages */
+.bahari-message { 
+  padding: 14px 16px; 
+  border-radius: 12px; 
+  margin-bottom: 20px; 
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.bahari-error { 
+  background: #fff0f0; 
+  border: 1px solid #ffbdbd; 
+  color: #a33; 
+}
+
+.bahari-success { 
+  background: #eef9f1; 
+  border: 1px solid #bfe6c9; 
+  color: #1a7a37; 
+}
+
+/* Float label system */
+.float-label { 
+  display: block; 
+  position: relative; 
+  margin-bottom: 24px;
+}
+
+.float-label-text {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0d2b45;
+  margin-bottom: 8px;
+  letter-spacing: 0.2px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.bahari-input {
+  width: 100%; 
+  padding: 14px 48px 14px 44px;
+  border-radius: 12px; 
+  border: 2px solid #e2e7ec; 
+  background: #f7fafc; 
+  font-size: 15px;
+  transition: all .2s ease;
+  color: #0d2b45;
+}
+
+.bahari-input::placeholder {
+  color: #a0aab3;
+}
+
+.bahari-input:focus { 
+  outline: none; 
+  border-color: #c0392b; 
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(192, 57, 43, 0.12); 
+}
+
+/* field icons (left side) */
+.field-icon-left {
+  position: absolute; 
+  left: 14px; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  color: #62727f;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.bahari-input:focus ~ .field-icon-left,
+.bahari-input:focus + .input-wrapper .field-icon-left {
+  color: #c0392b;
+}
+
+/* show password button */
+.show-pass {
+  position: absolute; 
+  right: 12px; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  border: none; 
+  background: transparent; 
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #62727f;
+  transition: color .2s ease;
+  border-radius: 6px;
+}
+
+.show-pass:hover {
+  color: #4a90e2;
+  background: rgba(74, 144, 226, 0.08);
+}
+
+.show-pass:focus {
+  outline: 2px solid #4a90e2;
+  outline-offset: 2px;
+}
+
+/* row + link */
+.bahari-row { 
+  display: flex; 
+  justify-content: flex-end; 
+  margin-bottom: 24px;
+  margin-top: -8px;
+}
+
+.bahari-link-right { 
+  font-size: 14px; 
+  color: #4a90e2; 
+  text-decoration: none;
+  font-weight: 500;
+  transition: color .2s ease;
+}
+
+.bahari-link-right:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* buttons */
+.bahari-btn { 
+  display: inline-block; 
+  background: #c0392b; 
+  color: #fff; 
+  border: none; 
+  padding: 14px 24px; 
+  font-size: 16px; 
+  border-radius: 12px; 
+  cursor: pointer; 
+  transition: all .2s ease;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.bahari-btn.full { 
+  width: 100%; 
+  margin-top: 8px; 
+  padding: 16px;
+}
+
+.bahari-btn:hover { 
+  background: #9f2d24; 
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3);
+}
+
+.bahari-btn:active {
+  transform: translateY(0);
+}
+
+/* center link */
+.bahari-link-center { 
+  display: block; 
+  margin-top: 20px; 
+  text-align: center; 
+  color: #62727f; 
+  text-decoration: none;
+  font-size: 15px;
+  transition: color .2s ease;
+}
+
+.bahari-link-center:hover {
+  color: #0d2b45;
+}
+
+.bahari-link-center strong {
+  color: #4a90e2;
+  font-weight: 600;
+}
+
+/* hidden helper class */
+.bahari-hidden { 
+  opacity: 0 !important;
+  pointer-events: none;
+  transform: translateX(-50%) scale(0.95) !important;
+}
+
+/* animation entry */
+.bahari-animate-in { 
+  animation: bahariFadeIn .5s cubic-bezier(.4, 0, .2, 1) forwards; 
+}
+
+@keyframes bahariFadeIn { 
+  from { 
+    opacity: 0; 
+    transform: translateX(-50%) scale(0.95);
+  } 
+  to { 
+    opacity: 1; 
+    transform: translateX(-50%) scale(1);
+  } 
+}
+
+/* responsive adjustments */
+@media (max-width: 680px) {
+  .bahari-card-inner { 
+    padding: 32px 24px; 
+  }
+  
+  .bahari-auth-container { 
+    padding: 0 16px; 
+  }
+  
+  .bahari-h1 {
+    font-size: 28px;
+  }
+  
+  .bahari-h2 {
+    font-size: 24px;
+  }
+  
+  .bahari-input {
+    padding: 13px 44px 13px 42px;
+  }
+  
+  .bahari-auth-wrapper {
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bahari-card-inner { 
+    padding: 28px 20px; 
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const loginCard = document.getElementById('login');
+  const recoverCard = document.getElementById('recover');
+
+  /* Utility: show a card with animation and update aria-hidden */
+  function showCard(showEl, hideEl) {
+    if(!showEl || !hideEl) return;
+    
+    // Start fade out of current card
+    hideEl.classList.add('bahari-hidden');
+    hideEl.setAttribute('aria-hidden','true');
+
+    // Wait for fade out, then show new card
+    setTimeout(()=> {
+      showEl.classList.remove('bahari-hidden');
+      showEl.classList.add('bahari-animate-in');
+      showEl.setAttribute('aria-hidden','false');
+
+      // remove animation class after done
+      setTimeout(()=> showEl.classList.remove('bahari-animate-in'), 550);
+    }, 200);
+  }
+
+  /* Toggle based on hash */
+  function handleHash() {
+    const hash = window.location.hash || '#login';
+    if(hash === '#recover') {
+      showCard(recoverCard, loginCard);
+      // focus first input
+      const inpt = recoverCard.querySelector('input');
+      if(inpt) setTimeout(()=> inpt.focus(), 200);
+    } else {
+      showCard(loginCard, recoverCard);
+      const inpt = loginCard.querySelector('input');
+      if(inpt) setTimeout(()=> inpt.focus(), 200);
+    }
+  }
+
+  // initial
+  handleHash();
+
+  // hash change listener
+  window.addEventListener('hashchange', handleHash);
+
+  /* Show password toggle with SVG icons */
+  document.querySelectorAll('.show-pass').forEach(btn=>{
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      const wrapper = this.closest('.float-label');
+      if(!wrapper) return;
+      const input = wrapper.querySelector('input');
+      const eyeOpen = this.querySelector('.eye-open');
+      const eyeClosed = this.querySelector('.eye-closed');
+      
+      if(!input || !eyeOpen || !eyeClosed) return;
+      
+      if(input.type === 'password'){ 
+        input.type = 'text'; 
+        eyeOpen.style.display = 'none';
+        eyeClosed.style.display = 'block';
+        this.setAttribute('aria-label','Ocultar contraseña');
+        this.setAttribute('title','Ocultar contraseña');
+      } else { 
+        input.type = 'password'; 
+        eyeOpen.style.display = 'block';
+        eyeClosed.style.display = 'none';
+        this.setAttribute('aria-label','Mostrar contraseña');
+        this.setAttribute('title','Mostrar contraseña');
+      }
+    });
+  });
+
+  /* Accessibility: allow keyboard focus on show-pass button */
+  document.querySelectorAll('.show-pass').forEach(b=> {
+    b.tabIndex = 0;
+    b.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        this.click();
+      }
+    });
+  });
+
+});
+</script>

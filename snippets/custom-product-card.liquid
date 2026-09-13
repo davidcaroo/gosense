@@ -1,0 +1,149 @@
+{% comment %}
+  Renders custom editorial product card for the sneaker storefront.
+  
+  Accepts:
+  - card_product: {Object} Product Liquid object (optional)
+  - show_badge: {Boolean} Show badge (optional, default: true)
+  - show_description: {Boolean} Show description (optional, default: true)
+  - custom_badge: {String} Overridden badge text (optional)
+  - placeholder_title: {String} (optional)
+  - placeholder_price: {String} (optional)
+  - placeholder_desc: {String} (optional)
+  - placeholder_image: {String} (optional)
+  - index: {Number} (optional)
+{% endcomment %}
+
+{%- liquid
+  assign current_variant = card_product.selected_or_first_available_variant
+  assign has_variants = false
+  if card_product.variants.size > 1
+    assign has_variants = true
+  endif
+
+  assign badge_label = custom_badge
+  if badge_label == blank
+    if card_product.available == false
+      assign badge_label = 'Sold Out'
+    elsif card_product.compare_at_price > card_product.price
+      assign badge_label = 'Sale'
+    else
+      if forloop_index == 1 or index == 1
+        assign badge_label = 'New Release'
+      elsif forloop_index == 2 or index == 2
+        assign badge_label = 'Best Seller'
+      elsif forloop_index == 3 or index == 3
+        assign badge_label = 'Trending'
+      else
+        assign badge_label = 'New'
+      endif
+    endif
+  endif
+-%}
+
+<div class="custom-product-card" data-product-id="{{ card_product.id | default: 'demo' }}">
+  <!-- Product Image Container -->
+  <a href="{{ card_product.url | default: '#' }}" class="custom-product-card-img-wrap" aria-label="{{ card_product.title | default: placeholder_title | escape }}">
+    {%- if card_product.featured_media -%}
+      <img
+        src="{{ card_product.featured_media | image_url: width: 600 }}"
+        srcset="
+          {{ card_product.featured_media | image_url: width: 300 }} 300w,
+          {{ card_product.featured_media | image_url: width: 600 }} 600w,
+          {{ card_product.featured_media | image_url: width: 900 }} 900w
+        "
+        sizes="(min-width: 900px) 33vw, (min-width: 600px) 50vw, 50vw"
+        alt="{{ card_product.featured_media.alt | default: card_product.title | escape }}"
+        class="custom-product-card-img custom-product-card-img--primary"
+        loading="lazy"
+        width="600"
+        height="510"
+      >
+      {%- if card_product.media[1] != null -%}
+        <img
+          src="{{ card_product.media[1] | image_url: width: 600 }}"
+          alt="{{ card_product.media[1].alt | default: card_product.title | escape }}"
+          class="custom-product-card-img custom-product-card-img--secondary"
+          loading="lazy"
+          width="600"
+          height="510"
+        >
+      {%- endif -%}
+    {%- elsif placeholder_image != blank -%}
+      <img
+        src="{{ placeholder_image }}"
+        alt="{{ placeholder_title | default: 'Sneaker product' | escape }}"
+        class="custom-product-card-img custom-product-card-img--primary"
+        loading="lazy"
+        width="600"
+        height="510"
+      >
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'custom-product-card-img' }}
+    {%- endif -%}
+  </a>
+
+  <!-- Product Meta Info -->
+  <div class="custom-product-card-meta">
+    <div class="custom-product-card-price">
+      {%- if card_product.price -%}
+        {{ card_product.price | money }}
+        {%- if card_product.compare_at_price > card_product.price -%}
+          <span class="custom-product-card-price-compare">{{ card_product.compare_at_price | money }}</span>
+        {%- endif -%}
+      {%- else -%}
+        {{ placeholder_price | default: '$219.96' }}
+      {%- endif -%}
+    </div>
+    {%- if show_badge != false and badge_label != blank -%}
+      <span class="custom-product-card-badge">{{ badge_label }}</span>
+    {%- endif -%}
+  </div>
+
+  <!-- Product Title -->
+  <a href="{{ card_product.url | default: '#' }}" class="custom-product-card-title">
+    {{ card_product.title | default: placeholder_title | default: 'Gaelic Indoor Shoes' }}
+  </a>
+
+  <!-- Product Short Description / Subtitle -->
+  {%- if show_description != false -%}
+    <div class="custom-product-card-desc">
+      {%- if card_product.metafields.custom.subtitle != blank -%}
+        {{ card_product.metafields.custom.subtitle }}
+      {%- elsif card_product.description != blank -%}
+        {{ card_product.description | strip_html | truncatewords: 13 }}
+      {%- else -%}
+        {{ placeholder_desc | default: 'Bold street silhouettes meets ultra-resilient street sole crafted for the rhythm of city life.' }}
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <!-- Action Buttons Row -->
+  <div class="custom-product-card-actions">
+    {%- if card_product.available == false -%}
+      <button class="btn-card-add" disabled style="grid-column: 1 / -1; opacity: 0.6; cursor: not-allowed;">
+        Sold Out
+      </button>
+    {%- else -%}
+      <button
+        type="button"
+        class="btn-card-add"
+        data-variant-id="{{ current_variant.id | default: 'demo' }}"
+        data-product-url="{{ card_product.url | default: '#' }}"
+        data-has-variants="{{ has_variants }}"
+        aria-label="Add {{ card_product.title | default: placeholder_title | escape }} to cart"
+      >
+        Add to Cart
+      </button>
+
+      <a
+        href="{% if current_variant.id %}/cart/{{ current_variant.id }}:1{% else %}{{ card_product.url | default: '#' }}{% endif %}"
+        class="btn-card-buy"
+        data-variant-id="{{ current_variant.id | default: 'demo' }}"
+        data-product-url="{{ card_product.url | default: '#' }}"
+        aria-label="Buy {{ card_product.title | default: placeholder_title | escape }} now"
+      >
+        Buy Now
+      </a>
+    {%- endif -%}
+  </div>
+</div>

@@ -1,0 +1,248 @@
+{% comment %}
+  Botón flotante de WhatsApp optimizado
+  Añadir en: snippets/wa-floating.liquid
+  Incluir en theme.liquid antes de </body> con: {% render 'wa-floating' %}
+{% endcomment %}
+
+<style>
+  .wa-float-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .wa-float-btn:hover {
+    transform: scale(1.1);
+  }
+  
+  .wa-btn-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: #25d366;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    text-decoration: none;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .wa-btn-link:hover {
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  }
+  
+  .wa-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .wa-popup {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 320px;
+    max-width: calc(100vw - 40px);
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+  }
+  
+  .wa-popup.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .wa-popup-header {
+    background: #075e54;
+    color: #fff;
+    padding: 16px;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .wa-popup-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .wa-close-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+  }
+  
+  .wa-popup-body {
+    padding: 20px 16px;
+  }
+  
+  .wa-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 80px;
+    box-sizing: border-box;
+  }
+  
+  .wa-input:focus {
+    outline: none;
+    border-color: #25d366;
+  }
+  
+  .wa-send-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    background: #25d366;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .wa-send-btn:hover {
+    background: #20bd5c;
+  }
+  
+  @media (max-width: 768px) {
+    .wa-float-btn {
+      bottom: 15px;
+      right: 15px;
+    }
+    
+    .wa-btn-link {
+      width: 56px;
+      height: 56px;
+    }
+    
+    .wa-icon {
+      width: 28px;
+      height: 28px;
+    }
+    
+    .wa-popup {
+      bottom: 80px;
+      right: 15px;
+    }
+  }
+</style>
+
+<div class="wa-float-btn">
+  <a href="javascript:void(0);" class="wa-btn-link" id="waFloatBtn" aria-label="Abrir WhatsApp">
+    <svg class="wa-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 0C7.164 0 0 7.164 0 16c0 2.832.74 5.49 2.036 7.792L0 32l8.384-2.116A15.937 15.937 0 0016 32c8.836 0 16-7.164 16-16S24.836 0 16 0z" fill="#fff"/>
+      <path d="M25.36 22.56c-.36 1.02-2.12 1.87-2.91 1.99-.78.12-1.77.16-2.86-.18-.66-.2-1.51-.47-2.59-.92-4.53-1.89-7.48-6.47-7.71-6.77-.22-.3-1.85-2.46-1.85-4.69 0-2.23 1.17-3.32 1.58-3.77.42-.45.91-.56 1.22-.56.3 0 .61.01.87.02.28.01.66-.11 1.03.78.38.91 1.28 3.14 1.39 3.37.11.23.19.5.04.8-.15.3-.22.49-.45.75-.22.26-.47.58-.67.78-.22.22-.45.46-.19.9.26.43 1.15 1.9 2.47 3.08 1.7 1.52 3.13 1.99 3.57 2.22.45.22.71.19.97-.12.26-.3 1.11-1.3 1.41-1.75.3-.45.6-.38.99-.22.41.15 2.58 1.22 3.02 1.44.45.22.75.33.86.51.11.19.11 1.08-.25 2.11z" fill="#25D366"/>
+    </svg>
+  </a>
+</div>
+
+<div class="wa-popup" id="waPopup">
+  <div class="wa-popup-header">
+    <h3 class="wa-popup-title">WhatsApp</h3>
+    <button class="wa-close-btn" id="waCloseBtn" aria-label="Cerrar">&times;</button>
+  </div>
+  <div class="wa-popup-body">
+    <textarea 
+      class="wa-input" 
+      id="waMessage" 
+      placeholder="Hola, tengo una consulta."
+      rows="3">Hola, tengo una consulta.</textarea>
+    <button class="wa-send-btn" id="waSendBtn">
+      Enviar mensaje
+    </button>
+  </div>
+</div>
+
+<script>
+  (function() {
+    'use strict';
+    
+    var phoneNumber = '573102041457';
+    var internalNote = 'Tienda Bahari';
+    var floatBtn = document.getElementById('waFloatBtn');
+    var popup = document.getElementById('waPopup');
+    var closeBtn = document.getElementById('waCloseBtn');
+    var sendBtn = document.getElementById('waSendBtn');
+    var messageInput = document.getElementById('waMessage');
+    
+    function togglePopup() {
+      popup.classList.toggle('active');
+    }
+    
+    function closePopup() {
+      popup.classList.remove('active');
+    }
+    
+    function sendMessage() {
+      var message = messageInput.value.trim();
+      
+      if (!message) {
+        alert('Por favor escribe un mensaje');
+        return;
+      }
+      
+      // Mensaje interno (no visible para el cliente en el textarea)
+      // Solo se envía en el enlace de WhatsApp
+      var fullMessage = internalNote + '\n\n' + message;
+      var encodedMessage = encodeURIComponent(fullMessage);
+      var waUrl = 'https://wa.me/' + phoneNumber + '?text=' + encodedMessage;
+      
+      window.open(waUrl, '_blank');
+      closePopup();
+    }
+    
+    // Event listeners
+    if (floatBtn) {
+      floatBtn.addEventListener('click', togglePopup);
+    }
+    
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closePopup);
+    }
+    
+    if (sendBtn) {
+      sendBtn.addEventListener('click', sendMessage);
+    }
+    
+    // Cerrar al hacer clic fuera
+    document.addEventListener('click', function(e) {
+      if (!popup.contains(e.target) && !floatBtn.contains(e.target)) {
+        closePopup();
+      }
+    });
+    
+    // Enter para enviar (Ctrl+Enter para nueva línea)
+    if (messageInput) {
+      messageInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.ctrlKey && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+      });
+    }
+  })();
+</script>

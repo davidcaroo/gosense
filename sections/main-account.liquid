@@ -1,0 +1,176 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+
+<style>
+  /* 🟦 Ajuste de padding general arriba/abajo */
+  .section-{{ section.id }}-padding {
+    padding-top: 20px !important;
+    padding-bottom: 40px !important;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: 25px !important;
+      padding-bottom: 50px !important;
+    }
+  }
+
+  /* 🟦 Contenedor principal */
+  .account-wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* 🟦 Header de cuenta */
+  .account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .account-header h1 {
+    font-size: 42px;
+    font-weight: 700;
+    color: #0d2b4b;
+  }
+
+  .logout-btn {
+    background: #f2f4f7;
+    border: 1px solid #cdd5df;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #0d2b4b;
+  }
+
+  .logout-btn:hover {
+    background: #e5e8ee;
+  }
+
+  /* 🟦 Cards */
+  .account-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-top: 25px;
+  }
+
+  .account-card {
+    background: #fff;
+    padding: 26px 32px;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+
+  .account-card h2 {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #0d2b4b;
+    margin-bottom: 12px;
+  }
+
+  /* 🟦 Botones dentro de cards */
+  .account-card button,
+  .account-card a.button-small {
+    background: #0066ff;
+    color: #fff;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 14px;
+    display: inline-block;
+    margin-top: 14px;
+  }
+
+  .account-card button:hover,
+  .account-card a.button-small:hover {
+    background: #004ecc;
+  }
+
+  /* 🟦 Iconos más modernos */
+  .card-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* 🟥 Responsive */
+  @media(max-width: 750px) {
+    .account-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .account-header h1 {
+      font-size: 32px;
+    }
+
+    .account-card {
+      padding: 22px;
+    }
+  }
+</style>
+
+<div class="section-{{ section.id }}-padding">
+  <div class="account-wrapper">
+
+    <!-- 🟦 ENCABEZADO -->
+    <div class="account-header">
+      <h1>Cuenta</h1>
+
+      <a href="{{ routes.account_logout_url }}" class="logout-btn">
+        Cerrar sesión
+      </a>
+    </div>
+
+    <!-- 🟦 GRID DE CARDS -->
+    <div class="account-grid">
+
+      <!-- 🔵 CARD: HISTORIAL -->
+      <div class="account-card">
+        <h2>
+          <svg class="card-icon" fill="none" stroke="#0d2b4b" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M3 3h18v18H3z"></path>
+          </svg>
+          Historial de pedidos
+        </h2>
+
+        {% if customer.orders.size == 0 %}
+          <div style="text-align:center; margin-top:20px;">
+            <img src="https://cdn-icons-png.flaticon.com/512/679/679720.png" width="55" height="55" alt="{{ 'customer.orders.none' | t }}" style="opacity:0.6; margin-bottom:10px;">
+            <p style="color:#555;">Aún no has realizado ningún pedido.</p>
+            <a href="{{ routes.all_products_collection_url }}" class="button-small" style="background:#000;">Ver Catálogo</a>
+          </div>
+        {% else %}
+          <!-- si hay pedidos, aquí podrías ponerlos luego -->
+        {% endif %}
+      </div>
+
+      <!-- 🔵 CARD: DETALLES -->
+      <div class="account-card">
+        <h2>
+          <svg class="card-icon" fill="none" stroke="#0d2b4b" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4"></circle>
+            <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"></path>
+          </svg>
+          Detalles de la cuenta
+        </h2>
+
+        <p><strong>{{ customer.name }}</strong></p>
+        <p>{{ customer.default_address.country }}</p>
+
+        <a href="{{ routes.account_addresses_url }}" class="button-small">
+          Ver direcciones ({{ customer.addresses_count }})
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cuenta mejorada",
+  "settings": []
+}
+{% endschema %}

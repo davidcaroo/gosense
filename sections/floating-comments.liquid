@@ -1,0 +1,138 @@
+{% comment %}
+  Sección personalizada Bahari Aqua – Floating Comments
+  Muestra burbujas aleatorias con comentarios y avatares de clientes/revendedores.
+{% endcomment %}
+
+<style>
+  .floating-comments-container {
+    position: fixed;
+    bottom: 100px;
+    left: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: none;
+  }
+
+  .floating-comment {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 8px 12px;
+    max-width: 280px;
+    font-size: 13px;
+    color: #333;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+  }
+
+  .floating-comment.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .floating-comment.hide {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .floating-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid #102E50;
+    margin-right: 10px;
+  }
+
+  .floating-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .floating-text {
+    line-height: 1.3;
+  }
+
+  .floating-text strong {
+    color: #000;
+    font-weight: 600;
+  }
+</style>
+
+<div class="floating-comments-container" id="floating-comments"></div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const comments = [
+      { name: 'Sofía', city: 'Medellín', text: 'Recibí mis Havaianas en menos de 48h, perfectas 😍.', avatar: 'https://randomuser.me/api/portraits/women/65.jpg' },
+      { name: 'Carlos', city: 'Bogotá', text: 'Soy revendedor Bahari, duplicé mis ganancias este mes 💸.', avatar: 'https://randomuser.me/api/portraits/men/32.jpg' },
+      { name: 'Laura', city: 'Cali', text: 'La calidad es increíble, ya voy por mi tercer par ⭐.', avatar: 'https://randomuser.me/api/portraits/women/33.jpg' },
+      { name: 'Andrés', city: 'Barranquilla', text: 'Llegaron perfectas, originales y cómodas 👡.', avatar: 'https://randomuser.me/api/portraits/men/12.jpg' },
+      { name: 'Daniela', city: 'Pereira', text: 'El proceso fue rápido y confiable 🏝️.', avatar: 'https://randomuser.me/api/portraits/women/49.jpg' },
+      { name: 'Valentina', city: 'Bucaramanga', text: 'Envíos muy puntuales, 100% recomendados 💬.', avatar: 'https://randomuser.me/api/portraits/women/61.jpg' },
+      { name: 'Felipe', city: 'Manizales', text: 'En la primera semana ya obtuve mis comisiones 🔥.', avatar: 'https://randomuser.me/api/portraits/men/18.jpg' },
+      { name: 'Natalia', city: 'Bogotá', text: 'Auténticas Havaianas, no cambio esta marca por nada 🩴.', avatar: 'https://randomuser.me/api/portraits/women/57.jpg' },
+      { name: 'Camilo', city: 'Medellín', text: 'Excelente atención, envío rápido y seguro ⚡.', avatar: 'https://randomuser.me/api/portraits/men/9.jpg' },
+      { name: 'Fernanda', city: 'Cartagena', text: 'Segunda vez que compro y siempre llega antes 🌈.', avatar: 'https://randomuser.me/api/portraits/women/25.jpg' },
+      { name: 'Ana', city: 'Bogotá', text: 'Me encantó. Recibí mi producto en solo 2 días 🕒.', avatar: 'https://randomuser.me/api/portraits/women/15.jpg' },
+      { name: 'Jorge', city: 'Cali', text: 'Excelente atención, muy buena experiencia 💎.', avatar: 'https://randomuser.me/api/portraits/men/21.jpg' },
+    ];
+
+    const container = document.getElementById('floating-comments');
+
+    function showRandomComment() {
+      const random = comments[Math.floor(Math.random() * comments.length)];
+      const comment = document.createElement('div');
+      comment.className = 'floating-comment';
+
+      comment.innerHTML = `
+        <div class="floating-avatar">
+          <img src="${random.avatar}" alt="${random.name}">
+        </div>
+        <div class="floating-text"><strong>${random.name}:</strong> ${random.text}</div>
+      `;
+
+      container.appendChild(comment);
+
+      setTimeout(() => comment.classList.add('show'), 100);
+
+      // Oculta y elimina después de unos segundos
+      setTimeout(() => {
+        comment.classList.remove('show');
+        comment.classList.add('hide');
+        setTimeout(() => comment.remove(), 600);
+      }, 6000);
+    }
+
+    // Muestra un comentario cada 7 segundos
+    showRandomComment();
+    setInterval(showRandomComment, 7000);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Floating Comments",
+  "tag": "section",
+  "class": "floating-comments-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Muestra comentarios flotantes con foto de perfil para aumentar la confianza del cliente."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Floating Comments",
+      "category": "Social Proof"
+    }
+  ]
+}
+{% endschema %}

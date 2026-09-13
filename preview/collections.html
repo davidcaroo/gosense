@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoSense — Todos los Productos | Colecciones</title>
+  <link rel="stylesheet" href="assets/custom-home.css">
+  <link rel="stylesheet" href="../assets/custom-home.css">
+  <link rel="stylesheet" href="assets/custom-cart.css">
+  <link rel="stylesheet" href="../assets/custom-cart.css">
+  <link rel="stylesheet" href="assets/custom-collection.css">
+  <link rel="stylesheet" href="../assets/custom-collection.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100% !important;
+      max-width: 100% !important;
+      overflow-x: hidden !important;
+      position: relative !important;
+      background-color: #F7F6F2;
+      color: #151515;
+      font-family: var(--font-body-editorial, -apple-system, sans-serif);
+    }
+  </style>
+</head>
+<body class="collection-page-wrap">
+
+  <!-- Mobile Navigation Drawer -->
+  <div id="mobileNavDrawer" class="mobile-nav-drawer">
+    <div class="mobile-nav-backdrop" onclick="closeMobileNavDrawer()"></div>
+    <div class="mobile-nav-body">
+      <div class="mobile-nav-header">
+        <a href="index.html" class="mobile-nav-logo">GoSense</a>
+        <button class="mobile-nav-close" onclick="closeMobileNavDrawer()" aria-label="Cerrar menú">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <ul class="mobile-nav-links">
+        <li class="mobile-nav-item"><a href="product.html"><span>Sneakers</span><span class="mobile-nav-badge">Nuevo</span></a></li>
+        <li class="mobile-nav-item"><a href="collections.html"><span>Hombre</span><span style="color: #999;">›</span></a></li>
+        <li class="mobile-nav-item"><a href="collections.html"><span>Niños</span><span style="color: #999;">›</span></a></li>
+        <li class="mobile-nav-item"><a href="collections.html"><span>Accesorios</span><span style="color: #999;">›</span></a></li>
+        <li class="mobile-nav-item"><a href="collections.html" class="active"><span>Colecciones</span><span style="color: #111;">›</span></a></li>
+        <li class="mobile-nav-item"><a href="index.html"><span>Nosotros</span><span style="color: #999;">›</span></a></li>
+      </ul>
+      <div class="mobile-nav-footer">
+        <a href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>Mi Cuenta / Registro</span>
+        </a>
+        <a href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <span>Ayuda y Preguntas</span>
+        </a>
+        <div style="font-size: 1.15rem; color: #888; margin-top: 14px;">
+          🇨🇴 Colombia • COP ($)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Announcement Bar (Dinámica cada 2s & Responsive) -->
+  <div class="preview-announcement-bar">
+    <div class="preview-announcement-wrap">
+      <button class="preview-announcement-nav" onclick="prevAnnouncement()" aria-label="Anuncio anterior">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <div class="preview-announcement-content">
+        <p id="announcementText" class="preview-announcement-msg">
+          ¡Envíos gratis a toda <strong>Colombia</strong> por compras superiores a $150.000!
+        </p>
+      </div>
+      <button class="preview-announcement-nav" onclick="nextAnnouncement()" aria-label="Siguiente anuncio">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Header (Navbar Blanco Fijo Full-Width) -->
+  <div class="preview-header-sticky-wrap">
+    <header class="preview-header">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button class="mobile-nav-toggle" onclick="openMobileNavDrawer()" aria-label="Abrir menú">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <a href="index.html" class="preview-logo">GoSense</a>
+      </div>
+      <ul class="preview-nav">
+        <li><a href="product.html">Sneakers</a></li>
+        <li><a href="collections.html">Hombre</a></li>
+        <li><a href="collections.html">Niños</a></li>
+        <li><a href="collections.html">Accesorios</a></li>
+        <li><a href="collections.html" class="active">Colecciones</a></li>
+        <li><a href="index.html">Nosotros</a></li>
+      </ul>
+      <div class="preview-icons">
+        <button class="preview-icon-btn" aria-label="Buscar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+        <button class="preview-icon-btn" aria-label="Mi Cuenta">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </button>
+        <button type="button" class="preview-icon-btn" onclick="openCartDrawer()" aria-label="Carrito">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span class="preview-cart-badge" id="collCartBadge">2</span>
+        </button>
+      </div>
+    </header>
+  </div>
+
+  <!-- Collection Hero Banner -->
+  <section class="collection-hero-banner">
+    <nav class="collection-breadcrumbs" aria-label="Miga de pan">
+      <a href="index.html">Inicio</a>
+      <span>/</span>
+      <a href="collections.html">Colecciones</a>
+      <span>/</span>
+      <span style="color: #111111; font-weight: 600;">Todos los Productos</span>
+    </nav>
+
+    <div class="collection-header-row">
+      <div class="collection-title-wrap">
+        <h1>Todos los Productos</h1>
+        <p class="collection-subtitle">
+          Explora nuestra selección completa de calzado urbano y lifestyle. Siluetas audaces confeccionadas para el ritmo cotidiano con soporte reactivo y materiales premium.
+        </p>
+      </div>
+    </div>
+
+    <!-- Active Filters Pills (dynamically updated) -->
+    <div class="active-filters-bar" id="activeFiltersBar" style="display: none;">
+      <span class="active-filters-label">Filtros activos:</span>
+      <div id="activeTagsList" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+      <button class="filter-clear-all" onclick="resetAllFilters()">Limpiar todo</button>
+    </div>
+  </section>
+
+  <!-- Main Collection Container (Sidebar + Grid) -->
+  <main class="collection-layout-container">
+
+    <!-- 01. Lateral Sidebar Filters (Desktop) -->
+    <aside class="collection-sidebar" aria-label="Filtros de productos">
+      <div class="sidebar-header">
+        <h2 class="sidebar-title">Filtros</h2>
+        <button class="sidebar-clear-btn" onclick="resetAllFilters()">Limpiar todo</button>
+      </div>
+
+      <!-- Filter Group 1: Talla -->
+      <div class="filter-group">
+        <button type="button" class="filter-group-header open" onclick="toggleFilterGroup(this)">
+          <span>Talla (US)</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="filter-group-content">
+          <div class="filter-sizes-grid">
+            <div class="size-chip" data-size="7" onclick="toggleSizeFilter(this, '7')">7</div>
+            <div class="size-chip" data-size="7.5" onclick="toggleSizeFilter(this, '7.5')">7.5</div>
+            <div class="size-chip" data-size="8" onclick="toggleSizeFilter(this, '8')">8</div>
+            <div class="size-chip" data-size="8.5" onclick="toggleSizeFilter(this, '8.5')">8.5</div>
+            <div class="size-chip" data-size="9" onclick="toggleSizeFilter(this, '9')">9</div>
+            <div class="size-chip" data-size="9.5" onclick="toggleSizeFilter(this, '9.5')">9.5</div>
+            <div class="size-chip" data-size="10" onclick="toggleSizeFilter(this, '10')">10</div>
+            <div class="size-chip" data-size="10.5" onclick="toggleSizeFilter(this, '10.5')">10.5</div>
+            <div class="size-chip" data-size="11" onclick="toggleSizeFilter(this, '11')">11</div>
+            <div class="size-chip" data-size="11.5" onclick="toggleSizeFilter(this, '11.5')">11.5</div>
+            <div class="size-chip" data-size="12" onclick="toggleSizeFilter(this, '12')">12</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Group 2: Color -->
+      <div class="filter-group">
+        <button type="button" class="filter-group-header open" onclick="toggleFilterGroup(this)">
+          <span>Color</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="filter-group-content">
+          <div class="filter-colors-list">
+            <div class="color-option-row" data-color="Negro" onclick="toggleColorFilter(this, 'Negro')">
+              <div class="color-option-left">
+                <span class="color-dot-indicator" style="background-color: #111111;"></span>
+                <span class="color-name">Negro Ónix</span>
+              </div>
+              <span class="color-count">(5)</span>
+            </div>
+            <div class="color-option-row" data-color="Crema" onclick="toggleColorFilter(this, 'Crema')">
+              <div class="color-option-left">
+                <span class="color-dot-indicator" style="background-color: #E6E2D8;"></span>
+                <span class="color-name">Crema Vintage</span>
+              </div>
+              <span class="color-count">(4)</span>
+            </div>
+            <div class="color-option-row" data-color="Azul" onclick="toggleColorFilter(this, 'Azul')">
+              <div class="color-option-left">
+                <span class="color-dot-indicator" style="background-color: #2F4050;"></span>
+                <span class="color-name">Azul Pizarra</span>
+              </div>
+              <span class="color-count">(3)</span>
+            </div>
+            <div class="color-option-row" data-color="Blanco" onclick="toggleColorFilter(this, 'Blanco')">
+              <div class="color-option-left">
+                <span class="color-dot-indicator" style="background-color: #FFFFFF; border: 1px solid #CCC;"></span>
+                <span class="color-name">Blanco Tiza</span>
+              </div>
+              <span class="color-count">(4)</span>
+            </div>
+            <div class="color-option-row" data-color="Verde" onclick="toggleColorFilter(this, 'Verde')">
+              <div class="color-option-left">
+                <span class="color-dot-indicator" style="background-color: #2B4C38;"></span>
+                <span class="color-name">Verde Forestal</span>
+              </div>
+              <span class="color-count">(2)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Group 3: Precio -->
+      <div class="filter-group">
+        <button type="button" class="filter-group-header open" onclick="toggleFilterGroup(this)">
+          <span>Rango de Precio</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="filter-group-content">
+          <div class="price-inputs-row">
+            <div class="price-input-box">
+              <span>$</span>
+              <input type="number" id="minPriceInput" value="140" min="100" max="350" onchange="onPriceInputChange()">
+            </div>
+            <span style="color: #999;">—</span>
+            <div class="price-input-box">
+              <span>$</span>
+              <input type="number" id="maxPriceInput" value="350" min="100" max="350" onchange="onPriceInputChange()">
+            </div>
+          </div>
+          <input type="range" class="price-range-slider" id="priceRange" min="140" max="350" value="350" step="5" oninput="onPriceSliderChange(this.value)">
+          <div style="display: flex; justify-content: space-between; font-size: 1.15rem; color: #888; margin-top: 6px;">
+            <span>$140.000</span>
+            <span id="maxPriceLabel">Hasta $350.000</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Group 4: Disponibilidad -->
+      <div class="filter-group">
+        <button type="button" class="filter-group-header open" onclick="toggleFilterGroup(this)">
+          <span>Disponibilidad</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="filter-group-content">
+          <label class="filter-checkbox-item">
+            <span class="filter-checkbox-label">
+              <input type="checkbox" class="custom-chk" checked onchange="applyFilters()">
+              En Stock
+            </span>
+            <span style="font-size: 1.2rem; color: #999;">(12)</span>
+          </label>
+          <label class="filter-checkbox-item">
+            <span class="filter-checkbox-label">
+              <input type="checkbox" class="custom-chk" onchange="applyFilters()">
+              Entrega Inmediata
+            </span>
+            <span style="font-size: 1.2rem; color: #999;">(8)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Filter Group 5: Colección / Línea -->
+      <div class="filter-group">
+        <button type="button" class="filter-group-header open" onclick="toggleFilterGroup(this)">
+          <span>Línea de Estilo</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="filter-group-content">
+          <label class="filter-checkbox-item">
+            <span class="filter-checkbox-label">
+              <input type="checkbox" class="custom-chk" name="styleLine" value="Indoor" onchange="applyFilters()">
+              Indoor Classics
+            </span>
+            <span style="font-size: 1.2rem; color: #999;">(6)</span>
+          </label>
+          <label class="filter-checkbox-item">
+            <span class="filter-checkbox-label">
+              <input type="checkbox" class="custom-chk" name="styleLine" value="Urban" onchange="applyFilters()">
+              Street & Runner
+            </span>
+            <span style="font-size: 1.2rem; color: #999;">(4)</span>
+          </label>
+          <label class="filter-checkbox-item">
+            <span class="filter-checkbox-label">
+              <input type="checkbox" class="custom-chk" name="styleLine" value="Retro" onchange="applyFilters()">
+              Retro Heritage
+            </span>
+            <span style="font-size: 1.2rem; color: #999;">(2)</span>
+          </label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 02. Main Product Catalog Content -->
+    <section class="collection-main-content">
+      
+      <!-- Utility Bar: Counter, Sort, Mobile Filter Button -->
+      <div class="collection-utility-bar">
+        <div class="product-count-badge">
+          Mostrando <strong id="productCount">12</strong> zapatillas
+        </div>
+
+        <div class="utility-controls-right">
+          <button type="button" class="mobile-filter-trigger" onclick="openMobileFilterDrawer()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+            <span>Filtros y Ordenar</span>
+          </button>
+
+          <div class="sort-dropdown-wrap">
+            <label for="collectionSort" class="sort-label">Ordenar por:</label>
+            <select id="collectionSort" class="sort-select" onchange="onSortChange(this.value)">
+              <option value="featured">Relevancia</option>
+              <option value="price-asc">Precio: Menor a Mayor</option>
+              <option value="price-desc">Precio: Mayor a Menor</option>
+              <option value="rating">Mejor Calificados</option>
+              <option value="new">Novedades</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State View -->
+      <div class="collection-empty-state" id="emptyState">
+        <h3 class="empty-title">No encontramos zapatillas con estos filtros</h3>
+        <p class="empty-desc">Intenta seleccionando otra combinación de talla, color o aumentando el rango de precio.</p>
+        <button class="empty-reset-btn" onclick="resetAllFilters()">Restablecer Filtros</button>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="collection-grid" id="productsGrid">
+
+        <!-- Product 1 -->
+        <article class="custom-product-card" data-title="Gaelic Indoor Shoes Crema" data-price="219.96" data-color="Crema" data-sizes="8,8.5,9,9.5,10" data-rating="4.9" data-date="2026-09-01">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=600&auto=format&fit=crop" alt="Gaelic Indoor Shoes Crema" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$219.96</span>
+            <span class="custom-product-card-badge">Nuevo Lanzamiento</span>
+          </div>
+          <div style="font-size: 1.15rem; color: #D97706; margin-bottom: 4px;">★★★★★ <span style="color: #666;">(4.9)</span></div>
+          <a href="product.html" class="custom-product-card-title">Gaelic Indoor Shoes — Crema Vintage</a>
+          <p class="custom-product-card-desc">Silueta urbana con suela de tracción ultra resistente, confeccionada para el dinamismo de la ciudad.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add" onclick="handleCardAddToCart('Gaelic Indoor Shoes — Crema Vintage', '$219.96', 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=300&auto=format&fit=crop', this)">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </article>
+
+        <!-- Product 2 -->
+        <article class="custom-product-card" data-title="Gaelic Low Runner Negro" data-price="329.96" data-color="Negro" data-sizes="8,9,9.5,10,11" data-rating="5.0" data-date="2026-08-15">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?q=80&w=600&auto=format&fit=crop" alt="Gaelic Low Runner Negro" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$329.96</span>
+            <span class="custom-product-card-badge">Más Vendido</span>
+          </div>
+          <div style="font-size: 1.15rem; color: #D97706; margin-bottom: 4px;">★★★★★ <span style="color: #666;">(5.0)</span></div>
+          <a href="product.html" class="custom-product-card-title">Gaelic Low Runner — Ónix Black</a>
+          <p class="custom-product-card-desc">Calzado lifestyle refinado con amortiguación reactiva y soporte anatómico continuo.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add" onclick="handleCardAddToCart('Gaelic Low Runner — Ónix Black', '$329.96', 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?q=80&w=300&auto=format&fit=crop', this)">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </article>
+
+        <!-- Product 3 -->
+        <article class="custom-product-card" data-title="Zoom Vomero Azul Pizarra" data-price="169.99" data-color="Azul" data-sizes="7.5,8,8.5,9,9.5" data-rating="4.8" data-date="2026-08-20">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=600&auto=format&fit=crop" alt="Zoom Vomero Azul Pizarra" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$169.99</span>
+            <span class="custom-product-card-badge">En Tendencia</span>
+          </div>
+          <div style="font-size: 1.15rem; color: #D97706; margin-bottom: 4px;">★★★★★ <span style="color: #666;">(4.8)</span></div>
+          <a href="product.html" class="custom-product-card-title">Zoom Vomero — Azul Pizarra</a>
+          <p class="custom-product-card-desc">Acentos vibrantes sobre amortiguación clásica, diseñada para exploradores urbanos con estilo.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add" onclick="handleCardAddToCart('Zoom Vomero — Azul Pizarra', '$169.99', 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=300&auto=format&fit=crop', this)">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </article>
+
+        <!-- Product 4 -->
+        <article class="custom-product-card" data-title="Heritage Runner Blanco Tiza" data-price="219.96" data-color="Blanco" data-sizes="8,8.5,9,10,11" data-rating="4.7" data-date="2026-07-28">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?q=80&w=600&auto=format&fit=crop" alt="Heritage Runner Blanco Tiza" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$219.96</span>
+            <span class="custom-product-card-badge">Nuevo Lanzamiento</span>
+          </div>
+          <div style="font-size: 1.15rem; color: #D97706; margin-bottom: 4px;">★★★★★ <span style="color: #666;">(4.7)</span></div>
+          <a href="product.html" class="custom-product-card-title">Heritage Runner — Blanco Tiza</a>
+          <p class="custom-product-card-desc">Perfil vintage reinterpretado con paneles técnicos transpirables y amortiguación premium.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add" onclick="handleCardAddToCart('Heritage Runner — Blanco Tiza', '$219.96', 'https://images.unsplash.com/photo-1539185441755-769473a23570?q=80&w=300&auto=format&fit=crop', this)">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </article>
+
+        <!-- Product 5 -->
+        <article class="custom-product-card" data-title="Stealth Edition Triple Dark" data-price="249.96" data-color="Negro" data-sizes="8.5,9,9.5,10,10.5,11,12" data-rating="5.0" data-date="2026-09-05">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?q=80&w=600&auto=format&fit=crop" alt="Stealth Edition Triple Dark" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$249.96</span>
+            <span class="custom-product-card-badge">Exclusivo</span>
+          </div>
+          <div style="font-size: 1.15rem; color: #D97706; margin-bottom: 4px;">★★★★★ <span style="color: #666;">(5.0)</span></div>
+          <a href="product.html" class="custom-product-card-title">Stealth Edition — Triple Dark</a>
+          <p class="custom-product-card-desc">Edición monocromática triple dark creada para un rendimiento discreto y elegancia contemporánea.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add" onclick="handleCardAddToCart('Stealth Edition — Triple Dark', '$249.96', 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?q=80&w=300&auto=format&fit=crop', this)">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </article>
+
+        <!-- Product 6 -->
+        <article class="custom-product-card" data-title="Zoom Vomero Oro Metálico" data-price="169.99" data-color="Crema" data-sizes="7,7.5,8,8.5,9,10" data-rating="4.8" data-date="2026-08-01">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?q=80&w=600&auto=format&fit=crop" alt="Zoom Vomero Oro Metálico" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$169.99</span>
+            <span class="custom-product-card-badge">Más Vendido</span>
+          </div>
+          <div style="font-size: 1.15rem; color: #D97706; margin-bottom: 4px;">★★★★★ <span style="color: #666;">(4.8)</span></div>
+          <a href="product.html" class="custom-product-card-title">Zoom Vomero — Acentos Metálicos</a>
+          <p class="custom-product-card-desc">Malla técnica ligera con detalles en tono metálico para un look distintivo y confort prolongado.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add" onclick="handleCardAddToCart('Zoom Vomero — Acentos Metálicos', '$169.99', 'https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?q=80&w=300&auto=format&fit=crop', this)">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </article>
+
+        <!-- Product 7 -->
+        <article class="custom-product-card" data-title="GoSense Court Prime Verde Forestal" data-price="239.00" data-color="Verde" data-sizes="8,9,9.5,10,11" data-rating="4.9" data-date="2026-09-08">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=600&auto=format&fit=crop" alt="Court Prime Verde Forestal" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$239.00</span>
+            <span class="custom-product-card-badge">Nuevo Lanzamiento</span>
+          </div>
+          <div style="font-size: 1.15rem; color: #D97706; margin-bottom: 4px;">★★★★★ <span style="color: #666;">(4.9)</span></div>
+          <a href="product.html" class="custom-product-card-title">Court Prime — Verde Forestal</a>
+          <p class="custom-product-card-desc">Piel suave con insertos de microfibra en contraste oscuro, diseñada para uso versátil.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add" onclick="handleCardAddToCart('Court Prime — Verde Forestal', '$239.00', 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=300&auto=format&fit=crop', this)">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </article>
+
+        <!-- Product 8 -->
+        <article class="custom-product-card" data-title="Urban Track Pace Blanco Puro" data-price="189.50" data-color="Blanco" data-sizes="7.5,8,8.5,9,9.5,10" data-rating="4.8" data-date="2026-07-15">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop" alt="Urban Track Pace" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$189.50</span>
+            <span class="custom-product-card-badge">Más Vendido</span>
+          </div>
+          <div style="font-size: 1.15rem; color: #D97706; margin-bottom: 4px;">★★★★★ <span style="color: #666;">(4.8)</span></div>
+          <a href="product.html" class="custom-product-card-title">Urban Track Pace — Pure White</a>
+          <p class="custom-product-card-desc">Estructura ultraliviana con tecnología de retorno de energía para caminatas exigentes.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add" onclick="handleCardAddToCart('Urban Track Pace — Pure White', '$189.50', 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=300&auto=format&fit=crop', this)">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </article>
+
+        <!-- Product 9 -->
+        <article class="custom-product-card" data-title="Matrix Neo Low Negro Sombra" data-price="279.00" data-color="Negro" data-sizes="9,9.5,10,10.5,11" data-rating="5.0" data-date="2026-09-02">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1607522370275-f14206abe5d3?q=80&w=600&auto=format&fit=crop" alt="Matrix Neo Low Negro Sombra" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$279.00</span>
+            <span class="custom-product-card-badge">Edición Limitada</span>
+          </div>
+          <div style="font-size: 1.15rem; color: #D97706; margin-bottom: 4px;">★★★★★ <span style="color: #666;">(5.0)</span></div>
+          <a href="product.html" class="custom-product-card-title">Matrix Neo Low — Sombra Negra</a>
+          <p class="custom-product-card-desc">Suela ergonómica modular con tracción direccional y amortiguación por cápsulas de aire.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add" onclick="handleCardAddToCart('Matrix Neo Low — Sombra Negra', '$279.00', 'https://images.unsplash.com/photo-1607522370275-f14206abe5d3?q=80&w=300&auto=format&fit=crop', this)">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </article>
+
+        <!-- Product 10 -->
+        <article class="custom-product-card" data-title="Cloud Walker Crema Suave" data-price="199.00" data-color="Crema" data-sizes="7,8,8.5,9,9.5" data-rating="4.7" data-date="2026-06-20">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=600&auto=format&fit=crop" alt="Cloud Walker Crema Suave" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$199.00</span>
+            <span class="custom-product-card-badge">En Tendencia</span>
+          </div>
+          <div style="font-size: 1.15rem; color: #D97706; margin-bottom: 4px;">★★★★★ <span style="color: #666;">(4.7)</span></div>
+          <a href="product.html" class="custom-product-card-title">Cloud Walker — Crema Arena</a>
+          <p class="custom-product-card-desc">Combinación cálida de tonalidades neutras con suela de goma natural adherente.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add" onclick="handleCardAddToCart('Cloud Walker — Crema Arena', '$199.00', 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=300&auto=format&fit=crop', this)">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </article>
+
+        <!-- Product 11 -->
+        <article class="custom-product-card" data-title="Aero Strider Azul Océano" data-price="229.00" data-color="Azul" data-sizes="8,8.5,9.5,10,11" data-rating="4.9" data-date="2026-08-25">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1512374382149-233c42b6a83b?q=80&w=600&auto=format&fit=crop" alt="Aero Strider Azul" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$229.00</span>
+            <span class="custom-product-card-badge">Nuevo Lanzamiento</span>
+          </div>
+          <div style="font-size: 1.15rem; color: #D97706; margin-bottom: 4px;">★★★★★ <span style="color: #666;">(4.9)</span></div>
+          <a href="product.html" class="custom-product-card-title">Aero Strider — Azul Profundo</a>
+          <p class="custom-product-card-desc">Capellada ventilada de doble capa que mantiene el pie fresco en cualquier entorno urbano.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add" onclick="handleCardAddToCart('Aero Strider — Azul Profundo', '$229.00', 'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?q=80&w=300&auto=format&fit=crop', this)">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </article>
+
+        <!-- Product 12 -->
+        <article class="custom-product-card" data-title="Apex Retro Verde Oliva" data-price="259.00" data-color="Verde" data-sizes="7.5,8.5,9,10,11" data-rating="4.8" data-date="2026-09-04">
+          <a href="product.html" class="custom-product-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=600&auto=format&fit=crop" alt="Apex Retro Verde Oliva" class="custom-product-card-img">
+          </a>
+          <div class="custom-product-card-meta">
+            <span class="custom-product-card-price">$259.00</span>
+            <span class="custom-product-card-badge">Exclusivo</span>
+          </div>
+          <div style="font-size: 1.15rem; color: #D97706; margin-bottom: 4px;">★★★★★ <span style="color: #666;">(4.8)</span></div>
+          <a href="product.html" class="custom-product-card-title">Apex Retro — Verde Oliva</a>
+          <p class="custom-product-card-desc">Diseño vintage con detalles de gamuza premium y plantilla con memoria de pisada.</p>
+          <div class="custom-product-card-actions">
+            <button class="btn-card-add" onclick="handleCardAddToCart('Apex Retro — Verde Oliva', '$259.00', 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=300&auto=format&fit=crop', this)">Añadir al Carrito</button>
+            <a href="product.html" class="btn-card-buy">Comprar Ahora</a>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Pagination / Load More Button -->
+      <div class="collection-pagination-wrap">
+        <button type="button" class="btn-load-more" onclick="alert('Todas las zapatillas de la colección están desplegadas.');">
+          <span>Ver Más Zapatillas</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- 03. Mobile Filter Drawer (Modal Bottom Sheet Impecable) -->
+  <div id="mobileFilterDrawer" class="mobile-filter-drawer">
+    <div class="mobile-drawer-backdrop" onclick="closeMobileFilterDrawer()"></div>
+    <div class="mobile-drawer-body">
+      <!-- Drag affordance handle -->
+      <div class="mobile-drawer-handle"></div>
+
+      <!-- Pinned Header -->
+      <div class="mobile-drawer-header">
+        <h3 class="mobile-drawer-title">Filtros y Ordenar</h3>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <button type="button" class="mobile-drawer-reset" onclick="resetAllFilters()" aria-label="Limpiar todos los filtros">Limpiar</button>
+          <button type="button" class="mobile-drawer-close" onclick="closeMobileFilterDrawer()" aria-label="Cerrar filtros">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Scrollable Options Area (Única zona que hace scroll interno) -->
+      <div class="mobile-drawer-scroll">
+        <!-- Mobile Sizes -->
+        <div class="filter-group">
+          <div style="font-size: 1.35rem; font-weight: 600; margin-bottom: 12px; color: #111111;">Talla (US)</div>
+          <div class="filter-sizes-grid">
+            <div class="size-chip" data-size="7" onclick="toggleSizeFilter(this, '7')">7</div>
+            <div class="size-chip" data-size="8" onclick="toggleSizeFilter(this, '8')">8</div>
+            <div class="size-chip" data-size="8.5" onclick="toggleSizeFilter(this, '8.5')">8.5</div>
+            <div class="size-chip" data-size="9" onclick="toggleSizeFilter(this, '9')">9</div>
+            <div class="size-chip" data-size="9.5" onclick="toggleSizeFilter(this, '9.5')">9.5</div>
+            <div class="size-chip" data-size="10" onclick="toggleSizeFilter(this, '10')">10</div>
+            <div class="size-chip" data-size="11" onclick="toggleSizeFilter(this, '11')">11</div>
+            <div class="size-chip" data-size="12" onclick="toggleSizeFilter(this, '12')">12</div>
+          </div>
+        </div>
+
+        <!-- Mobile Colors -->
+        <div class="filter-group">
+          <div style="font-size: 1.35rem; font-weight: 600; margin-bottom: 12px; color: #111111;">Color</div>
+          <div class="filter-colors-list">
+            <div class="color-option-row" data-color="Negro" onclick="toggleColorFilter(this, 'Negro')">
+              <div class="color-option-left">
+                <span class="color-dot-indicator" style="background-color: #111111;"></span>
+                <span class="color-name">Negro Ónix</span>
+              </div>
+            </div>
+            <div class="color-option-row" data-color="Crema" onclick="toggleColorFilter(this, 'Crema')">
+              <div class="color-option-left">
+                <span class="color-dot-indicator" style="background-color: #E6E2D8;"></span>
+                <span class="color-name">Crema Vintage</span>
+              </div>
+            </div>
+            <div class="color-option-row" data-color="Azul" onclick="toggleColorFilter(this, 'Azul')">
+              <div class="color-option-left">
+                <span class="color-dot-indicator" style="background-color: #2F4050;"></span>
+                <span class="color-name">Azul Pizarra</span>
+              </div>
+            </div>
+            <div class="color-option-row" data-color="Blanco" onclick="toggleColorFilter(this, 'Blanco')">
+              <div class="color-option-left">
+                <span class="color-dot-indicator" style="background-color: #FFFFFF; border: 1px solid #CCC;"></span>
+                <span class="color-name">Blanco Tiza</span>
+              </div>
+            </div>
+            <div class="color-option-row" data-color="Verde" onclick="toggleColorFilter(this, 'Verde')">
+              <div class="color-option-left">
+                <span class="color-dot-indicator" style="background-color: #2B4C38;"></span>
+                <span class="color-name">Verde Forestal</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Price Range -->
+        <div class="filter-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <span style="font-size: 1.35rem; font-weight: 600; color: #111111;">Rango de Precio</span>
+            <span id="mobilePriceDisplay" style="font-size: 1.3rem; font-weight: 700; color: #111111;">Hasta $350.000</span>
+          </div>
+          <input type="range" class="price-slider-input" min="150" max="350" step="10" value="350" id="mobilePriceRange" oninput="onPriceSliderChange(this.value)">
+          <div style="display: flex; justify-content: space-between; font-size: 1.15rem; color: #888888; margin-top: 6px;">
+            <span>$150.000</span>
+            <span>$350.000</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pinned Footer (Aislado, 100% fondo blanco sin superposiciones) -->
+      <div class="mobile-drawer-footer">
+        <button type="button" class="mobile-apply-btn" onclick="closeMobileFilterDrawer()">
+          Ver Resultados (<span id="mobileResultCount">12</span>)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04. Cart Drawer (Slide-out panel) -->
+  <div id="cartDrawerBackdrop" class="cart-side-backdrop" onclick="closeCartDrawer()"></div>
+  <aside id="cartDrawerPanel" class="cart-side-drawer" aria-label="Carrito de compras">
+    <div class="cart-side-header">
+      <button class="cart-side-back-btn" onclick="closeCartDrawer()" aria-label="Cerrar carrito">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <h3 class="cart-side-title">Mi Carrito (<span id="cartDrawerCount">2</span>)</h3>
+      <button class="cart-side-close-btn" onclick="closeCartDrawer()" aria-label="Cerrar carrito">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <!-- Items Area -->
+    <div class="cart-side-items" id="cartSideItems">
+      <div class="side-item-card" id="sideCartItem1">
+        <div class="side-item-thumb">
+          <img id="collDrawerImg" src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=300&auto=format&fit=crop" alt="Gaelic Sneaker">
+        </div>
+        <div class="side-item-details">
+          <div class="side-item-title" id="collDrawerTitle">Gaelic Indoor Shoes — Crema Vintage</div>
+          <div class="side-item-variant" id="collDrawerVariant">Color: Crema Vintage • Talla: 9.5</div>
+          <div class="side-item-price" id="collDrawerPrice">$219.96</div>
+        </div>
+        <div class="side-item-actions">
+          <div class="side-item-stepper">
+            <button class="stepper-minus" onclick="updateCollCartQty(-1)">−</button>
+            <span class="stepper-val" id="collCartItemQty">2</span>
+            <button class="stepper-plus" onclick="updateCollCartQty(1)">+</button>
+          </div>
+          <button class="side-item-delete" onclick="removeCollCartItem()" aria-label="Eliminar producto">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer: Order Info & Checkout -->
+    <div class="cart-side-footer">
+      <div class="side-order-info-card">
+        <span class="side-order-info-title">Información del Pedido</span>
+        <div class="side-order-row">
+          <span>Subtotal</span>
+          <strong id="collCartSubtotal">$439.92</strong>
+        </div>
+        <div class="side-order-row">
+          <span>Costo de Envío</span>
+          <strong style="color: #16A34A;">Gratis Express</strong>
+        </div>
+        <div class="side-order-row side-order-row--discount">
+          <span>Descuento Promocional</span>
+          <strong style="color: #16A34A;">-$50.00</strong>
+        </div>
+        <div class="side-order-divider"></div>
+        <div class="side-order-total-row">
+          <span class="side-order-total-label">Total</span>
+          <span class="side-order-total-val" id="collCartTotal">$389.92</span>
+        </div>
+      </div>
+
+      <button class="side-checkout-btn" onclick="alert('Redirigiendo a la pasarela segura de pago de GoSense...');">
+        Proceder al Pago &nbsp;→
+      </button>
+      <button class="side-continue-btn" onclick="closeCartDrawer()">
+        Seguir Comprando
+      </button>
+    </div>
+  </aside>
+
+  <!-- Custom Editorial Footer -->
+  <footer class="custom-editorial-footer">
+    <div class="editorial-container">
+      <div class="custom-footer-grid">
+        <div>
+          <h3 class="custom-footer-brand-title editorial-serif">GoSense</h3>
+          <p class="custom-footer-desc">Colecciones diseñadas para elevar tu estilo cotidiano con la perfecta fusión de diseño de autor, durabilidad y máxima comodidad.</p>
+          <span class="custom-footer-newsletter-label">Suscríbete a nuestro boletín</span>
+          <form class="custom-footer-newsletter-form" onsubmit="event.preventDefault(); alert('¡Gracias por suscribirte!');">
+            <input type="email" class="custom-footer-input" placeholder="Ingresa tu correo electrónico" required>
+            <button type="submit" class="custom-footer-submit">Suscribirme</button>
+          </form>
+        </div>
+        <div>
+          <h4 class="custom-footer-col-heading">Categorías</h4>
+          <ul class="custom-footer-links">
+            <li class="custom-footer-link-item"><a href="collections.html" class="custom-footer-link">Hombre</a></li>
+            <li class="custom-footer-link-item"><a href="collections.html" class="custom-footer-link">Mujer</a></li>
+            <li class="custom-footer-link-item"><a href="collections.html" class="custom-footer-link">Niños</a></li>
+            <li class="custom-footer-link-item"><a href="collections.html" class="custom-footer-link">Accesorios</a></li>
+            <li class="custom-footer-link-item"><a href="collections.html" class="custom-footer-link">Colecciones</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="custom-footer-col-heading">Legal</h4>
+          <ul class="custom-footer-links">
+            <li class="custom-footer-link-item"><a href="#" class="custom-footer-link">Política de Privacidad</a></li>
+            <li class="custom-footer-link-item"><a href="#" class="custom-footer-link">Términos del Servicio</a></li>
+            <li class="custom-footer-link-item"><a href="#" class="custom-footer-link">Política de Devoluciones</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="custom-footer-col-heading">Ayuda</h4>
+          <ul class="custom-footer-links">
+            <li class="custom-footer-link-item"><a href="#" class="custom-footer-link">Estado del Pedido</a></li>
+            <li class="custom-footer-link-item"><a href="#" class="custom-footer-link">Centro de Ayuda</a></li>
+            <li class="custom-footer-link-item"><a href="#" class="custom-footer-link">Contáctanos</a></li>
+            <li class="custom-footer-link-item"><a href="#" class="custom-footer-link">Guía de Tallas</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="custom-footer-bottom">
+        <div>&copy; 2026 GoSense Sneakers Inc. Todos los derechos reservados.</div>
+        <div class="custom-footer-policy-links">
+          <a href="#" class="custom-footer-policy-link">Privacidad</a>
+          <a href="#" class="custom-footer-policy-link">Comentarios</a>
+          <a href="#" class="custom-footer-policy-link">Accesibilidad</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script: Filtering, Sorting, Cart Drawer, Announcement Bar -->
+  <script>
+    /* State */
+    let selectedSizes = new Set();
+    let selectedColors = new Set();
+    let maxAllowedPrice = 350;
+    let collCartQty = 2;
+    let currentBasePrice = 219.96;
+
+    /* 1. Dynamic Announcement Bar (2s interval) */
+    const announcements = [
+      "¡Envíos gratis a toda <strong>Colombia</strong> por compras superiores a $150.000!",
+      "🔥 Promoción de Temporada: Hasta <strong>20% OFF</strong> en referencias seleccionadas",
+      "✨ Garantía GoSense: <strong>30 días</strong> para cambios sin costo en todo el país",
+      "💳 Compra hoy y paga a <strong>cuotas sin interés</strong> con Addi y Sistecrédito"
+    ];
+    let currentAnnouncementIdx = 0;
+    let announcementTimer = null;
+
+    function showAnnouncement(idx) {
+      currentAnnouncementIdx = (idx + announcements.length) % announcements.length;
+      const el = document.getElementById('announcementText');
+      if (!el) return;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(-4px)';
+      setTimeout(() => {
+        el.innerHTML = announcements[currentAnnouncementIdx];
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 150);
+    }
+
+    function nextAnnouncement() {
+      showAnnouncement(currentAnnouncementIdx + 1);
+      resetAnnouncementTimer();
+    }
+
+    function prevAnnouncement() {
+      showAnnouncement(currentAnnouncementIdx - 1);
+      resetAnnouncementTimer();
+    }
+
+    function resetAnnouncementTimer() {
+      if (announcementTimer) clearInterval(announcementTimer);
+      announcementTimer = setInterval(() => {
+        showAnnouncement(currentAnnouncementIdx + 1);
+      }, 2000);
+    }
+    resetAnnouncementTimer();
+
+    /* 2. Filters Logic */
+    function toggleFilterGroup(btn) {
+      btn.classList.toggle('open');
+      const content = btn.nextElementSibling;
+      if (content) content.classList.toggle('collapsed');
+    }
+
+    function toggleSizeFilter(el, size) {
+      if (selectedSizes.has(size)) {
+        selectedSizes.delete(size);
+        document.querySelectorAll(`.size-chip[data-size="${size}"]`).forEach(c => c.classList.remove('active'));
+      } else {
+        selectedSizes.add(size);
+        document.querySelectorAll(`.size-chip[data-size="${size}"]`).forEach(c => c.classList.add('active'));
+      }
+      applyFilters();
+    }
+
+    function toggleColorFilter(el, color) {
+      if (selectedColors.has(color)) {
+        selectedColors.delete(color);
+        document.querySelectorAll(`.color-option-row[data-color="${color}"]`).forEach(r => r.classList.remove('active'));
+      } else {
+        selectedColors.add(color);
+        document.querySelectorAll(`.color-option-row[data-color="${color}"]`).forEach(r => r.classList.add('active'));
+      }
+      applyFilters();
+    }
+
+    function onPriceSliderChange(val) {
+      maxAllowedPrice = parseFloat(val);
+      const deskInput = document.getElementById('maxPriceInput');
+      if (deskInput) deskInput.value = val;
+      const deskLabel = document.getElementById('maxPriceLabel');
+      if (deskLabel) deskLabel.textContent = `Hasta $${val}.000`;
+      const mobRange = document.getElementById('mobilePriceRange');
+      if (mobRange) mobRange.value = val;
+      const mobDisp = document.getElementById('mobilePriceDisplay');
+      if (mobDisp) mobDisp.textContent = `Hasta $${val}.000`;
+      applyFilters();
+    }
+
+    function onPriceInputChange() {
+      const maxVal = parseFloat(document.getElementById('maxPriceInput').value) || 350;
+      maxAllowedPrice = maxVal;
+      const deskRange = document.getElementById('priceRange');
+      if (deskRange) deskRange.value = maxVal;
+      const deskLabel = document.getElementById('maxPriceLabel');
+      if (deskLabel) deskLabel.textContent = `Hasta $${maxVal}.000`;
+      const mobRange = document.getElementById('mobilePriceRange');
+      if (mobRange) mobRange.value = maxVal;
+      const mobDisp = document.getElementById('mobilePriceDisplay');
+      if (mobDisp) mobDisp.textContent = `Hasta $${maxVal}.000`;
+      applyFilters();
+    }
+
+    function resetAllFilters() {
+      selectedSizes.clear();
+      selectedColors.clear();
+      maxAllowedPrice = 350;
+
+      document.querySelectorAll('.size-chip').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.color-option-row').forEach(r => r.classList.remove('active'));
+      document.querySelectorAll('.custom-chk[name="styleLine"]').forEach(chk => chk.checked = false);
+      
+      const deskInput = document.getElementById('maxPriceInput');
+      if (deskInput) deskInput.value = 350;
+      const deskRange = document.getElementById('priceRange');
+      if (deskRange) deskRange.value = 350;
+      const deskLabel = document.getElementById('maxPriceLabel');
+      if (deskLabel) deskLabel.textContent = "Hasta $350.000";
+
+      const mobRange = document.getElementById('mobilePriceRange');
+      if (mobRange) mobRange.value = 350;
+      const mobDisp = document.getElementById('mobilePriceDisplay');
+      if (mobDisp) mobDisp.textContent = "Hasta $350.000";
+
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const cards = document.querySelectorAll('#productsGrid .custom-product-card');
+      let visibleCount = 0;
+
+      // Check selected style lines
+      const selectedStyles = Array.from(document.querySelectorAll('.custom-chk[name="styleLine"]:checked')).map(c => c.value);
+
+      cards.forEach(card => {
+        const cardPrice = parseFloat(card.dataset.price) || 0;
+        const cardColor = card.dataset.color || '';
+        const cardSizes = (card.dataset.sizes || '').split(',');
+
+        let matchesPrice = cardPrice <= maxAllowedPrice;
+        let matchesColor = selectedColors.size === 0 || selectedColors.has(cardColor);
+        let matchesSize = selectedSizes.size === 0 || Array.from(selectedSizes).some(s => cardSizes.includes(s));
+
+        if (matchesPrice && matchesColor && matchesSize) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Update counters
+      document.getElementById('productCount').textContent = visibleCount;
+      const mobCount = document.getElementById('mobileResultCount');
+      if (mobCount) mobCount.textContent = visibleCount;
+
+      // Toggle empty state
+      const emptyEl = document.getElementById('emptyState');
+      if (visibleCount === 0) {
+        emptyEl.classList.add('visible');
+      } else {
+        emptyEl.classList.remove('visible');
+      }
+
+      // Update Active Filter Pills
+      renderActiveFilterTags();
+    }
+
+    function renderActiveFilterTags() {
+      const bar = document.getElementById('activeFiltersBar');
+      const list = document.getElementById('activeTagsList');
+      list.innerHTML = '';
+
+      let hasFilters = false;
+
+      selectedSizes.forEach(size => {
+        hasFilters = true;
+        list.innerHTML += `
+          <div class="filter-tag" onclick="toggleSizeFilter(null, '${size}')">
+            <span>Talla: ${size}</span>
+            <span class="filter-tag-remove">✕</span>
+          </div>
+        `;
+      });
+
+      selectedColors.forEach(color => {
+        hasFilters = true;
+        list.innerHTML += `
+          <div class="filter-tag" onclick="toggleColorFilter(null, '${color}')">
+            <span>Color: ${color}</span>
+            <span class="filter-tag-remove">✕</span>
+          </div>
+        `;
+      });
+
+      if (maxAllowedPrice < 350) {
+        hasFilters = true;
+        list.innerHTML += `
+          <div class="filter-tag" onclick="onPriceSliderChange(350)">
+            <span>Precio: ≤ $${maxAllowedPrice}.000</span>
+            <span class="filter-tag-remove">✕</span>
+          </div>
+        `;
+      }
+
+      bar.style.display = hasFilters ? 'flex' : 'none';
+    }
+
+    /* 3. Sorting */
+    function onSortChange(criteria) {
+      const grid = document.getElementById('productsGrid');
+      const cards = Array.from(grid.querySelectorAll('.custom-product-card'));
+
+      cards.sort((a, b) => {
+        const priceA = parseFloat(a.dataset.price);
+        const priceB = parseFloat(b.dataset.price);
+        const ratingA = parseFloat(a.dataset.rating);
+        const ratingB = parseFloat(b.dataset.rating);
+        const dateA = new Date(a.dataset.date);
+        const dateB = new Date(b.dataset.date);
+
+        if (criteria === 'price-asc') return priceA - priceB;
+        if (criteria === 'price-desc') return priceB - priceA;
+        if (criteria === 'rating') return ratingB - ratingA;
+        if (criteria === 'new') return dateB - dateA;
+        return 0; // featured/default
+      });
+
+      cards.forEach(card => grid.appendChild(card));
+    }
+
+    /* 4. Mobile Filter Drawer */
+    function openMobileFilterDrawer() {
+      document.getElementById('mobileFilterDrawer').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    }
+
+    function closeMobileFilterDrawer() {
+      document.getElementById('mobileFilterDrawer').classList.remove('active');
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+
+    /* 5. Lateral Cart Drawer */
+    function openCartDrawer() {
+      document.getElementById('cartDrawerBackdrop').classList.add('active');
+      document.getElementById('cartDrawerPanel').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCartDrawer() {
+      document.getElementById('cartDrawerBackdrop').classList.remove('active');
+      document.getElementById('cartDrawerPanel').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function updateCollTotals() {
+      const subtotal = currentBasePrice * collCartQty;
+      const total = Math.max(0, subtotal - 50);
+      const qtySpan = document.getElementById('collCartItemQty');
+      if (qtySpan) qtySpan.textContent = collCartQty;
+      const countEl = document.getElementById('cartDrawerCount');
+      if (countEl) countEl.textContent = collCartQty;
+      const badgeEl = document.getElementById('collCartBadge');
+      if (badgeEl) badgeEl.textContent = collCartQty;
+      const subEl = document.getElementById('collCartSubtotal');
+      if (subEl) subEl.textContent = `$${subtotal.toFixed(2)}`;
+      const totEl = document.getElementById('collCartTotal');
+      if (totEl) totEl.textContent = `$${total.toFixed(2)}`;
+    }
+
+    function updateCollCartQty(delta) {
+      collCartQty += delta;
+      if (collCartQty < 1) {
+        removeCollCartItem();
+        return;
+      }
+      updateCollTotals();
+    }
+
+    function removeCollCartItem() {
+      const itemCard = document.getElementById('sideCartItem1');
+      if (itemCard) {
+        itemCard.style.opacity = '0';
+        itemCard.style.transform = 'translateX(20px)';
+        setTimeout(() => {
+          itemCard.remove();
+          collCartQty = 0;
+          document.getElementById('cartDrawerCount').textContent = '0';
+          document.getElementById('collCartBadge').textContent = '0';
+          document.getElementById('cartSideItems').innerHTML = `
+            <div style="text-align: center; padding: 48px 20px; color: #888;">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5" style="margin: 0 auto 16px; display: block;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+              <p style="font-size: 1.4rem; font-weight: 600; color: #111; margin-bottom: 6px;">Tu carrito está vacío</p>
+              <p style="font-size: 1.2rem;">Agrega zapatillas exclusivas para comenzar.</p>
+            </div>
+          `;
+          document.getElementById('collCartSubtotal').textContent = '$0.00';
+          document.getElementById('collCartTotal').textContent = '$0.00';
+        }, 200);
+      }
+    }
+
+    function handleCardAddToCart(title, priceStr, imgSrc, btn) {
+      const cleanPrice = parseFloat(priceStr.replace('$', '')) || 219.96;
+      currentBasePrice = cleanPrice;
+
+      const titleEl = document.getElementById('collDrawerTitle');
+      if (titleEl) titleEl.textContent = title;
+      const priceEl = document.getElementById('collDrawerPrice');
+      if (priceEl) priceEl.textContent = priceStr;
+      const imgEl = document.getElementById('collDrawerImg');
+      if (imgEl) imgEl.src = imgSrc;
+
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Añadido';
+      btn.style.backgroundColor = '#166534';
+
+      collCartQty++;
+      updateCollTotals();
+
+      setTimeout(() => {
+        openCartDrawer();
+      }, 250);
+
+      setTimeout(() => {
+        btn.innerHTML = orig;
+        btn.style.backgroundColor = '#111111';
+      }, 1500);
+    }
+
+    /* 6. Mobile Nav Drawer Handlers */
+    function openMobileNavDrawer() {
+      document.getElementById('mobileNavDrawer').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileNavDrawer() {
+      document.getElementById('mobileNavDrawer').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  </script>
+</body>
+</html>

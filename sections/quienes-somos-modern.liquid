@@ -1,0 +1,267 @@
+<section class="qs-hero">
+  <div class="qs-container">
+    <div class="qs-hero-text">
+      <h1>{{ section.settings.titulo_principal }}</h1>
+      <p>{{ section.settings.texto_principal }}</p>
+
+      {% if section.settings.boton_texto != blank %}
+      <a href="{{ section.settings.boton_link }}" class="qs-btn">
+        {{ section.settings.boton_texto }}
+      </a>
+      {% endif %}
+    </div>
+
+    <div class="qs-hero-img">
+      <img src="{{ section.settings.imagen_principal | image_url: width: 800 }}" alt="{{ section.settings.titulo_principal | default: 'Quiénes somos' | escape }}" width="800" height="600" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section class="qs-mision-vision">
+  <h2 class="qs-title">{{ section.settings.titulo_mision_vision }}</h2>
+
+  <div class="qs-columns">
+
+    <div class="qs-col">
+      <img src="{{ section.settings.icono_mision | image_url: width: 120 }}" alt="Misión" width="60" height="60" loading="lazy" class="qs-icon">
+      <h3>Misión</h3>
+      <p>{{ section.settings.texto_mision }}</p>
+    </div>
+
+    <div class="qs-col">
+      <img src="{{ section.settings.icono_vision | image_url: width: 120 }}" alt="Visión" width="60" height="60" loading="lazy" class="qs-icon">
+      <h3>Visión</h3>
+      <p>{{ section.settings.texto_vision }}</p>
+    </div>
+
+    <div class="qs-col">
+      <img src="{{ section.settings.icono_impacto | image_url: width: 120 }}" alt="Impacto" width="60" height="60" loading="lazy" class="qs-icon">
+      <h3>Impacto</h3>
+      <p>{{ section.settings.texto_impacto }}</p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.qs-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 70px 20px;
+}
+.qs-hero-text h1 {
+  font-size: 5rem;
+  color: #102E50;
+  font-weight: 800;
+}
+.qs-hero-text p {
+  font-size: 2.0rem;
+  margin: 15px 0 20px;
+}
+.qs-btn {
+  display: inline-block;
+  background: #102E50;
+  color: #fff;
+  padding: 10px 25px;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: .3s;
+}
+.qs-btn:hover {
+  background: #E50000;
+}
+.qs-hero-img img {
+  max-width: 450px;
+  border-radius: 12px;
+}
+
+.qs-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  text-align: center;
+  margin-top: 20px;
+  color: #102E50;
+}
+
+.qs-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1100px;
+  margin: 40px auto 80px;
+}
+.qs-col {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.07);
+}
+.qs-col h3 {
+  color: #102E50;
+  margin-top: 10px;
+  font-size: 2.4rem;
+  font-weight: bold;
+}
+.qs-icon {
+  width: 150px;
+  height: auto;
+}
+
+/* -------------------------------------------
+   📱 Responsive Mejorado BahariAqua - 2025
+-------------------------------------------- */
+
+/* Tablets grandes */
+@media (max-width: 1100px) {
+  .qs-container {
+    gap: 30px;
+    padding: 60px 25px;
+  }
+  .qs-hero-text h1 {
+    font-size: 4rem;
+  }
+  .qs-hero-text p {
+    font-size: 1.6rem;
+  }
+  .qs-hero-img img {
+    max-width: 380px;
+  }
+}
+
+/* Tablets verticales */
+@media (max-width: 900px) {
+  .qs-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 50px 25px 20px;
+  }
+
+  .qs-hero-text h1 {
+    font-size: 3.5rem;
+  }
+
+  .qs-hero-text p {
+    font-size: 1.5rem;
+    max-width: 620px;
+    margin: 0 auto 20px;
+  }
+
+  .qs-hero-img img {
+    max-width: 70%;
+    margin: 0 auto;
+  }
+
+  .qs-columns {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 0 20px;
+  }
+
+  .qs-col {
+    padding: 30px 20px;
+  }
+
+  .qs-col h3 {
+    font-size: 2.2rem;
+  }
+}
+
+/* Celulares grandes */
+@media (max-width: 650px) {
+  .qs-hero-text h1 {
+    font-size: 3rem;
+    line-height: 1.2;
+  }
+
+  .qs-title {
+    font-size: 2.8rem;
+  }
+
+  .qs-hero-img img {
+    max-width: 85%;
+  }
+
+  .qs-col h3 {
+    font-size: 2.0rem;
+  }
+
+  .qs-icon {
+    width: 110px;
+  }
+}
+
+/* Celulares medianos */
+@media (max-width: 480px) {
+  .qs-container {
+    padding: 40px 15px;
+  }
+
+  .qs-hero-text h1 {
+    font-size: 2.5rem;
+  }
+
+  .qs-hero-text p {
+    font-size: 1.35rem;
+  }
+
+  .qs-title {
+    font-size: 2.4rem;
+  }
+
+  .qs-columns {
+    margin-top: 20px;
+  }
+
+  .qs-col {
+    padding: 25px 18px;
+  }
+
+  .qs-icon {
+    width: 95px;
+  }
+}
+
+/* Celulares pequeños */
+@media (max-width: 380px) {
+  .qs-hero-text h1 {
+    font-size: 2.2rem;
+  }
+  .qs-hero-text p {
+    font-size: 1.2rem;
+  }
+}
+
+</style>
+
+{% schema %}
+{
+  "name": "Quiénes Somos — Moderno",
+  "settings": [
+    { "type": "text", "id": "titulo_principal", "label": "Título principal", "default": "Somos BahariAqua" },
+    { "type": "textarea", "id": "texto_principal", "label": "Texto principal" },
+    { "type": "image_picker", "id": "imagen_principal", "label": "Imagen principal" },
+
+    { "type": "text", "id": "boton_texto", "label": "Texto del botón" },
+    { "type": "url", "id": "boton_link", "label": "Enlace del botón" },
+
+    { "type": "text", "id": "titulo_mision_vision", "label": "Título Misión/Visión", "default": "Lo que nos mueve" },
+
+    { "type": "image_picker", "id": "icono_mision", "label": "Ícono Misión" },
+    { "type": "textarea", "id": "texto_mision", "label": "Texto de Misión" },
+
+    { "type": "image_picker", "id": "icono_vision", "label": "Ícono Visión" },
+    { "type": "textarea", "id": "texto_vision", "label": "Texto de Visión" },
+
+    { "type": "image_picker", "id": "icono_impacto", "label": "Ícono Impacto" },
+    { "type": "textarea", "id": "texto_impacto", "label": "Texto de Impacto" }
+  ],
+  "presets": [
+    { "name": "Sección Quienes Somos Moderno" }
+  ]
+}
+{% endschema %}

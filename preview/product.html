@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gaelic Indoor Shoes — GoSense</title>
+  <link rel="stylesheet" href="assets/custom-home.css">
+  <link rel="stylesheet" href="../assets/custom-home.css">
+  <link rel="stylesheet" href="assets/custom-product.css">
+  <link rel="stylesheet" href="../assets/custom-product.css">
+  <link rel="stylesheet" href="assets/custom-cart.css">
+  <link rel="stylesheet" href="../assets/custom-cart.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    .preview-icons {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .preview-icon-btn,
+    .preview-icon-btn:visited,
+    .preview-icon-btn:focus,
+    .preview-icon-btn:hover {
+      background: transparent !important;
+      background-color: transparent !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      cursor: pointer;
+      color: #111111 !important;
+      text-decoration: none !important;
+      position: relative;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .preview-icon-btn:hover {
+      opacity: 0.75;
+      transform: scale(1.05);
+    }
+    .preview-icon-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: #111111;
+      color: #111111;
+      fill: none;
+      display: block;
+    }
+    .preview-cart-badge {
+      position: absolute !important;
+      top: -3px !important;
+      right: -5px !important;
+      background: #111111 !important;
+      color: #FFFFFF !important;
+      font-family: var(--font-body-editorial, -apple-system, sans-serif);
+      font-size: 1.05rem !important;
+      font-weight: 700 !important;
+      width: 18px !important;
+      height: 18px !important;
+      min-width: 18px !important;
+      min-height: 18px !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+      line-height: 1 !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      text-decoration: none !important;
+      pointer-events: none !important;
+      z-index: 5 !important;
+    }
+
+    /* Breadcrumbs */
+    .pdp-breadcrumbs {
+      max-width: 1320px;
+      margin: 20px auto 10px;
+      padding: 0 32px;
+      font-size: 1.2rem;
+      color: #888888;
+    }
+    .pdp-breadcrumbs a { color: #888888; text-decoration: none; }
+    .pdp-breadcrumbs a:hover { color: #111111; }
+
+    /* Product Layout */
+    .pdp-grid {
+      max-width: 1320px;
+      margin: 0 auto 60px;
+      padding: 0 32px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    @media screen and (min-width: 900px) {
+      .pdp-grid {
+        grid-template-columns: 1.15fr 1fr;
+        gap: 56px;
+        align-items: start;
+      }
+    }
+
+    /* Eye-catching Gallery Carousel */
+    .pdp-gallery-wrap {
+      position: relative;
+    }
+    .pdp-main-media {
+      position: relative;
+      background-color: #F3F3F1;
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 1 / 0.95;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(222, 222, 218, 0.6);
+    }
+    .pdp-main-img {
+      width: 88%;
+      height: 88%;
+      object-fit: contain;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+      cursor: zoom-in;
+    }
+    .pdp-main-img:hover {
+      transform: scale(1.08);
+    }
+    .pdp-nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(0,0,0,0.06);
+      color: #111111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+      transition: all 0.2s ease;
+      z-index: 5;
+    }
+    .pdp-nav-arrow:hover {
+      background: #FFFFFF;
+      transform: translateY(-50%) scale(1.1);
+    }
+    .pdp-nav-arrow--prev { left: 16px; }
+    .pdp-nav-arrow--next { right: 16px; }
+
+    .pdp-badge-overlay {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      background: #111111;
+      color: #FFFFFF;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      z-index: 4;
+    }
+
+    .pdp-thumbnails {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .pdp-thumb {
+      background: #F3F3F1;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      opacity: 0.65;
+    }
+    .pdp-thumb:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+    .pdp-thumb.active {
+      opacity: 1;
+      border-color: #111111;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      background: #FFFFFF;
+    }
+    .pdp-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Product Info (Right Sticky) */
+    .pdp-info-wrap {
+      position: sticky;
+      top: 24px;
+    }
+    .pdp-vendor-tag {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #777777;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .pdp-title {
+      font-family: var(--font-heading-editorial);
+      font-size: clamp(2.8rem, 3.8vw, 4.2rem);
+      line-height: 1.1;
+      font-weight: 700;
+      color: #111111;
+      letter-spacing: -0.025em;
+      margin-bottom: 12px;
+    }
+    .pdp-rating-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      font-size: 1.25rem;
+      color: #666666;
+    }
+    .pdp-stars {
+      color: #111111;
+      letter-spacing: 2px;
+    }
+    .pdp-price-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(222, 222, 218, 0.6);
+    }
+    .pdp-price {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: #111111;
+      letter-spacing: -0.02em;
+    }
+    .pdp-price-compare {
+      font-size: 1.8rem;
+      color: #999999;
+      text-decoration: line-through;
+    }
+    .pdp-price-save {
+      font-size: 1.15rem;
+      font-weight: 700;
+      background: #EAE8E1;
+      color: #111111;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    /* Interactive Color Swatches */
+    .pdp-section-label {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #111111;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .pdp-color-swatches {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .pdp-color-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.25s ease;
+      position: relative;
+    }
+    .pdp-color-btn:hover {
+      transform: scale(1.18);
+    }
+    .pdp-color-btn.active {
+      transform: scale(1.12);
+      box-shadow: 0 0 0 2px #F7F6F2, 0 0 0 4px #111111;
+    }
+
+    /* Interactive Size Pills */
+    .pdp-size-guide-btn {
+      font-size: 1.25rem;
+      color: #555555;
+      text-decoration: underline;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .pdp-size-guide-btn:hover { color: #111111; }
+    .pdp-size-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .pdp-size-pill {
+      background: #FFFFFF;
+      border: 1.5px solid #DEDEDA;
+      border-radius: 8px;
+      height: 46px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #111111;
+      transition: all 0.22s cubic-bezier(0.2, 0, 0, 1);
+      position: relative;
+    }
+    .pdp-size-pill:hover:not(.disabled) {
+      border-color: #111111;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    .pdp-size-pill.active {
+      background: #111111;
+      color: #FFFFFF;
+      border-color: #111111;
+      font-weight: 700;
+      animation: pillPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .pdp-size-pill.low-stock::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #E58E26;
+    }
+    .pdp-size-pill.disabled {
+      background: #F4F4F2;
+      border-color: #E2E2DC;
+      color: #A5A59E;
+      text-decoration: line-through;
+      cursor: not-allowed;
+    }
+
+    /* Actions */
+    .pdp-actions-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .pdp-qty-stepper {
+      display: flex;
+      align-items: center;
+      background: #FFFFFF;
+      border: 1.5px solid #DEDEDA;
+      border-radius: 8px;
+      height: 52px;
+      padding: 0 8px;
+    }
+    .pdp-qty-btn {
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      width: 36px;
+      height: 100%;
+      cursor: pointer;
+      color: #111111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pdp-qty-input {
+      width: 36px;
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      outline: none;
+    }
+    .pdp-btn-add {
+      flex: 1;
+      background: #111111;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.45rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    }
+    .pdp-btn-add:hover {
+      background: #282828;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+    }
+    .pdp-btn-buynow {
+      width: 100%;
+      background: #FFFFFF;
+      color: #111111;
+      border: 1.5px solid #111111;
+      border-radius: 8px;
+      font-size: 1.45rem;
+      font-weight: 600;
+      cursor: pointer;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      margin-bottom: 24px;
+      transition: all 0.25s ease;
+    }
+    .pdp-btn-buynow:hover {
+      background: #111111;
+      color: #FFFFFF;
+      transform: translateY(-2px);
+    }
+
+    /* Value Props */
+    .pdp-props-box {
+      background: #FFFFFF;
+      border: 1px solid #DEDEDA;
+      border-radius: 10px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .pdp-prop-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.25rem;
+      color: #333333;
+    }
+
+    /* Accordion */
+    .pdp-accordion-item {
+      border-top: 1px solid #DEDEDA;
+      padding: 16px 0;
+    }
+    .pdp-accordion-header {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #111111;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .pdp-accordion-body {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      color: #666666;
+      margin-top: 10px;
+      display: none;
+    }
+    .pdp-accordion-body.open {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile Navigation Drawer -->
+  <div id="mobileNavDrawer" class="mobile-nav-drawer">
+    <div class="mobile-nav-backdrop" onclick="closeMobileNavDrawer()"></div>
+    <div class="mobile-nav-body">
+      <div class="mobile-nav-header">
+        <a href="index.html" class="mobile-nav-logo">GoSense</a>
+        <button class="mobile-nav-close" onclick="closeMobileNavDrawer()" aria-label="Cerrar menú">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <ul class="mobile-nav-links">
+        <li class="mobile-nav-item"><a href="product.html" class="active"><span>Sneakers</span><span class="mobile-nav-badge">Nuevo</span></a></li>
+        <li class="mobile-nav-item"><a href="collections.html"><span>Hombre</span><span style="color: #999;">›</span></a></li>
+        <li class="mobile-nav-item"><a href="collections.html"><span>Niños</span><span style="color: #999;">›</span></a></li>
+        <li class="mobile-nav-item"><a href="collections.html"><span>Accesorios</span><span style="color: #999;">›</span></a></li>
+        <li class="mobile-nav-item"><a href="collections.html"><span>Colecciones</span><span style="color: #111;">›</span></a></li>
+        <li class="mobile-nav-item"><a href="index.html"><span>Nosotros</span><span style="color: #999;">›</span></a></li>
+      </ul>
+      <div class="mobile-nav-footer">
+        <a href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>Mi Cuenta / Registro</span>
+        </a>
+        <a href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <span>Ayuda y Preguntas</span>
+        </a>
+        <div style="font-size: 1.15rem; color: #888; margin-top: 14px;">
+          🇨🇴 Colombia • COP ($)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Announcement Bar (Dinámica cada 2s & Responsive) -->
+  <div class="preview-announcement-bar">
+    <div class="preview-announcement-wrap">
+      <button class="preview-announcement-nav" onclick="prevAnnouncement()" aria-label="Anuncio anterior">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <div class="preview-announcement-content">
+        <p id="announcementText" class="preview-announcement-msg">
+          ¡Envíos gratis a toda <strong>Colombia</strong> por compras superiores a $150.000!
+        </p>
+      </div>
+      <button class="preview-announcement-nav" onclick="nextAnnouncement()" aria-label="Siguiente anuncio">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Header (Navbar Blanco Fijo Full-Width) -->
+  <div class="preview-header-sticky-wrap">
+    <header class="preview-header">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button class="mobile-nav-toggle" onclick="openMobileNavDrawer()" aria-label="Abrir menú">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <a href="index.html" class="preview-logo">GoSense</a>
+      </div>
+      <ul class="preview-nav">
+        <li><a href="product.html" style="font-weight: 600; color: #111111;">Zapatillas</a></li>
+        <li><a href="collections.html">Hombre</a></li>
+        <li><a href="collections.html">Niños</a></li>
+        <li><a href="collections.html">Accesorios</a></li>
+        <li><a href="collections.html">Colecciones</a></li>
+        <li><a href="index.html">Nosotros</a></li>
+      </ul>
+      <div class="preview-icons">
+        <button class="preview-icon-btn" aria-label="Buscar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+        <button class="preview-icon-btn" aria-label="Cuenta">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </button>
+        <button type="button" class="preview-icon-btn" onclick="openCartDrawer()" aria-label="Carrito">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span class="preview-cart-badge" id="headerCartBadge">2</span>
+        </button>
+      </div>
+    </header>
+  </div>
+
+  <!-- Breadcrumbs -->
+  <div class="pdp-breadcrumbs">
+    <a href="index.html">Inicio</a> &nbsp;/&nbsp; <a href="index.html">Zapatillas</a> &nbsp;/&nbsp; <span style="color: #111111; font-weight: 500;">Gaelic Indoor Shoes</span>
+  </div>
+
+  <!-- PDP Main Grid -->
+  <main class="pdp-grid">
+    <!-- LEFT: Gallery Carousel -->
+    <div class="pdp-gallery-wrap">
+      <div class="pdp-main-media">
+        <span class="pdp-badge-overlay">Nuevo Lanzamiento</span>
+        <button class="pdp-nav-arrow pdp-nav-arrow--prev" onclick="prevImage()" aria-label="Imagen anterior">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <img id="mainHeroImage" src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=900&auto=format&fit=crop" alt="Gaelic Indoor Shoes" class="pdp-main-img">
+        <button class="pdp-nav-arrow pdp-nav-arrow--next" onclick="nextImage()" aria-label="Siguiente imagen">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
+      <!-- Thumbnails -->
+      <div class="pdp-thumbnails">
+        <div class="pdp-thumb active" onclick="setImage(0)">
+          <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=300&auto=format&fit=crop" alt="Miniatura 1">
+        </div>
+        <div class="pdp-thumb" onclick="setImage(1)">
+          <img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?q=80&w=300&auto=format&fit=crop" alt="Miniatura 2">
+        </div>
+        <div class="pdp-thumb" onclick="setImage(2)">
+          <img src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=300&auto=format&fit=crop" alt="Miniatura 3">
+        </div>
+        <div class="pdp-thumb" onclick="setImage(3)">
+          <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?q=80&w=300&auto=format&fit=crop" alt="Miniatura 4">
+        </div>
+        <div class="pdp-thumb" onclick="setImage(4)">
+          <img src="https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?q=80&w=300&auto=format&fit=crop" alt="Miniatura 5">
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Sticky Product Information -->
+    <div class="pdp-info-wrap">
+      <span class="pdp-vendor-tag">GoSense Heritage • Serie 01</span>
+      <h1 class="pdp-title">Gaelic Indoor Shoes</h1>
+
+      <div class="pdp-rating-row">
+        <span class="pdp-stars">★★★★★</span>
+        <span><strong>4.9</strong> (142 reseñas verificadas)</span>
+        <span>•</span>
+        <span style="color: #2e7d32; font-weight: 600;">✓ En Stock</span>
+      </div>
+
+      <div class="pdp-price-wrap">
+        <span class="pdp-price">$219.96</span>
+        <span class="pdp-price-compare">$269.96</span>
+        <span class="pdp-price-save">Ahorra $50</span>
+      </div>
+
+      <!-- Color Selector -->
+      <div class="pdp-section-label">
+        <span>Color: <strong id="selectedColorName">Crema Vintage / Forestal</strong></span>
+      </div>
+      <div class="pdp-color-swatches">
+        <button class="pdp-color-btn active" style="background: #E5E1D8;" onclick="selectColor(this, 'Crema Vintage / Forestal', 0)" title="Crema Vintage / Forestal"></button>
+        <button class="pdp-color-btn" style="background: #1C1C1C;" onclick="selectColor(this, 'Negro Onix Total', 4)" title="Negro Onix Total"></button>
+        <button class="pdp-color-btn" style="background: #4A5568;" onclick="selectColor(this, 'Azul Pizarra / Escarcha', 2)" title="Azul Pizarra / Escarcha"></button>
+        <button class="pdp-color-btn" style="background: #D9822B;" onclick="selectColor(this, 'Ámbar Arcilla / Blanco', 3)" title="Ámbar Arcilla / Blanco"></button>
+      </div>
+
+      <!-- Size Selector -->
+      <div class="pdp-section-label">
+        <span>Seleccionar Talla (US Hombre): <strong id="selectedSize">9.5</strong></span>
+        <span class="pdp-size-guide-btn" onclick="alert('Guía de Tallas: Calce regular. Si estás entre dos tallas, recomendamos pedir media talla más.')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M2 12l5-5m-5 5l5 5"></path></svg>
+          Guía de Tallas
+        </span>
+      </div>
+      <div class="pdp-size-grid">
+        <div class="pdp-size-pill" onclick="selectSize(this, '7.5')">7.5</div>
+        <div class="pdp-size-pill" onclick="selectSize(this, '8.0')">8.0</div>
+        <div class="pdp-size-pill" onclick="selectSize(this, '8.5')">8.5</div>
+        <div class="pdp-size-pill" onclick="selectSize(this, '9.0')">9.0</div>
+        <div class="pdp-size-pill active" onclick="selectSize(this, '9.5')">9.5</div>
+        <div class="pdp-size-pill" onclick="selectSize(this, '10.0')">10.0</div>
+        <div class="pdp-size-pill" onclick="selectSize(this, '10.5')">10.5</div>
+        <div class="pdp-size-pill low-stock" onclick="selectSize(this, '11.0')" title="¡Últimas 2 unidades!">11.0</div>
+        <div class="pdp-size-pill" onclick="selectSize(this, '11.5')">11.5</div>
+        <div class="pdp-size-pill disabled" title="Agotado">12.0</div>
+      </div>
+
+      <!-- Actions -->
+      <div class="pdp-actions-row">
+        <div class="pdp-qty-stepper">
+          <button class="pdp-qty-btn" onclick="adjustQty(-1)">−</button>
+          <input type="text" id="pdpQty" class="pdp-qty-input" value="1" readonly>
+          <button class="pdp-qty-btn" onclick="adjustQty(1)">+</button>
+        </div>
+        <button id="addToCartBtn" class="pdp-btn-add" onclick="handleAddToCart()">
+          <span>Añadir al Carrito</span>
+        </button>
+      </div>
+
+      <a href="index.html" class="pdp-btn-buynow">
+        Comprar Ahora con Pago Directo
+      </a>
+
+      <!-- Value Props -->
+      <div class="pdp-props-box">
+        <div class="pdp-prop-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          <span><strong>Envíos Express Gratis:</strong> Compras superiores a $150.000 llegan en 2 a 3 días hábiles.</span>
+        </div>
+        <div class="pdp-prop-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg>
+          <span><strong>30 Días de Cambios Gratuitos:</strong> Cambio de talla ágil o reembolso total sin costo.</span>
+        </div>
+        <div class="pdp-prop-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span><strong>Calidad Auténtica:</strong> Cuero genuino premium y suela vulcanizada ultra resistente.</span>
+        </div>
+      </div>
+
+      <!-- Accordions -->
+      <div class="pdp-accordion-item">
+        <div class="pdp-accordion-header" onclick="toggleAccordion(this)">
+          <span>Materiales & Confección Artesanal</span>
+          <span>+</span>
+        </div>
+        <div class="pdp-accordion-body open">
+          Elaboradas a mano con cuero vacuno seleccionado, puntera perforada transpirable, plantilla ergonómica con soporte de arco y suela de caucho que no deja marcas.
+        </div>
+      </div>
+      <div class="pdp-accordion-item">
+        <div class="pdp-accordion-header" onclick="toggleAccordion(this)">
+          <span>Envíos Nacionales & Devoluciones Sin Costo</span>
+          <span>+</span>
+        </div>
+        <div class="pdp-accordion-body">
+          Enviamos a toda Colombia con rastreo en tiempo real. Todos los pares vienen en bolsas guardapolvo exclusivas y cajas reforzadas de edición de lujo.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const images = [
+      'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=900&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?q=80&w=900&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=900&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1539185441755-769473a23570?q=80&w=900&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?q=80&w=900&auto=format&fit=crop'
+    ];
+    let currentIndex = 0;
+
+    function setImage(idx) {
+      currentIndex = idx;
+      const hero = document.getElementById('mainHeroImage');
+      hero.style.opacity = '0.3';
+      setTimeout(() => {
+        hero.src = images[currentIndex];
+        hero.style.opacity = '1';
+      }, 150);
+
+      document.querySelectorAll('.pdp-thumb').forEach((t, i) => {
+        t.classList.toggle('active', i === idx);
+      });
+    }
+
+    function prevImage() {
+      const newIdx = (currentIndex - 1 + images.length) % images.length;
+      setImage(newIdx);
+    }
+
+    function nextImage() {
+      const newIdx = (currentIndex + 1) % images.length;
+      setImage(newIdx);
+    }
+
+    function selectColor(btn, name, imgIdx) {
+      document.querySelectorAll('.pdp-color-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('selectedColorName').textContent = name;
+      if (typeof imgIdx === 'number') {
+        setImage(imgIdx);
+      }
+    }
+
+    function selectSize(pill, size) {
+      if (pill.classList.contains('disabled')) return;
+      document.querySelectorAll('.pdp-size-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      document.getElementById('selectedSize').textContent = size;
+    }
+
+    function adjustQty(delta) {
+      const input = document.getElementById('pdpQty');
+      let val = parseInt(input.value) + delta;
+      if (val < 1) val = 1;
+      input.value = val;
+    }
+
+    function handleAddToCart() {
+      const btn = document.getElementById('addToCartBtn');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<span>✓ Added to Cart!</span>';
+      btn.style.backgroundColor = '#166534';
+      setTimeout(() => {
+        btn.innerHTML = orig;
+        btn.style.backgroundColor = '#111111';
+      }, 1500);
+    }
+
+    function toggleAccordion(header) {
+      const body = header.nextElementSibling;
+      const isOpen = body.classList.contains('open');
+      body.classList.toggle('open', !isOpen);
+      header.querySelector('span:last-child').textContent = isOpen ? '+' : '−';
+    }
+
+    /* Lateral Cart Drawer State & Controls */
+    let sideItemQuantity = 1;
+    const itemUnitPrice = 219.96;
+
+    function openCartDrawer() {
+      document.getElementById('cartDrawerBackdrop').classList.add('active');
+      document.getElementById('cartDrawerPanel').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCartDrawer() {
+      document.getElementById('cartDrawerBackdrop').classList.remove('active');
+      document.getElementById('cartDrawerPanel').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function updateSideTotals() {
+      const subtotal = itemUnitPrice * sideItemQuantity;
+      const discount = sideItemQuantity > 0 ? 50.00 : 0;
+      const total = Math.max(0, subtotal - discount);
+      const qtySpan = document.getElementById('sideCartQty');
+      if (qtySpan) qtySpan.textContent = sideItemQuantity;
+      const countEl = document.getElementById('cartDrawerCount');
+      if (countEl) countEl.textContent = sideItemQuantity;
+      const badgeEl = document.getElementById('headerCartBadge');
+      if (badgeEl) badgeEl.textContent = sideItemQuantity;
+      const subEl = document.getElementById('sideSubtotal');
+      if (subEl) subEl.textContent = `$${subtotal.toFixed(2)}`;
+      const totEl = document.getElementById('sideTotal');
+      if (totEl) totEl.textContent = `$${total.toFixed(2)}`;
+    }
+
+    function updateSideQty(delta) {
+      sideItemQuantity += delta;
+      if (sideItemQuantity < 1) {
+        removeSideItem();
+        return;
+      }
+      updateSideTotals();
+    }
+
+    function removeSideItem() {
+      const itemCard = document.getElementById('sideCartItem');
+      if (itemCard) {
+        itemCard.style.opacity = '0';
+        itemCard.style.transform = 'translateX(20px)';
+        setTimeout(() => {
+          itemCard.remove();
+          sideItemQuantity = 0;
+          document.getElementById('cartDrawerCount').textContent = '0';
+          document.getElementById('headerCartBadge').textContent = '0';
+          document.getElementById('cartSideItems').innerHTML = `
+            <div style="text-align: center; padding: 48px 20px; color: #888;">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5" style="margin: 0 auto 16px; display: block;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+              <p style="font-size: 1.4rem; font-weight: 600; color: #111; margin-bottom: 6px;">Tu carrito está vacío</p>
+              <p style="font-size: 1.2rem;">Descubre zapatillas y añade tu estilo.</p>
+            </div>
+          `;
+          document.getElementById('sideSubtotal').textContent = '$0.00';
+          document.getElementById('sideTotal').textContent = '$0.00';
+        }, 200);
+      }
+    }
+
+    function handleAddToCart() {
+      const btn = document.getElementById('addToCartBtn');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<span>✓ ¡Añadido!</span>';
+      btn.style.backgroundColor = '#166534';
+      
+      // Sync variant selections
+      const colorName = document.getElementById('selectedColorName').textContent;
+      const sizeVal = document.getElementById('selectedSize').textContent;
+      const addQty = parseInt(document.getElementById('pdpQty').value) || 1;
+      const heroSrc = document.getElementById('mainHeroImage').src;
+
+      // Re-insert item if previously removed
+      if (!document.getElementById('sideCartItem')) {
+        document.getElementById('cartSideItems').innerHTML = `
+          <div class="side-item-card" id="sideCartItem">
+            <div class="side-item-thumb">
+              <img id="sideCartImg" src="${heroSrc}" alt="Gaelic Sneaker">
+            </div>
+            <div class="side-item-details">
+              <div class="side-item-title">Gaelic Indoor Shoes</div>
+              <div class="side-item-variant" id="sideCartVariant">Color: ${colorName} • Talla: ${sizeVal}</div>
+              <div class="side-item-price" id="sideCartPrice">$219.96</div>
+            </div>
+            <div class="side-item-actions">
+              <div class="side-item-stepper">
+                <button class="stepper-minus" onclick="updateSideQty(-1)">−</button>
+                <span class="stepper-val" id="sideCartQty">${addQty}</span>
+                <button class="stepper-plus" onclick="updateSideQty(1)">+</button>
+              </div>
+              <button class="side-item-delete" onclick="removeSideItem()" aria-label="Eliminar producto">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              </button>
+            </div>
+          </div>
+        `;
+      } else {
+        const variantEl = document.getElementById('sideCartVariant');
+        if (variantEl) variantEl.textContent = `Color: ${colorName} • Talla: ${sizeVal}`;
+        const imgEl = document.getElementById('sideCartImg');
+        if (imgEl) imgEl.src = heroSrc;
+      }
+
+      sideItemQuantity = addQty;
+      updateSideTotals();
+
+      // Open drawer after brief 250ms feedback
+      setTimeout(() => {
+        openCartDrawer();
+      }, 250);
+
+      setTimeout(() => {
+        btn.innerHTML = orig;
+        btn.style.backgroundColor = '#111111';
+      }, 1500);
+    }
+
+    /* Dynamic Announcement Bar (2 seconds rotation) */
+    const announcements = [
+      "¡Envíos gratis a toda <strong>Colombia</strong> por compras superiores a $150.000!",
+      "🔥 Promoción de Temporada: Hasta <strong>20% OFF</strong> en referencias seleccionadas",
+      "✨ Garantía GoSense: <strong>30 días</strong> para cambios sin costo en todo el país",
+      "💳 Compra hoy y paga a <strong>cuotas sin interés</strong> con Addi y Sistecrédito"
+    ];
+    let currentAnnouncementIdx = 0;
+    let announcementTimer = null;
+
+    function showAnnouncement(idx) {
+      currentAnnouncementIdx = (idx + announcements.length) % announcements.length;
+      const el = document.getElementById('announcementText');
+      if (!el) return;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(-4px)';
+      setTimeout(() => {
+        el.innerHTML = announcements[currentAnnouncementIdx];
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 150);
+    }
+
+    function nextAnnouncement() {
+      showAnnouncement(currentAnnouncementIdx + 1);
+      resetAnnouncementTimer();
+    }
+
+    function prevAnnouncement() {
+      showAnnouncement(currentAnnouncementIdx - 1);
+      resetAnnouncementTimer();
+    }
+
+    function resetAnnouncementTimer() {
+      if (announcementTimer) clearInterval(announcementTimer);
+      announcementTimer = setInterval(() => {
+        showAnnouncement(currentAnnouncementIdx + 1);
+      }, 2000);
+    }
+
+    resetAnnouncementTimer();
+
+    /* Mobile Nav Drawer Handlers */
+    function openMobileNavDrawer() {
+      document.getElementById('mobileNavDrawer').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileNavDrawer() {
+      document.getElementById('mobileNavDrawer').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  </script>
+
+  <!-- Cart Drawer (Lateral slide-out panel) -->
+  <div id="cartDrawerBackdrop" class="cart-side-backdrop" onclick="closeCartDrawer()"></div>
+  <aside id="cartDrawerPanel" class="cart-side-drawer" aria-label="Carrito de compras">
+    <div class="cart-side-header">
+      <button class="cart-side-back-btn" onclick="closeCartDrawer()" aria-label="Cerrar carrito">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <h3 class="cart-side-title">Mi Carrito (<span id="cartDrawerCount">1</span>)</h3>
+      <button class="cart-side-close-btn" onclick="closeCartDrawer()" aria-label="Cerrar carrito">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <!-- Items Area -->
+    <div class="cart-side-items" id="cartSideItems">
+      <div class="side-item-card" id="sideCartItem">
+        <div class="side-item-thumb">
+          <img id="sideCartImg" src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=300&auto=format&fit=crop" alt="Gaelic Sneaker">
+        </div>
+        <div class="side-item-details">
+          <div class="side-item-title">Gaelic Indoor Shoes</div>
+          <div class="side-item-variant" id="sideCartVariant">Color: Crema Vintage / Forestal • Talla: 9.5</div>
+          <div class="side-item-price" id="sideCartPrice">$219.96</div>
+        </div>
+        <div class="side-item-actions">
+          <div class="side-item-stepper">
+            <button class="stepper-minus" onclick="updateSideQty(-1)">−</button>
+            <span class="stepper-val" id="sideCartQty">1</span>
+            <button class="stepper-plus" onclick="updateSideQty(1)">+</button>
+          </div>
+          <button class="side-item-delete" onclick="removeSideItem()" aria-label="Eliminar producto">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer: Order Info & Checkout -->
+    <div class="cart-side-footer">
+      <div class="side-order-info-card">
+        <span class="side-order-info-title">Información del Pedido</span>
+        <div class="side-order-row">
+          <span>Subtotal</span>
+          <strong id="sideSubtotal">$219.96</strong>
+        </div>
+        <div class="side-order-row">
+          <span>Costo de Envío</span>
+          <strong style="color: #16A34A;">Gratis Express</strong>
+        </div>
+        <div class="side-order-row side-order-row--discount">
+          <span>Descuento Promocional</span>
+          <strong style="color: #16A34A;">-$50.00</strong>
+        </div>
+        <div class="side-order-divider"></div>
+        <div class="side-order-total-row">
+          <span class="side-order-total-label">Total</span>
+          <span class="side-order-total-val" id="sideTotal">$169.96</span>
+        </div>
+      </div>
+
+      <button class="side-checkout-btn" onclick="alert('Redirigiendo a la pasarela segura de pago de GoSense...');">
+        Proceder al Pago &nbsp;→
+      </button>
+      <button class="side-continue-btn" onclick="closeCartDrawer()">
+        Seguir Comprando
+      </button>
+    </div>
+  </aside>
+</body>
+</html>

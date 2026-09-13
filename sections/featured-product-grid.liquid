@@ -1,0 +1,203 @@
+{{ 'custom-home.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="featured-product-grid-section section-{{ section.id }}-padding">
+  <div class="editorial-container">
+    <!-- Centered Editorial Heading -->
+    {%- if section.settings.title != blank -%}
+      <div class="editorial-heading-block">
+        <h2 class="editorial-section-title editorial-serif">
+          {{ section.settings.title }}
+        </h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="editorial-section-subtitle">
+            {{ section.settings.subtitle }}
+          </p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <!-- Product Grid -->
+    <div class="editorial-product-grid">
+      {%- assign collection = section.settings.collection -%}
+      {%- if collection != blank and collection.products.size > 0 -%}
+        {%- for product in collection.products limit: section.settings.products_to_show -%}
+          {% render 'custom-product-card',
+            card_product: product,
+            show_badge: section.settings.show_badge,
+            show_description: section.settings.show_description,
+            index: forloop.index
+          %}
+        {%- endfor -%}
+      {%- else -%}
+        <!-- High-fidelity preview demo cards matching target screenshot -->
+        {%- render 'custom-product-card',
+          placeholder_title: 'Gaelic Indoor Shoes',
+          placeholder_price: '$219.96',
+          placeholder_desc: 'Street silhouettes meets ultra-resilient street sole crafted for the rhythm of city life.',
+          placeholder_image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=600&auto=format&fit=crop',
+          custom_badge: 'New Release',
+          index: 1
+        -%}
+        {%- render 'custom-product-card',
+          placeholder_title: 'Gaelic Indoor Shoes',
+          placeholder_price: '$329.96',
+          placeholder_desc: 'Refined lifestyle sneaker with responsive support effortlessly day to night.',
+          placeholder_image: 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?q=80&w=600&auto=format&fit=crop',
+          custom_badge: 'Best Seller',
+          index: 2
+        -%}
+        {%- render 'custom-product-card',
+          placeholder_title: 'Zoom Vomero',
+          placeholder_price: '$169.99',
+          placeholder_desc: 'Bold fresh accents on classic cushioning made for energetic urban explorers.',
+          placeholder_image: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=600&auto=format&fit=crop',
+          custom_badge: 'Trending',
+          index: 3
+        -%}
+        {%- render 'custom-product-card',
+          placeholder_title: 'Gaelic Indoor Shoes',
+          placeholder_price: '$219.96',
+          placeholder_desc: 'Classic vintage runner profile redefined with technical overlays and comfort.',
+          placeholder_image: 'https://images.unsplash.com/photo-1539185441755-769473a23570?q=80&w=600&auto=format&fit=crop',
+          custom_badge: 'New Release',
+          index: 4
+        -%}
+        {%- render 'custom-product-card',
+          placeholder_title: 'Gaelic Indoor Shoes',
+          placeholder_price: '$249.96',
+          placeholder_desc: 'Triple dark monochromatic edition built for stealth performance and style.',
+          placeholder_image: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?q=80&w=600&auto=format&fit=crop',
+          custom_badge: 'Exclusive',
+          index: 5
+        -%}
+        {%- render 'custom-product-card',
+          placeholder_title: 'Zoom Vomero',
+          placeholder_price: '$169.99',
+          placeholder_desc: 'Lightweight technical mesh and gold metallic accents for statement wear.',
+          placeholder_image: 'https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?q=80&w=600&auto=format&fit=crop',
+          custom_badge: 'Best Seller',
+          index: 6
+        -%}
+      {%- endif -%}
+    </div>
+
+    <!-- Centered See More Button -->
+    {%- if section.settings.see_more_label != blank -%}
+      <div class="editorial-see-more-wrap">
+        <a
+          href="{{ section.settings.see_more_link | default: collection.url | default: '/collections/all' }}"
+          class="btn-see-more"
+        >
+          {{ section.settings.see_more_label }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Product Grid",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Newly Dropped Collections"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "These collections always tie sneaker classic, everyday look, authentic fusion build for day-to-day comfort and style."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "label": "Products to Show",
+      "default": 6
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show Badge",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show Short Description",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "see_more_label",
+      "label": "See More Button Label",
+      "default": "See More Collection"
+    },
+    {
+      "type": "url",
+      "id": "see_more_link",
+      "label": "See More Button Link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Product Grid",
+      "settings": {
+        "title": "Newly Dropped Collections",
+        "subtitle": "These collections always tie sneaker classic, everyday look, authentic fusion build for day-to-day comfort and style.",
+        "products_to_show": 6,
+        "see_more_label": "See More Collection"
+      }
+    }
+  ]
+}
+{% endschema %}

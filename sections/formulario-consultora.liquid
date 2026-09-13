@@ -1,0 +1,143 @@
+{% comment %}
+  Formulario personalizado para registro de Consultoras Bahari Aqua
+  Autor: David Caro
+{% endcomment %}
+
+<section class="bahari-consultora-form">
+  <div class="container">
+    <h2 class="form-title">Únete al programa de Consultoras Bahari Aqua</h2>
+    <p class="form-subtitle">
+      Regístrate para obtener tu descuento exclusivo del <strong>24%</strong> y ser parte de nuestra red de consultoras.
+    </p>
+
+    <form method="post" action="/contact#contact_form" id="consultoraForm" accept-charset="UTF-8" class="contact-form">
+      <input type="hidden" name="form_type" value="customer">
+      <input type="hidden" name="utf8" value="✓">
+
+      <!-- Campos ocultos que sí registran el nombre -->
+      <input type="hidden" name="contact[first_name]" id="first_name_hidden">
+      <input type="hidden" name="contact[last_name]" id="last_name_hidden">
+
+      <div class="form-linear">
+        <div class="form-group">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" required>
+        </div>
+
+        <div class="form-group">
+          <label for="correo">Correo electrónico</label>
+          <input type="email" name="contact[email]" id="correo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="telefono">Número de teléfono</label>
+          <input type="tel" name="contact[phone]" id="telefono" required>
+        </div>
+
+        <div class="form-group">
+          <label for="ciudad">Ciudad</label>
+          <input type="text" name="contact[ciudad]" id="ciudad">
+        </div>
+
+        <div class="form-group">
+          <label for="redes">¿Cuentas con redes sociales o web activa para promoción digital?</label>
+          <textarea
+            name="contact[redes]"
+            id="redes"
+            rows="3"
+            placeholder="Ejemplo: Instagram, Facebook, página web o tienda en línea"
+          ></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-enviar" onclick="separarNombre()">Enviar solicitud</button>
+    </form>
+
+    <script>
+      function separarNombre() {
+        const fullName = document.getElementById('nombre').value.trim();
+        const parts = fullName.split(' ');
+        const firstName = parts.shift();
+        const lastName = parts.join(' ') || '.';
+        document.getElementById('first_name_hidden').value = firstName;
+        document.getElementById('last_name_hidden').value = lastName;
+      }
+    </script>
+
+    <p class="nota">*Una vez aprobada, recibirás un correo de bienvenida con tu acceso y beneficios.</p>
+  </div>
+</section>
+
+<style>
+  .bahari-consultora-form {
+    background: #ffffff;
+    padding: 70px 20px;
+    text-align: center;
+  }
+  .form-title {
+    color: #102E50;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .form-subtitle {
+    color: #333;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  .form-linear {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .form-group label {
+    color: #102E50;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    resize: none;
+  }
+  .btn-enviar {
+    margin-top: 25px;
+    background: #102E50;
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-weight: 600;
+  }
+  .btn-enviar:hover {
+    background: #E50000;
+  }
+  .nota {
+    color: #555;
+    font-size: 0.85rem;
+    margin-top: 1rem;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Formulario Consultora",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Formulario de consultoras"
+    }
+  ]
+}
+{% endschema %}

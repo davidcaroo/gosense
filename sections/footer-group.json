@@ -1,0 +1,24 @@
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "editorial_footer": {
+      "type": "custom-editorial-footer",
+      "settings": {
+        "brand_name": "GoSense",
+        "brand_description": "These collections always tie sneaker classic, everyday look, authentic fusion build for day-to-day comfort and style.",
+        "show_newsletter": true,
+        "newsletter_label": "Subscribe to newsletter",
+        "newsletter_placeholder": "Enter your email address",
+        "newsletter_button_label": "Subscribe",
+        "menu_1_heading": "Categories",
+        "menu_2_heading": "Legal",
+        "menu_3_heading": "Help",
+        "copyright_text": "All rights reserved."
+      }
+    }
+  },
+  "order": [
+    "editorial_footer"
+  ]
+}

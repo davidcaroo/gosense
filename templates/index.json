@@ -1,0 +1,160 @@
+{
+  "sections": {
+    "custom_home_hero": {
+      "type": "custom-home-hero",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "overlay_opacity": 65,
+            "heading": "Sneakers That\nDefy Your Every\nday Look",
+            "subheading": "",
+            "button_label": "Shop Now",
+            "button_link": "/collections/all",
+            "text_alignment": "left"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1"
+      ],
+      "settings": {
+        "hero_height_desktop": 640,
+        "hero_height_mobile": 520,
+        "padding_top": 16,
+        "padding_bottom": 24
+      }
+    },
+    "promotional_cards": {
+      "type": "promotional-cards",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "overlay_opacity": 70,
+            "heading": "Sneakers That Move With You, Comfortable, Durable, and Always In Style.",
+            "is_style_stack": false,
+            "button_label": "Shop Now",
+            "button_link": "/collections/all",
+            "button_style": "dark",
+            "content_alignment": "left"
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "overlay_opacity": 70,
+            "heading": "Fresh Drops Alert! Extraordinary Sneakers That Speak Before You Do.",
+            "is_style_stack": false,
+            "button_label": "Explore Now",
+            "button_link": "/collections/all",
+            "button_style": "dark",
+            "content_alignment": "left"
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "overlay_opacity": 65,
+            "heading": "STYLE-STACK",
+            "is_style_stack": true,
+            "button_label": "Shop Sneakers",
+            "button_link": "/collections/all",
+            "button_style": "white",
+            "content_alignment": "center"
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3"
+      ],
+      "settings": {
+        "padding_top": 10,
+        "padding_bottom": 36
+      }
+    },
+    "newly_dropped_collections": {
+      "type": "featured-product-grid",
+      "settings": {
+        "title": "Newly Dropped Collections",
+        "subtitle": "These collections always tie sneaker classic, everyday look, authentic fusion build for day-to-day comfort and style.",
+        "products_to_show": 6,
+        "show_badge": true,
+        "show_description": true,
+        "see_more_label": "See More Collection",
+        "see_more_link": "/collections/all",
+        "padding_top": 20,
+        "padding_bottom": 24
+      }
+    },
+    "editorial_mosaic": {
+      "type": "editorial-collection-mosaic",
+      "settings": {
+        "title": "Most Recommend Collections For You",
+        "subtitle": "These sneakers always tie sneaker classic, everyday look, authentic fusion build for day-to-day comfort and style.",
+        "tall_heading": "Sneakers",
+        "tall_button_label": "View all products",
+        "tall_button_link": "/collections/all",
+        "wide1_heading": "Sneakers",
+        "wide1_button_label": "View all products",
+        "wide1_button_link": "/collections/all",
+        "wide2_heading": "Sneakers",
+        "wide2_button_label": "View all products",
+        "wide2_button_link": "/collections/all",
+        "padding_top": 20,
+        "padding_bottom": 32
+      }
+    },
+    "trending_banner": {
+      "type": "trending-banner",
+      "settings": {
+        "heading": "Trending Now",
+        "button_label": "Explore Shop",
+        "button_link": "/collections/all",
+        "banner_height_desktop": 400,
+        "banner_height_mobile": 320,
+        "overlay_opacity": 55,
+        "padding_top": 10,
+        "padding_bottom": 36
+      }
+    },
+    "summer_collections": {
+      "type": "featured-product-grid",
+      "settings": {
+        "title": "Summer Collections",
+        "subtitle": "These sneakers always tie sneaker classic, everyday look, authentic fusion build for day-to-day comfort and style.",
+        "products_to_show": 6,
+        "show_badge": true,
+        "show_description": true,
+        "see_more_label": "See More Collections",
+        "see_more_link": "/collections/all",
+        "padding_top": 20,
+        "padding_bottom": 24
+      }
+    },
+    "lifestyle_cta": {
+      "type": "lifestyle-cta",
+      "settings": {
+        "heading": "Build Your Style With Confident\nSteps By Wearing Our Sneakers.",
+        "button_label": "Shop Now",
+        "button_link": "/collections/all",
+        "cta_height_desktop": 420,
+        "cta_height_mobile": 340,
+        "overlay_opacity": 55,
+        "padding_top": 20,
+        "padding_bottom": 50
+      }
+    }
+  },
+  "order": [
+    "custom_home_hero",
+    "promotional_cards",
+    "newly_dropped_collections",
+    "editorial_mosaic",
+    "trending_banner",
+    "summer_collections",
+    "lifestyle_cta"
+  ]
+}

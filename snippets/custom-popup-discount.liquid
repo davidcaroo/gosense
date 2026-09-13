@@ -1,0 +1,189 @@
+{%- if request.page_type != 'password' -%}
+<style>
+  .custom-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .custom-popup-overlay.is-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+  .custom-popup-content {
+    background: #ffffff;
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+  .custom-popup-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    z-index: 10;
+  }
+  .custom-popup-image {
+    width: 50%;
+    background-color: #f4f4f4; /* Fondo de reserva */
+    background-image: url('https://cdn.shopify.com/s/files/1/0769/3120/3285/files/4000039-flash-urban-3606-5.jpg?v=1773863286'); /* URL CON LA URL DE TU IMAGEN DE SHOPIFY */
+    background-size: cover;
+    background-position: center;
+  }
+  .custom-popup-form-container {
+    width: 50%;
+    padding: 50px 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .custom-popup-form-container h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #111;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  .custom-popup-form-container p.subtitle {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 25px;
+  }
+  .custom-popup-input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .custom-popup-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #102E50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .custom-popup-btn:hover {
+    background-color: #0b1f36;
+  }
+  .custom-popup-decline {
+    background: none;
+    border: none;
+    color: #102E50;
+    font-size: 14px;
+    margin-top: 15px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .custom-popup-disclaimer {
+    font-size: 11px;
+    color: #888;
+    margin-top: 20px;
+    line-height: 1.4;
+  }
+  .success-msg {
+    color: #28a745;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  @media (max-width: 768px) {
+    .custom-popup-content {
+      flex-direction: column;
+      max-width: 400px;
+    }
+    .custom-popup-image {
+      width: 100%;
+      height: 200px;
+    }
+    .custom-popup-form-container {
+      width: 100%;
+      padding: 30px 20px;
+    }
+  }
+</style>
+
+<div id="PromoPopup" class="custom-popup-overlay">
+  <div class="custom-popup-content">
+    <button id="ClosePopup" class="custom-popup-close">&times;</button>
+    
+    <div class="custom-popup-image"></div>
+    
+    <div class="custom-popup-form-container">
+      <h2>Obtén 10% de Dcto en tu orden</h2>
+      <p class="subtitle">Regístrate y desbloquea tu descuento instantáneo.</p>
+      
+      {% form 'customer', id: 'PopupContactForm' %}
+        {% if form.posted_successfully? %}
+          <p class="success-msg">¡Éxito! Tu descuento se aplicará en el carrito.</p>
+          <script>
+            // Aplica el descuento automáticamente en la sesión del cliente
+            fetch('/discount/BIENVENIDO10').then(() => {
+              localStorage.setItem('popup_dismissed', 'true');
+              setTimeout(() => {
+                document.getElementById('PromoPopup').classList.remove('is-visible');
+              }, 3000);
+            });
+          </script>
+        {% else %}
+          {{ form.errors | default_errors }}
+          <input type="hidden" name="contact[tags]" value="newsletter, popup_suscriptor">
+          <input type="email" name="contact[email]" class="custom-popup-input" placeholder="Correo electrónico" required="required">
+          <button type="submit" class="custom-popup-btn">Reclamar descuento</button>
+          <button type="button" id="DeclinePopup" class="custom-popup-decline">No, gracias</button>
+          <p class="custom-popup-disclaimer">Al registrarte aceptas recibir comunicaciones por correo electrónico y puedes cancelar tu suscripción en cualquier momento.</p>
+        {% endif %}
+      {% endform %}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const popup = document.getElementById('PromoPopup');
+    const closeBtn = document.getElementById('ClosePopup');
+    const declineBtn = document.getElementById('DeclinePopup');
+    
+    // Comprobar si el usuario ya cerró o usó el popup
+    if (!localStorage.getItem('popup_dismissed') && !window.location.href.includes('customer_posted=true')) {
+      // Mostrar popup después de 4 segundos
+      setTimeout(() => {
+        popup.classList.add('is-visible');
+      }, 4000);
+    } else if (window.location.href.includes('customer_posted=true')) {
+       // Mantener abierto unos segundos si acaba de enviar el form exitosamente
+       popup.classList.add('is-visible');
+    }
+
+    function dismissPopup() {
+      popup.classList.remove('is-visible');
+      localStorage.setItem('popup_dismissed', 'true');
+    }
+
+    closeBtn.addEventListener('click', dismissPopup);
+    declineBtn.addEventListener('click', dismissPopup);
+  });
+</script>
+{%- endif -%}

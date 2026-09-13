@@ -1,0 +1,704 @@
+<!-- sections/store-locator.liquid -->
+<style>
+.store-locator-wrapper {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 40px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.store-locator-container {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 20px;
+  height: 600px;
+}
+
+@media (max-width: 1024px) {
+  .store-locator-container {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+}
+
+/* Barra de búsqueda */
+.search-box {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 0.9375em;
+}
+
+.search-box button {
+  background: #1e88e5;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.search-box button:hover {
+  background: #1565c0;
+}
+
+.clear-search {
+  background: transparent !important;
+  color: #6b7280;
+  padding: 4px 8px !important;
+  font-size: 1.2em;
+}
+
+/* Sidebar con listado */
+.stores-sidebar {
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.stores-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.stores-sidebar::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 3px;
+}
+
+/* Cards de tiendas */
+.store-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.store-card:hover,
+.store-card.active {
+  border-color: #1e88e5;
+  box-shadow: 0 4px 12px rgba(30, 136, 229, 0.15);
+  transform: translateX(4px);
+}
+
+.store-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.store-number {
+  background: #1e88e5;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875em;
+  flex-shrink: 0;
+}
+
+.store-info h3 {
+  font-size: 1em;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 4px 0;
+}
+
+.store-distance {
+  font-size: 0.75em;
+  color: #10b981;
+  font-weight: 600;
+}
+
+.store-address {
+  font-size: 0.875em;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  padding-left: 44px;
+}
+
+.store-hours {
+  font-size: 0.8125em;
+  color: #6b7280;
+  padding-left: 44px;
+  margin-bottom: 12px;
+}
+
+.store-actions {
+  display: flex;
+  gap: 8px;
+  padding-left: 44px;
+  flex-wrap: wrap;
+}
+
+.store-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.8125em;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-directions {
+  background: #1e88e5;
+  color: white;
+}
+
+.btn-directions:hover {
+  background: #1565c0;
+}
+
+.btn-website {
+  background: transparent;
+  color: #1e88e5;
+  border: 1px solid #1e88e5;
+}
+
+.btn-website:hover {
+  background: #e3f2fd;
+}
+
+.btn-whatsapp {
+  background: #25d366;
+  color: white;
+}
+
+.btn-whatsapp:hover {
+  background: #1da851;
+}
+
+/* Mapa */
+.map-container {
+  background: #f3f4f6;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  min-height: 500px;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+.location-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 1000;
+  transition: all 0.3s;
+}
+
+.location-btn:hover {
+  background: #f3f4f6;
+  transform: scale(1.05);
+}
+
+.location-btn svg {
+  display: block;
+}
+
+/* Info Window personalizada */
+.custom-info-window {
+  padding: 12px;
+  max-width: 280px;
+}
+
+.custom-info-window h3 {
+  font-size: 1em;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 8px 0;
+}
+
+.custom-info-window p {
+  font-size: 0.875em;
+  color: #6b7280;
+  margin: 4px 0;
+  line-height: 1.5;
+}
+
+.custom-info-window a {
+  display: inline-block;
+  margin-top: 8px;
+  color: #1e88e5;
+  font-weight: 600;
+  font-size: 0.875em;
+  text-decoration: none;
+}
+
+.custom-info-window a:hover {
+  text-decoration: underline;
+}
+
+/* Loading y mensajes */
+.loading-message,
+.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+}
+
+.loading-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #1e88e5;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 1024px) {
+  .map-container {
+    min-height: 400px;
+    order: -1;
+  }
+}
+</style>
+
+<div class="store-locator-wrapper">
+  <!-- Barra de búsqueda -->
+  <div class="search-box">
+    <input 
+      type="text" 
+      id="searchInput" 
+      placeholder="Buscar por ciudad, código postal o dirección..."
+    >
+    <button id="clearSearch" class="clear-search" style="display: none;">×</button>
+    <button id="searchBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div class="store-locator-container">
+    <!-- Sidebar con listado de tiendas -->
+    <div class="stores-sidebar" id="storesList">
+      <div class="loading-message">
+        <div class="spinner"></div>
+        <p>Cargando tiendas cercanas...</p>
+      </div>
+    </div>
+
+    <!-- Mapa -->
+    <div class="map-container">
+      <button class="location-btn" id="locationBtn" title="Usar mi ubicación">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e88e5" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+      </button>
+      <div id="map"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Datos de las tiendas
+const stores = [
+  {
+    id: 1,
+    name: "Mall Plaza Cartagena",
+    address: "Av. Pedro De Heredia #Carrera 13",
+    city: "Cartagena",
+    lat: 10.3997200,
+    lng: -75.4794400,
+    hours: "Domingo a jueves 10AM–8PM / Viernes y sábados 10AM–9PM",
+    phone: "3011265436",
+    email: "isla.mall.cartagena@bahariaqua.com"
+  },
+  {
+    id: 2,
+    name: "La Serrezuela Cartagena",
+    address: "Cra. 11 #39-21 San Diego",
+    city: "Cartagena",
+    lat: 10.4019800,
+    lng: -75.5518300,
+    hours: "Domingo a jueves 10AM–8PM / Viernes y sábados 10AM–9PM",
+    phone: "3102041547",
+    email: "isla.serrezuela.cartagena@bahariaqua.com"
+  },
+  {
+    id: 3,
+    name: "Arrecife Santa Marta",
+    address: "Cra 4 # 11 A -119, El Rodadero",
+    city: "Santa Marta",
+    lat: 11.2024300,
+    lng: -74.2258800,
+    hours: "Lunes a sábado 10AM–8PM / Domingos y festivos 11AM–8PM",
+    phone: "3507757010",
+    email: "isla.arrecife.santamarta@bahariaqua.com"
+  },
+  {
+    id: 4,
+    name: "Alamedas Montería",
+    address: "Cl. 44 #10 - 91",
+    city: "Montería",
+    lat: 8.7481910,
+    lng: -75.8791570,
+    hours: "Lunes a jueves 10AM–8PM / Viernes y sábados 10AM–9PM / Domingos y festivos 11AM–7PM",
+    phone: "3125779157",
+    email: "isla.alameda.monteria@bahariaqua.com"
+  },
+  {
+    id: 5,
+    name: "Mayales Plaza II Valledupar",
+    address: "Carrera 7A / Av. Salguero",
+    city: "Valledupar",
+    lat: 10.4631900,
+    lng: -73.2532300,
+    hours: "Domingos a jueves 10AM–8PM / Viernes y sábados 10AM–9PM",
+    phone: "3116418334",
+    email: "isla.mayales.valledupar@bahariaqua.com"
+  },
+  {
+    id: 6,
+    name: "San Pedro Plaza Neiva",
+    address: "Carrera 8 # 38-42",
+    city: "Neiva",
+    lat: 2.9273000,
+    lng: -75.2819300,
+    hours: "Lunes a viernes 10AM–8PM / Sábados 10AM–8:30PM / Domingos y festivos 11AM–8PM",
+    phone: "3102041536",
+    email: "isla.sanpedro.neiva@bahariaqua.com"
+  },
+  {
+    id: 7,
+    name: "Parque Comercial Guacarí Sincelejo",
+    address: "Calle 28 #25B-365 Barrio Boston",
+    city: "Sincelejo",
+    lat: 9.3047200,
+    lng: -75.3977800,
+    hours: "Lunes a jueves 10AM–8PM / Viernes y sábados 10AM–9PM / Domingos y festivos 11AM–8PM",
+    phone: "3102041396",
+    email: "isla.guacari.sincelejo@bahariaqua.com"
+  },
+  {
+    id: 8,
+    name: "Mall Plaza Barranquilla",
+    address: "Carrera 55 #99 - 51",
+    city: "Barranquilla",
+    lat: 11.0187900,
+    lng: -74.8509400,
+    hours: "Domingo a jueves 10AM–8PM / Viernes y sábados 10AM–9PM",
+    phone: "3104844054",
+    email: "isla.mall.barranquilla@bahariaqua.com"
+  }
+];
+
+let map;
+let markers = [];
+let userLocation = null;
+let infoWindow;
+
+// Inicializar mapa
+function initMap() {
+  // Centro de Colombia por defecto
+  const colombiaCenter = { lat: 4.5709, lng: -74.2973 };
+  
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 6,
+    center: colombiaCenter,
+    styles: [
+      {
+        featureType: "poi",
+        elementType: "labels",
+        stylers: [{ visibility: "off" }]
+      }
+    ]
+  });
+
+  infoWindow = new google.maps.InfoWindow();
+
+  // Intentar obtener ubicación del usuario
+  tryGetUserLocation();
+}
+
+// Obtener ubicación del usuario
+function tryGetUserLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        userLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        
+        // Centrar mapa en ubicación del usuario
+        map.setCenter(userLocation);
+        map.setZoom(10);
+        
+        // Añadir marcador de usuario
+        new google.maps.Marker({
+          position: userLocation,
+          map: map,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 8,
+            fillColor: "#4285F4",
+            fillOpacity: 1,
+            strokeColor: "white",
+            strokeWeight: 2
+          },
+          title: "Tu ubicación"
+        });
+        
+        // Mostrar tiendas ordenadas por cercanía
+        displayStores(true);
+      },
+      () => {
+        // Si rechaza, mostrar todas las tiendas
+        displayStores(false);
+      }
+    );
+  } else {
+    // Navegador no soporta geolocalización
+    displayStores(false);
+  }
+}
+
+// Calcular distancia entre dos puntos (fórmula de Haversine)
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radio de la Tierra en km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c;
+}
+
+// Mostrar tiendas
+function displayStores(sortByDistance = false) {
+  let storesToShow = [...stores];
+  
+  if (sortByDistance && userLocation) {
+    storesToShow = stores.map(store => ({
+      ...store,
+      distance: calculateDistance(
+        userLocation.lat,
+        userLocation.lng,
+        store.lat,
+        store.lng
+      )
+    })).sort((a, b) => a.distance - b.distance);
+  }
+  
+  // Limpiar markers anteriores
+  markers.forEach(marker => marker.setMarker(null));
+  markers = [];
+  
+  // Crear HTML de las tarjetas
+  const storesHTML = storesToShow.map((store, index) => {
+    const distanceHTML = store.distance 
+      ? `<div class="store-distance">📍 ${store.distance.toFixed(1)} km de ti</div>`
+      : '';
+    
+    return `
+      <div class="store-card" data-store-id="${store.id}" onclick="focusStore(${store.id})">
+        <div class="store-card-header">
+          <div class="store-number">${index + 1}</div>
+          <div class="store-info">
+            <h3>${store.name}</h3>
+            ${distanceHTML}
+          </div>
+        </div>
+        <div class="store-address">${store.address}, ${store.city}</div>
+        <div class="store-hours">🕒 ${store.hours}</div>
+        <div class="store-actions">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=${store.lat},${store.lng}" 
+             target="_blank" 
+             class="store-btn btn-directions"
+             onclick="event.stopPropagation()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+            </svg>
+            Cómo llegar
+          </a>
+          <a href="https://wa.me/57${store.phone}" 
+             target="_blank" 
+             class="store-btn btn-whatsapp"
+             onclick="event.stopPropagation()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  document.getElementById('storesList').innerHTML = storesHTML;
+  
+  // Añadir markers al mapa
+  storesToShow.forEach((store, index) => {
+    const marker = new google.maps.Marker({
+      position: { lat: store.lat, lng: store.lng },
+      map: map,
+      label: {
+        text: String(index + 1),
+        color: "white",
+        fontWeight: "bold"
+      },
+      title: store.name
+    });
+    
+    marker.addListener('click', () => {
+      const content = `
+        <div class="custom-info-window">
+          <h3>${store.name}</h3>
+          <p><strong>📍</strong> ${store.address}, ${store.city}</p>
+          <p><strong>🕒</strong> ${store.hours}</p>
+          <p><strong>📞</strong> ${store.phone}</p>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=${store.lat},${store.lng}" target="_blank">
+            Cómo llegar →
+          </a>
+        </div>
+      `;
+      infoWindow.setContent(content);
+      infoWindow.open(map, marker);
+      
+      // Resaltar card
+      document.querySelectorAll('.store-card').forEach(card => card.classList.remove('active'));
+      document.querySelector(`[data-store-id="${store.id}"]`).classList.add('active');
+    });
+    
+    markers.push(marker);
+  });
+  
+  // Ajustar bounds del mapa
+  if (storesToShow.length > 0) {
+    const bounds = new google.maps.LatLngBounds();
+    if (userLocation) {
+      bounds.extend(userLocation);
+    }
+    storesToShow.forEach(store => {
+      bounds.extend({ lat: store.lat, lng: store.lng });
+    });
+    map.fitBounds(bounds);
+  }
+}
+
+// Enfocar tienda desde el listado
+function focusStore(storeId) {
+  const store = stores.find(s => s.id === storeId);
+  const markerIndex = markers.findIndex(m => m.getTitle() === store.name);
+  
+  if (markerIndex !== -1) {
+    map.setCenter({ lat: store.lat, lng: store.lng });
+    map.setZoom(15);
+    google.maps.event.trigger(markers[markerIndex], 'click');
+  }
+}
+
+// Botón de ubicación
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('locationBtn').addEventListener('click', tryGetUserLocation);
+  
+  // Búsqueda
+  const searchInput = document.getElementById('searchInput');
+  const searchBtn = document.getElementById('searchBtn');
+  const clearBtn = document.getElementById('clearSearch');
+  
+  searchBtn.addEventListener('click', performSearch);
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') performSearch();
+  });
+  
+  searchInput.addEventListener('input', (e) => {
+    clearBtn.style.display = e.target.value ? 'block' : 'none';
+  });
+  
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    clearBtn.style.display = 'none';
+    displayStores(!!userLocation);
+  });
+});
+
+function performSearch() {
+  const query = document.getElementById('searchInput').value.toLowerCase().trim();
+  
+  if (!query) {
+    displayStores(!!userLocation);
+    return;
+  }
+  
+  const filtered = stores.filter(store => 
+    store.name.toLowerCase().includes(query) ||
+    store.city.toLowerCase().includes(query) ||
+    store.address.toLowerCase().includes(query)
+  );
+  
+  if (filtered.length === 0) {
+    document.getElementById('storesList').innerHTML = `
+      <div class="no-results">
+        <p>No se encontraron tiendas para "${query}"</p>
+      </div>
+    `;
+    return;
+  }
+  
+  // Mostrar resultados filtrados
+  displayStores(false);
+}
+
+// Cargar Google Maps
+function loadGoogleMaps() {
+  const script = document.createElement('script');
+  script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDnExdsOmVbCo2LBOFtrWBqLo6dAeM5BEM&callback=initMap';
+  script.async = true;
+  script.defer = true;
+  document.head.appendChild(script);
+}
+
+loadGoogleMaps();
+</script>

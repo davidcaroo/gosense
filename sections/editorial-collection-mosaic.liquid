@@ -1,0 +1,279 @@
+{{ 'custom-home.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="editorial-mosaic-section section-{{ section.id }}-padding">
+  <div class="editorial-container">
+    {%- if section.settings.title != blank -%}
+      <div class="editorial-heading-block" style="padding-top: 10px; padding-bottom: 24px;">
+        <h2 class="editorial-section-title editorial-serif">
+          {{ section.settings.title }}
+        </h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="editorial-section-subtitle">
+            {{ section.settings.subtitle }}
+          </p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="editorial-mosaic-grid">
+      <!-- Left Column: Tall Portrait Card -->
+      <div class="mosaic-card mosaic-card--tall">
+        {%- if section.settings.tall_image != blank -%}
+          <img
+            src="{{ section.settings.tall_image | image_url: width: 1000 }}"
+            alt="{{ section.settings.tall_heading | escape }}"
+            class="mosaic-card-bg"
+            loading="lazy"
+            width="1000"
+            height="1200"
+          >
+        {%- else -%}
+          <img
+            src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1000&auto=format&fit=crop"
+            alt="{{ section.settings.tall_heading | escape }}"
+            class="mosaic-card-bg"
+            loading="lazy"
+            width="1000"
+            height="1200"
+          >
+        {%- endif -%}
+
+        <div class="mosaic-card-overlay"></div>
+
+        <div class="mosaic-card-content">
+          {%- if section.settings.tall_heading != blank -%}
+            <h3 class="mosaic-card-title editorial-serif">{{ section.settings.tall_heading }}</h3>
+          {%- endif -%}
+          {%- if section.settings.tall_button_label != blank -%}
+            <div>
+              <a href="{{ section.settings.tall_button_link | default: '/collections/all' }}" class="mosaic-card-btn">
+                {{ section.settings.tall_button_label }}
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Right Column: Two Stacked Landscape Cards -->
+      <div class="editorial-mosaic-col-right">
+        <!-- Wide Card 1 (Top) -->
+        <div class="mosaic-card mosaic-card--wide">
+          {%- if section.settings.wide1_image != blank -%}
+            <img
+              src="{{ section.settings.wide1_image | image_url: width: 900 }}"
+              alt="{{ section.settings.wide1_heading | escape }}"
+              class="mosaic-card-bg"
+              loading="lazy"
+              width="900"
+              height="550"
+            >
+          {%- else -%}
+            <img
+              src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=900&auto=format&fit=crop"
+              alt="{{ section.settings.wide1_heading | escape }}"
+              class="mosaic-card-bg"
+              loading="lazy"
+              width="900"
+              height="550"
+            >
+          {%- endif -%}
+
+          <div class="mosaic-card-overlay"></div>
+
+          <div class="mosaic-card-content">
+            {%- if section.settings.wide1_heading != blank -%}
+              <h3 class="mosaic-card-title editorial-serif">{{ section.settings.wide1_heading }}</h3>
+            {%- endif -%}
+            {%- if section.settings.wide1_button_label != blank -%}
+              <div>
+                <a href="{{ section.settings.wide1_button_link | default: '/collections/all' }}" class="mosaic-card-btn">
+                  {{ section.settings.wide1_button_label }}
+                </a>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <!-- Wide Card 2 (Bottom) -->
+        <div class="mosaic-card mosaic-card--wide">
+          {%- if section.settings.wide2_image != blank -%}
+            <img
+              src="{{ section.settings.wide2_image | image_url: width: 900 }}"
+              alt="{{ section.settings.wide2_heading | escape }}"
+              class="mosaic-card-bg"
+              loading="lazy"
+              width="900"
+              height="550"
+            >
+          {%- else -%}
+            <img
+              src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=900&auto=format&fit=crop"
+              alt="{{ section.settings.wide2_heading | escape }}"
+              class="mosaic-card-bg"
+              loading="lazy"
+              width="900"
+              height="550"
+            >
+          {%- endif -%}
+
+          <div class="mosaic-card-overlay"></div>
+
+          <div class="mosaic-card-content">
+            {%- if section.settings.wide2_heading != blank -%}
+              <h3 class="mosaic-card-title editorial-serif">{{ section.settings.wide2_heading }}</h3>
+            {%- endif -%}
+            {%- if section.settings.wide2_button_label != blank -%}
+              <div>
+                <a href="{{ section.settings.wide2_button_link | default: '/collections/all' }}" class="mosaic-card-btn">
+                  {{ section.settings.wide2_button_label }}
+                </a>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Editorial Category Mosaic",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Heading",
+      "default": "Most Recommend Collections For You"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "These sneakers always tie sneaker classic, everyday look, authentic fusion build for day-to-day comfort and style."
+    },
+    {
+      "type": "header",
+      "content": "Left Tall Card"
+    },
+    {
+      "type": "image_picker",
+      "id": "tall_image",
+      "label": "Tall Card Image"
+    },
+    {
+      "type": "text",
+      "id": "tall_heading",
+      "label": "Tall Card Heading",
+      "default": "Sneakers"
+    },
+    {
+      "type": "text",
+      "id": "tall_button_label",
+      "label": "Tall Card Button Label",
+      "default": "View all products"
+    },
+    {
+      "type": "url",
+      "id": "tall_button_link",
+      "label": "Tall Card Link"
+    },
+    {
+      "type": "header",
+      "content": "Right Top Card"
+    },
+    {
+      "type": "image_picker",
+      "id": "wide1_image",
+      "label": "Right Top Card Image"
+    },
+    {
+      "type": "text",
+      "id": "wide1_heading",
+      "label": "Right Top Card Heading",
+      "default": "Sneakers"
+    },
+    {
+      "type": "text",
+      "id": "wide1_button_label",
+      "label": "Right Top Button Label",
+      "default": "View all products"
+    },
+    {
+      "type": "url",
+      "id": "wide1_button_link",
+      "label": "Right Top Link"
+    },
+    {
+      "type": "header",
+      "content": "Right Bottom Card"
+    },
+    {
+      "type": "image_picker",
+      "id": "wide2_image",
+      "label": "Right Bottom Card Image"
+    },
+    {
+      "type": "text",
+      "id": "wide2_heading",
+      "label": "Right Bottom Card Heading",
+      "default": "Sneakers"
+    },
+    {
+      "type": "text",
+      "id": "wide2_button_label",
+      "label": "Right Bottom Button Label",
+      "default": "View all products"
+    },
+    {
+      "type": "url",
+      "id": "wide2_button_link",
+      "label": "Right Bottom Link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 30
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial Category Mosaic"
+    }
+  ]
+}
+{% endschema %}
